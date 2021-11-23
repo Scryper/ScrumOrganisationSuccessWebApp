@@ -1,0 +1,33 @@
+<form [formGroup]="form" (ngSubmit)="sendData()" (dblclick)="autoComplete()">
+
+<div id="logContainer" class="columnStyle signUpContainerSize bgLightBlue radius alignText">
+    <div id="logFormsContainer">
+
+        <div id="formSign" formGroupName="main">
+        <p class="titleSize robotoMedium textShadowBottom">Create an account</p>
+        <input type="email"
+               formControlName="email"
+               class="inputLog noOutlineOnFocus radius inputSize noBorder paddingLeft"
+               placeholder="Email">
+        <input type="password"
+               formControlName="password"
+               class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
+               placeholder="Password">
+        <input type="password"
+               formControlName="confirmPassword"
+               class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
+               placeholder="Confirm Password">
+        </div>
+
+        <input (mousedown)="toggleButtonPress(true);" (mouseup)="toggleButtonPress(false);" (mouseleave)="toggleButtonPress(false);"
+            [ngClass]="{'isPressedClass': buttonIsPressed === true}"
+            id="btnSignUp" type="submit" value="Sign up" [disabled]="form.invalid"
+               class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+
+        <p class="robotoLight italic fontSizeSmall">
+            <span>Already have an account ? </span><a class="red">Sign in</a>
+        </p>
+
+    </div>
+</div>
+</form>

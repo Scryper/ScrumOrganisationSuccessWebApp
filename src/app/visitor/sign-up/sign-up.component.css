@@ -1,0 +1,18 @@
+.signUpContainerSize {
+    height: 370px;
+    width: 380px;
+}
+
+#logFormsContainer>*:first-child {
+    padding-top: 35px;
+}
+
+#btnSignUp {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.isPressedClass {
+    box-shadow: 0px -2px 4px black;
+    background-color: #009B86;
+}

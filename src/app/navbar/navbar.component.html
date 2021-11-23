@@ -1,0 +1,19 @@
+<!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div [ngClass]="isOpen === true ? 'responsive' : 'topnav'" class="topnav bgHardBlue" id="myTopnav">
+    <a routerLink="homeVisiteur" class="noPadAndMarg"><img alt="logo" src="../../assets/img/Logo.png" class = "logo cursorPointer" routerLink="homeVisiteur"></a>
+    <a routerLink="contact" class="categorie robotoLight">Contact</a>
+    <a routerLink="team" class="categorie robotoLight">Team</a>
+    <a routerLink="tutorial" class="categorie robotoLight">Tutorial</a>
+    <a routerLink="faq" class="categorie robotoLight">FAQ</a>
+    <span class="logMenu">
+    <a routerLink="login" class="categorie robotoLight logMenu">Login</a>
+    <a routerLink="signUp" class="categorie robotoLight logMenu">Sign Up</a>
+    </span>
+    <a class="icon" (click)="switchIsOpen();">
+        <i class="fa fa-bars"></i>
+    </a>
+</div>
+
+<router-outlet></router-outlet>

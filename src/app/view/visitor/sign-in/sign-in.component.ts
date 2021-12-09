@@ -64,7 +64,7 @@ export class SignInComponent implements OnInit {
 
     get controls() { return this.form.controls; }
 
-    onSubmit() {
+    onSubmit() {/*
         this.submitted = true;
         this.loading = true;
         this.authenticationService.login(this.controls.username.value, this.controls.password.value)
@@ -76,6 +76,6 @@ export class SignInComponent implements OnInit {
                 error => {
                     this.error = error;
                     this.loading = false;
-                });
+                });*/
     }
 }

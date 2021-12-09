@@ -1,8 +1,7 @@
-<form [formGroup]="form" (ngSubmit)="sendData()" (dblclick)="autoComplete()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" (dblclick)="autoComplete()">
 
 <div id="logContainer" class="columnStyle signInContainerSize bgLightBlue radius alignText">
     <div id="logFormsContainer">
-
         <div id="formSign" formGroupName="main">
             <p class="titleSize robotoMedium textShadowBottom">Log in</p>
             <input type="email"

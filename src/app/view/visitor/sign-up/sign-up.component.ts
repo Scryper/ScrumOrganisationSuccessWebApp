@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 @Component({
     selector: 'app-sign-up',
     templateUrl: './sign-up.component.html',
-    styleUrls: ['../../app.component.css', './sign-up.component.css']
+    styleUrls: ['../../../app.component.css', './sign-up.component.css']
 })
 
 export class SignUpComponent implements OnInit {

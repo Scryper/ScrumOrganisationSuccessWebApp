@@ -2,23 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-    selector: 'app-sign-up',
-    templateUrl: './sign-up.component.html',
-    styleUrls: ['../../app.component.css', './sign-up.component.css']
+  selector: 'app-additional-infos',
+  templateUrl: './additional-infos.component.html',
+  styleUrls: ['../../app.component.css', './additional-infos.component.css']
 })
+export class AdditionalInfosComponent implements OnInit {
+    typeUserNames:string[] = [
+        "Developer",
+        "ScrumMaster",
+        "ProductOwner"
+    ]
 
-export class SignUpComponent implements OnInit {
-    title: string = "Create an account";
+    title: string = "Additional Information";
 
     buttonIsPressed: boolean = false;
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
-            email:this.fb.control('', [
-                Validators.required, Validators.email
-            ]),
-            password:this.fb.control('', Validators.required),
-            confirmPassword:this.fb.control('', Validators.required)
+            lastName:this.fb.control('', Validators.required),
+            firstName:this.fb.control('', Validators.required),
+            userType:this.fb.control('Developer')
         })
     })
 
@@ -33,9 +36,9 @@ export class SignUpComponent implements OnInit {
     autoComplete() {
         this.form.setValue({
             main:{
-                email:"damien@gmail.com",
-                password:"1234",
-                confirmPassword:"1234"
+                lastName:"Auversack",
+                firstName:"Damien",
+                userType:"Developer"
             }
         })
     }
@@ -47,4 +50,5 @@ export class SignUpComponent implements OnInit {
             this.buttonIsPressed = false;
         }
     }
+
 }

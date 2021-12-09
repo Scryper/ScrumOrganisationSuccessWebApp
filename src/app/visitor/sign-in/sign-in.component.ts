@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
     styleUrls: ['../../app.component.css', './sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
+    title: string = "Log in";
 
     buttonIsPressed: boolean = false;
 

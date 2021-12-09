@@ -4,7 +4,7 @@
     <div id="logFormsContainer">
 
         <div id="formSign" formGroupName="main">
-            <p class="titleSize robotoMedium textShadowBottom">Log in</p>
+            <p class="titleSize robotoMedium textShadowBottom">{{title}}</p>
             <input type="email"
                    formControlName="email"
                    class="inputLog noOutlineOnFocus radius inputSize noBorder paddingLeft"
@@ -25,7 +25,7 @@
                class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
 
         <p class="robotoLight italic fontSizeSmall">
-            <span  >Don't have an account ? </span><a  class="red">Sign up</a>
+            <span  >Don't have an account ? </span><a routerLink="/signUp" class="red">Sign up</a>
         </p>
 
     </div>

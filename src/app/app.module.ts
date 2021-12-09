@@ -29,6 +29,7 @@ import { NavbarProductOwnerComponent } from './navbar/navbar-connected/navbar-pr
 import { ConnectedComponent } from './connected/connected.component';
 import { VisitorComponent } from './visitor/visitor.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AdditionalInfosComponent } from './visitor/additional-infos/additional-infos.component';
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -60,7 +61,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         NavbarScrumMasterComponent,
         NavbarProductOwnerComponent,
         ConnectedComponent,
-        VisitorComponent
+        VisitorComponent,
+        AdditionalInfosComponent
     ],
     imports: [
         BrowserModule,

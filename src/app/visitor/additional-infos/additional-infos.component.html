@@ -1,0 +1,35 @@
+<form [formGroup]="form" (ngSubmit)="sendData()" (dblclick)="autoComplete()">
+
+    <div id="logContainer" class="columnStyle addInfosContainerSize bgLightBlue radius alignText">
+        <div id="logFormsContainer">
+
+            <div id="formSign" formGroupName="main">
+                <p class="titleSize robotoMedium textShadowBottom">{{title}}</p>
+                <input type="text"
+                       formControlName="lastName"
+                       class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
+                       placeholder="LastName">
+                <br/>
+                <input type="text"
+                       formControlName="firstName"
+                       class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
+                       placeholder="Firstname">
+
+                <div id="radioButtonContainer">
+                    <label *ngFor="let name of typeUserNames">
+                    <input  type="radio"
+                           value="{{name}}"
+                           formControlName="userType"
+                           name="userType"
+                           class="radioSize noOutlineOnFocus"
+                           placeholder="Test"> {{name}}</label>
+                </div>
+            </div>
+
+            <input (mousedown)="toggleButtonPress(true);" (mouseup)="toggleButtonPress(false);" (mouseleave)="toggleButtonPress(false);"
+                   [ngClass]="{'isPressedClass': buttonIsPressed === true}"
+                   id="btnSignUp" type="submit" value="Confirm" [disabled]="form.invalid"
+                   class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+        </div>
+    </div>
+</form>

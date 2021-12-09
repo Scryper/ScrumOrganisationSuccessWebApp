@@ -4,7 +4,7 @@
     <div id="logFormsContainer">
 
         <div id="formSign" formGroupName="main">
-        <p class="titleSize robotoMedium textShadowBottom">Create an account</p>
+        <p class="titleSize robotoMedium textShadowBottom">{{title}}</p>
         <input type="email"
                formControlName="email"
                class="inputLog noOutlineOnFocus radius inputSize noBorder paddingLeft"
@@ -22,10 +22,11 @@
         <input (mousedown)="toggleButtonPress(true);" (mouseup)="toggleButtonPress(false);" (mouseleave)="toggleButtonPress(false);"
             [ngClass]="{'isPressedClass': buttonIsPressed === true}"
             id="btnSignUp" type="submit" value="Sign up" [disabled]="form.invalid"
-               class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+               class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
+               routerLink="/AdditionalInfos">
 
         <p class="robotoLight italic fontSizeSmall">
-            <span>Already have an account ? </span><a class="red">Sign in</a>
+            <span>Already have an account ? </span><a routerLink="/login" class="red">Sign in</a>
         </p>
 
     </div>

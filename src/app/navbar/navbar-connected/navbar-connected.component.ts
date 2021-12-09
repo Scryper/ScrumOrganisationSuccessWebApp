@@ -5,11 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './navbar-connected.component.html',
   styleUrls: ['./navbar-connected.component.css']
 })
+
 export class NavbarConnectedComponent implements OnInit {
+    constructor() { }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void { }
 }

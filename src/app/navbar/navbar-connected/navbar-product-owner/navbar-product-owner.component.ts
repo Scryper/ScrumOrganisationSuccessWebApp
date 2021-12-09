@@ -5,11 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './navbar-product-owner.component.html',
   styleUrls: ['./navbar-product-owner.component.css']
 })
+
 export class NavbarProductOwnerComponent implements OnInit {
+    constructor() { }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void { }
 }

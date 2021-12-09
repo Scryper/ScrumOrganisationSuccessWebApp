@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['../../app.component.css', './sign-up.component.css']
+    selector: 'app-sign-up',
+    templateUrl: './sign-up.component.html',
+    styleUrls: ['../../app.component.css', './sign-up.component.css']
 })
-export class SignUpComponent implements OnInit {
 
+export class SignUpComponent implements OnInit {
     buttonIsPressed: boolean = false;
 
     form:FormGroup = this.fb.group({
@@ -20,24 +20,23 @@ export class SignUpComponent implements OnInit {
         })
     })
 
-  constructor(private fb: FormBuilder) { }
+    constructor(private fb: FormBuilder) { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void { }
 
-  sendData() {
-    console.log(this.form.value);
-  }
+    sendData() {
+        console.log(this.form.value);
+    }
 
-  autoComplete() {
-    this.form.setValue({
-        main:{
-            email:"damien@gmail.com",
-            password:"1234",
-            confirmPassword:"1234"
-        }
-    })
-  }
+    autoComplete() {
+        this.form.setValue({
+            main:{
+                email:"damien@gmail.com",
+                password:"1234",
+                confirmPassword:"1234"
+            }
+        })
+    }
 
     toggleButtonPress(isPressed:boolean) {
         if(isPressed) {
@@ -46,5 +45,4 @@ export class SignUpComponent implements OnInit {
             this.buttonIsPressed = false;
         }
     }
-
 }

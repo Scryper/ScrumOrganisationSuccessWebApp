@@ -5,11 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './navbar-visitor.component.html',
   styleUrls: ['./navbar-visitor.component.css']
 })
+
 export class NavbarVisitorComponent implements OnInit {
+    constructor() { }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void { }
 }

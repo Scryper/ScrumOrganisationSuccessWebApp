@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular'; // fullcalendar
 
 @Component({
-  selector: 'app-meeting',
-  templateUrl: './meeting.component.html',
-  styleUrls: ['./meeting.component.css']
+    selector: 'app-meeting',
+    templateUrl: './meeting.component.html',
+    styleUrls: ['./meeting.component.css']
 })
+
 export class MeetingComponent implements OnInit {
+    constructor() { }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {}
 
     calendarOptions: CalendarOptions = {
         initialView: 'dayGridMonth',
@@ -27,5 +26,4 @@ export class MeetingComponent implements OnInit {
     handleDateClick(arg:any) {
         console.log('clic sur la date : ' + arg.dateStr)
     }
-
 }

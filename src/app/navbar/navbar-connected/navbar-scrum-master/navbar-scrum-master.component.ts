@@ -5,11 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './navbar-scrum-master.component.html',
   styleUrls: ['./navbar-scrum-master.component.css']
 })
+
 export class NavbarScrumMasterComponent implements OnInit {
+    constructor() { }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void { }
 }

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['../../app.component.css', './sign-in.component.css']
+    selector: 'app-sign-in',
+    templateUrl: './sign-in.component.html',
+    styleUrls: ['../../app.component.css', './sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
 
@@ -19,23 +19,22 @@ export class SignInComponent implements OnInit {
         })
     })
 
-  constructor(private fb: FormBuilder) { }
+    constructor(private fb: FormBuilder) { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {}
 
-  sendData() {
+    sendData() {
         console.log(this.form.value);
-  }
+    }
 
-  autoComplete() {
+    autoComplete() {
         this.form.setValue({
             main:{
                 email:"damien@gmail.com",
                 password:"1234"
             }
         })
-  }
+    }
 
     toggleButtonPress(isPressed:boolean) {
         if(isPressed) {

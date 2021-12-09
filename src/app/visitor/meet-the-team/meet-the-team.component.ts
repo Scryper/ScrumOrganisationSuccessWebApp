@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-meet-the-team',
-  templateUrl: './meet-the-team.component.html',
-  styleUrls: ['../../app.component.css', './meet-the-team.component.css']
+    selector: 'app-meet-the-team',
+    templateUrl: './meet-the-team.component.html',
+    styleUrls: ['../../app.component.css', './meet-the-team.component.css']
 })
 export class MeetTheTeamComponent implements OnInit {
 
@@ -77,9 +77,7 @@ export class MeetTheTeamComponent implements OnInit {
 
     title:string = "Meet the team";
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit(): void {
-  }
-
+    ngOnInit(): void { }
 }

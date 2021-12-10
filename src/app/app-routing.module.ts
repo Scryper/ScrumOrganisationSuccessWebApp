@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {MeetTheTeamComponent} from "./visitor/meet-the-team/meet-the-team.component";
-import {ContactComponent} from "./visitor/contact/contact.component";
-import {TutorialComponent} from "./visitor/tutorial/tutorial.component";
-import {FaqComponent} from "./visitor/faq/faq.component";
-import {SignUpComponent} from "./visitor/sign-up/sign-up.component";
-import {SignInComponent} from "./visitor/sign-in/sign-in.component";
-import {HomeComponent} from "./visitor/home/home.component";
-import {AdditionalInfosComponent} from "./visitor/additional-infos/additional-infos.component";
-import {ProfileComponent} from "./connected/developer/profile/profile.component";
-import {MeetingComponent} from "./connected/developer/meeting/meeting.component";
-import {ProjectsComponent} from "./connected/developer/projects/projects.component";
-import {TodayComponent} from "./connected/developer/today/today.component";
-import {ProjectManagerComponent} from "./connected/product-owner/project-manager/project-manager.component";
-import {CreateProjectComponent} from "./connected/product-owner/create-project/create-project.component";
-import {MyProjectComponent} from "./connected/product-owner/my-project/my-project.component";
-import {OldProjectsComponent} from "./connected/product-owner/old-projects/old-projects.component";
-import {NotificationComponent} from "./connected/product-owner/notification/notification.component";
+import { MeetTheTeamComponent } from "./view/visitor/meet-the-team/meet-the-team.component";
+import { ContactComponent } from "./view/visitor/contact/contact.component";
+import { TutorialComponent } from "./view/visitor/tutorial/tutorial.component";
+import { FaqComponent } from "./view/visitor/faq/faq.component";
+import { SignUpComponent } from "./view/visitor/sign-up/sign-up.component";
+import { SignInComponent } from "./visitor/sign-in/sign-in.component";
+import { HomeComponent } from "./view/visitor/home/home.component";
+import { AdditionalInfosComponent } from "./visitor/additional-infos/additional-infos.component";
+import { ProfileComponent } from "./connected/developer/profile/profile.component";
+import { MeetingComponent } from "./view/connected/developer/meeting/meeting.component";
+import { ProjectsComponent } from "./view/connected/developer/projects/projects.component";
+import { TodayComponent } from "./view/connected/developer/today/today.component";
+import {  ProjectManagerComponent } from "./connected/product-owner/project-manager/project-manager.component";
+import { CreateProjectComponent } from "./connected/product-owner/create-project/create-project.component";
+import { MyProjectComponent } from "./connected/product-owner/my-project/my-project.component";
+import { OldProjectsComponent } from "./connected/product-owner/old-projects/old-projects.component";
+import { NotificationComponent } from "./connected/product-owner/notification/notification.component";
+import { NotFoundComponent } from "./view/not-found/not-found.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -36,8 +37,8 @@ const routes: Routes = [
     {path: 'createProject', component : CreateProjectComponent},
     {path: 'myProject', component : MyProjectComponent},
     {path: 'oldProjects', component : OldProjectsComponent},
-    {path: 'notification', component : NotificationComponent}
-
+    {path: 'notification', component : NotificationComponent},
+    {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({

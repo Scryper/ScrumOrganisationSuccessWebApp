@@ -10,7 +10,6 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './view/visitor/home/home.component';
 import { NavbarComponent } from './view/navbar/navbar.component';
-import { SignInComponent } from './view/visitor/sign-in/sign-in.component';
 import { SignUpComponent } from './view/visitor/sign-up/sign-up.component';
 import { ContactComponent } from './view/visitor/contact/contact.component';
 import { MeetTheTeamComponent } from './view/visitor/meet-the-team/meet-the-team.component';
@@ -30,7 +29,7 @@ import { NavbarProductOwnerComponent } from './view/navbar/navbar-connected/navb
 import { ConnectedComponent } from './view/connected/connected.component';
 import { VisitorComponent } from './view/visitor/visitor.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AdditionalInfosComponent } from './visitor/additional-infos/additional-infos.component';
+import { AdditionalInfosComponent } from './view/visitor/additional-infos/additional-infos.component';
 import { ProfileComponent } from './connected/developer/profile/profile.component';
 import { CreateProjectComponent } from './connected/product-owner/create-project/create-project.component';
 import { ProjectManagerComponent } from './connected/product-owner/project-manager/project-manager.component';
@@ -39,6 +38,7 @@ import { OldProjectsComponent } from './connected/product-owner/old-projects/old
 import { NotificationComponent } from './connected/product-owner/notification/notification.component';
 import { NotFoundComponent } from './view/not-found/not-found.component';
 import { ErrorInterceptor, JwtInterceptor } from "./helpers";
+import { LoginComponent } from './view/visitor/login/login.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -50,7 +50,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         AppComponent,
         HomeComponent,
         NavbarComponent,
-        SignInComponent,
+        LoginComponent,
         SignUpComponent,
         ContactComponent,
         MeetTheTeamComponent,

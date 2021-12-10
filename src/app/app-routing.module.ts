@@ -5,9 +5,9 @@ import { ContactComponent } from "./view/visitor/contact/contact.component";
 import { TutorialComponent } from "./view/visitor/tutorial/tutorial.component";
 import { FaqComponent } from "./view/visitor/faq/faq.component";
 import { SignUpComponent } from "./view/visitor/sign-up/sign-up.component";
-import { SignInComponent } from "./visitor/sign-in/sign-in.component";
+import { LoginComponent } from "./view/visitor/login/login.component";
 import { HomeComponent } from "./view/visitor/home/home.component";
-import { AdditionalInfosComponent } from "./visitor/additional-infos/additional-infos.component";
+import { AdditionalInfosComponent } from "./view/visitor/additional-infos/additional-infos.component";
 import { ProfileComponent } from "./connected/developer/profile/profile.component";
 import { MeetingComponent } from "./view/connected/developer/meeting/meeting.component";
 import { ProjectsComponent } from "./view/connected/developer/projects/projects.component";
@@ -25,7 +25,7 @@ const routes: Routes = [
     {path: 'contact', component: ContactComponent},
     {path: 'tutorial', component: TutorialComponent},
     {path: 'faq', component: FaqComponent},
-    {path: 'login', component : SignInComponent},
+    {path: 'login', component : LoginComponent},
     {path: 'signUp', component : SignUpComponent},
     {path: 'homeVisitor', component : HomeComponent},
     {path: 'AdditionalInfos', component : AdditionalInfosComponent},

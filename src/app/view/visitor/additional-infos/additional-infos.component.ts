@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 @Component({
     selector: 'app-additional-infos',
     templateUrl: './additional-infos.component.html',
-    styleUrls: ['../../app.component.css', './additional-infos.component.css']
+    styleUrls: ['../../../app.component.css', './additional-infos.component.css']
 })
 export class AdditionalInfosComponent implements OnInit {
     typeUserNames:string[] = [

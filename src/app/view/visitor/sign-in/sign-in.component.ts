@@ -48,11 +48,7 @@ export class SignInComponent implements OnInit {
     }
 
     toggleButtonPress(isPressed:boolean) {
-        if(isPressed) {
-            this.buttonIsPressed = true;
-        } else {
-            this.buttonIsPressed = false;
-        }
+        this.buttonIsPressed = isPressed;
     }
 
     get controls() { return this.form.controls; }
@@ -64,7 +60,7 @@ export class SignInComponent implements OnInit {
         this.authenticationService.login(rawValue.main.email, rawValue.main.password)
             .pipe(first())
             .subscribe(
-                data => {
+                () => {
                     this.router.navigate([this.returnUrl])
                 },
                 error => {

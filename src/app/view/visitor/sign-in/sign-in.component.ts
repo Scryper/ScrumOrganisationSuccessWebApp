@@ -65,7 +65,7 @@ export class SignInComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    this.router.navigate([this.returnUrl])
                 },
                 error => {
                     this.error = error;

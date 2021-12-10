@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../../service/authentication.service";
 import {first} from "rxjs/operators";
 import {ActivatedRoute, Router} from "@angular/router";
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-sign-in',

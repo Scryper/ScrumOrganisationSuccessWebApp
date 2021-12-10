@@ -26,9 +26,14 @@
                 </div>
             </div>
 
-            <input (mousedown)="toggleButtonPress(true);" (mouseup)="toggleButtonPress(false);" (mouseleave)="toggleButtonPress(false);"
+            <input (mousedown)="toggleButtonPress(true);"
+                   (mouseup)="toggleButtonPress(false);"
+                   (mouseleave)="toggleButtonPress(false);"
                    [ngClass]="{'isPressedClass': buttonIsPressed === true}"
-                   id="btnSignUp" type="submit" value="Confirm" [disabled]="form.invalid"
+                   id="btnSignUp"
+                   type="submit"
+                   value="Confirm"
+                   [disabled]="form.invalid"
                    class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
         </div>
     </div>

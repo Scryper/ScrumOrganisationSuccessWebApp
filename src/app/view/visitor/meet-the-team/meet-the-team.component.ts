@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['../../../app.component.css', './meet-the-team.component.css']
 })
 export class MeetTheTeamComponent implements OnInit {
-
     team:any = [
         {
             imgProfil: "imgDamien",

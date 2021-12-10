@@ -6,7 +6,7 @@ import {environment} from "../../environments/environment";
 import {map} from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<SosUser>;

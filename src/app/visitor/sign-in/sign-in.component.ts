@@ -38,10 +38,6 @@ export class SignInComponent implements OnInit {
     }
 
     toggleButtonPress(isPressed:boolean) {
-        if(isPressed) {
-            this.buttonIsPressed = true;
-        } else {
-            this.buttonIsPressed = false;
-        }
+        this.buttonIsPressed = isPressed;
     }
 }

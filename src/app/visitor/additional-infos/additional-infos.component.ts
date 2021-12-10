@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
-  selector: 'app-additional-infos',
-  templateUrl: './additional-infos.component.html',
-  styleUrls: ['../../app.component.css', './additional-infos.component.css']
+    selector: 'app-additional-infos',
+    templateUrl: './additional-infos.component.html',
+    styleUrls: ['../../app.component.css', './additional-infos.component.css']
 })
 export class AdditionalInfosComponent implements OnInit {
     typeUserNames:string[] = [
@@ -12,9 +12,7 @@ export class AdditionalInfosComponent implements OnInit {
         "ScrumMaster",
         "ProductOwner"
     ]
-
     title: string = "Additional Information";
-
     buttonIsPressed: boolean = false;
 
     form:FormGroup = this.fb.group({
@@ -44,11 +42,6 @@ export class AdditionalInfosComponent implements OnInit {
     }
 
     toggleButtonPress(isPressed:boolean) {
-        if(isPressed) {
-            this.buttonIsPressed = true;
-        } else {
-            this.buttonIsPressed = false;
-        }
+        this.buttonIsPressed = isPressed;
     }
-
 }

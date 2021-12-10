@@ -1,17 +1,29 @@
 <div class="inputContainer">
 
-<input routerLink="/myProject" type="button" value="My Project"
-       (mousedown)="toggleButtonMyProjectPress(true);" (mouseup)="toggleButtonMyProjectPress(false);" (mouseleave)="toggleButtonMyProjectPress(false);"
+<input routerLink="/myProject"
+       type="button"
+       value="My Project"
+       (mousedown)="toggleButtonMyProjectPress(true);"
+       (mouseup)="toggleButtonMyProjectPress(false);"
+       (mouseleave)="toggleButtonMyProjectPress(false);"
        [ngClass]="{'isPressedClass': buttonMyProjectIsPressed === true}"
        class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom cursorPointer">
 
-<input routerLink="/createProject" type="button" value="Create project"
-       (mousedown)="toggleButtonCreateProjectPress(true);" (mouseup)="toggleButtonCreateProjectPress(false);" (mouseleave)="toggleButtonCreateProjectPress(false);"
+<input routerLink="/createProject"
+       type="button"
+       value="Create project"
+       (mousedown)="toggleButtonCreateProjectPress(true);"
+       (mouseup)="toggleButtonCreateProjectPress(false);"
+       (mouseleave)="toggleButtonCreateProjectPress(false);"
        [ngClass]="{'isPressedClass': buttonCreateProjectIsPressed === true}"
        class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom cursorPointer">
 
-<input routerLink="/oldProjects" type="button" value="Old projects"
-       (mousedown)="toggleButtonOldProjectsPress(true);" (mouseup)="toggleButtonOldProjectsPress(false);" (mouseleave)="toggleButtonOldProjectsPress(false);"
+<input routerLink="/oldProjects"
+       type="button"
+       value="Old projects"
+       (mousedown)="toggleButtonOldProjectsPress(true);"
+       (mouseup)="toggleButtonOldProjectsPress(false);"
+       (mouseleave)="toggleButtonOldProjectsPress(false);"
        [ngClass]="{'isPressedClass': buttonOldProjectsIsPressed === true}"
        class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom cursorPointer">
 

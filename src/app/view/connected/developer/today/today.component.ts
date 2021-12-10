@@ -12,5 +12,4 @@ export class TodayComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {}
-
 }

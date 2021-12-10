@@ -82,11 +82,10 @@
 
 .hamburger span:first-of-type {
     margin-top: 15px;
-
 }
+
 .hamburger span:last-of-type {
     margin-bottom: 15px;
-
 }
 
 .hamburger span {
@@ -98,6 +97,5 @@
     position: relative;
     background: #cdcdcd;
     border-radius: 3px;
-
 }
 

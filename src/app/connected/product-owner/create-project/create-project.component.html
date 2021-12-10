@@ -1,7 +1,4 @@
-
-
 <form [formGroup]="form" (ngSubmit)="sendData()">
-
     <div class="inputContainer" formGroupName="main">
         <h1>{{title}}</h1>
 
@@ -10,15 +7,15 @@
            class="inputLog noOutlineOnFocus radius inputSize paddingLeft"
            placeholder="Project Name">
 
-        
-
     <input
-        (mousedown)="toggleButtonPress(true);" (mouseup)="toggleButtonPress(false);" (mouseleave)="toggleButtonPress(false);"
+        (mousedown)="toggleButtonPress(true);"
+        (mouseup)="toggleButtonPress(false);"
+        (mouseleave)="toggleButtonPress(false);"
         [ngClass]="{'isPressedClass': buttonIsPressed === true}"
-        id="btnSignUp" type="submit" value="Create" [disabled]="form.invalid"
-        class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
-        >
-
+        id="btnSignUp"
+        type="submit"
+        value="Create"
+        [disabled]="form.invalid"
+        class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
     </div>
-
 </form>

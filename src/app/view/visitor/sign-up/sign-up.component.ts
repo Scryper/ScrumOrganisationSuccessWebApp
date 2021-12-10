@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
     selector: 'app-sign-up',
@@ -9,8 +9,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 export class SignUpComponent implements OnInit {
     title: string = "Create an account";
-
-
+    buttonIsPressed: boolean = false;
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -40,14 +39,8 @@ export class SignUpComponent implements OnInit {
         })
     }
 
-    buttonIsPressed: boolean = false;
-
     toggleButtonPress(isPressed:boolean) {
-        if(isPressed) {
-            this.buttonIsPressed = true;
-        } else {
-            this.buttonIsPressed = false;
-        }
+        this.buttonIsPressed = isPressed;
     }
 
 }

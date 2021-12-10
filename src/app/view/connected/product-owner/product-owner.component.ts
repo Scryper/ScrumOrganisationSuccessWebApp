@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ProductOwnerComponent implements OnInit {
-  constructor() { }
+    constructor() { }
 
-  ngOnInit(): void { }
+    ngOnInit(): void { }
 }

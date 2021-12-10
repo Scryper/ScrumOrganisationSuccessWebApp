@@ -1,10 +1,14 @@
 <form [formGroup]="form" (ngSubmit)="sendData()">
     <div id="profileContainer">
-
-        <div id="profilePictureContainer" (mouseenter)="isEditButtonHidden=false;" (mouseleave)="isEditButtonHidden=true;">
-            <img  src="./assets/img/Anonym.png"><input id="editButton" type="button" value="Edit"
-                                                       class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
-                                                       [hidden]="isEditButtonHidden">
+        <div id="profilePictureContainer"
+             (mouseenter)="isEditButtonHidden=false;"
+             (mouseleave)="isEditButtonHidden=true;">
+            <img src="./assets/images/Anonym.png" alt="">
+            <input id="editButton"
+                   type="button"
+                   value="Edit"
+                   class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
+                   [hidden]="isEditButtonHidden">
         </div>
 
         <div class="inputContainer" formGroupName="main">
@@ -24,10 +28,11 @@
                    class="inputSize radius noOutlineOnFocus paddingLeft">
 
             <input type="submit" value="Save"
-                   (mousedown)="toggleButtonPress(true);" (mouseup)="toggleButtonPress(false);" (mouseleave)="toggleButtonPress(false);"
+                   (mousedown)="toggleButtonPress(true);"
+                   (mouseup)="toggleButtonPress(false);"
+                   (mouseleave)="toggleButtonPress(false);"
                    [ngClass]="{'isPressedClass': buttonIsPressed === true}"
                    class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
         </div>
     </div>
-
 </form>

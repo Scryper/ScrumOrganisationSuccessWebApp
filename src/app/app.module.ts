@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { FullCalendarModule } from '@fullcalendar/angular'; // FullCalendar
+import { ReactiveFormsModule } from "@angular/forms";
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 
@@ -15,7 +16,6 @@ import { ContactComponent } from './view/visitor/contact/contact.component';
 import { MeetTheTeamComponent } from './view/visitor/meet-the-team/meet-the-team.component';
 import { TutorialComponent } from './view/visitor/tutorial/tutorial.component';
 import { FaqComponent } from './view/visitor/faq/faq.component';
-import {ReactiveFormsModule} from "@angular/forms";
 import { TodayComponent } from './view/connected/developer/today/today.component';
 import { MeetingComponent } from './view/connected/developer/meeting/meeting.component';
 import { ProjectsComponent } from './view/connected/developer/projects/projects.component';

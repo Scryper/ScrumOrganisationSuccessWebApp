@@ -1,5 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" (dblclick)="autoComplete()">
-    <div id="logContainer" class="columnStyle signInContainerSize bgLightBlue radius alignText">
+    <div id="logContainer"
+         class="columnStyle signInContainerSize bgLightBlue radius alignText">
         <div id="logFormsContainer">
             <div id="formSign" formGroupName="main">
                 <p class="titleSize robotoMedium textShadowBottom">Log in</p>
@@ -16,9 +17,14 @@
                 <a class="fontSizeSmall robotoLight italic">Forgot password ?</a>
             </p>
 
-            <input (mousedown)="toggleButtonPress(true);" (mouseup)="toggleButtonPress(false);" (mouseleave)="toggleButtonPress(false);"
+            <input (mousedown)="toggleButtonPress(true);"
+                   (mouseup)="toggleButtonPress(false);"
+                   (mouseleave)="toggleButtonPress(false);"
                    [ngClass]="{'isPressedClass': buttonIsPressed === true}"
-                   id="btnSignIn" type="submit" value="Sign in" [disabled]="form.invalid"
+                   id="btnSignIn"
+                   type="submit"
+                   value="Sign in"
+                   [disabled]="form.invalid"
                    class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
 
             <p class="robotoLight italic fontSizeSmall">

@@ -7,9 +7,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
     styleUrls: ['../../../app.component.css', './profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
     isEditButtonHidden: boolean = true;
-
     buttonIsPressed: boolean = false;
 
     form:FormGroup = this.fb.group({
@@ -22,19 +20,13 @@ export class ProfileComponent implements OnInit {
 
     constructor(private fb: FormBuilder) { }
 
-    ngOnInit(): void {
-    }
+    ngOnInit(): void { }
 
     sendData() {
         console.log(this.form.value);
     }
 
-    toggleButtonPress(isPressed:boolean) {
-        if(isPressed) {
-            this.buttonIsPressed = true;
-        } else {
-            this.buttonIsPressed = false;
-        }
+    toggleButtonPress(isPressed: boolean) {
+        this.buttonIsPressed = isPressed;
     }
-
 }

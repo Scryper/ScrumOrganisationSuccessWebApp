@@ -2,18 +2,21 @@
     height: 340px;
     width: 350px;
 }
+
 #logFormsContainer>*:first-child {
     padding-top: 35px;
 }
+
 #linkForgotPassword {
     margin-top: 5px;
 }
+
 #btnSignIn {
     margin-top: 25px;
     margin-bottom: 10px;
 }
 
 .isPressedClass {
-    box-shadow: 0px -2px 4px black;
+    box-shadow: 0 -2px 4px black;
     background-color: #009B86;
 }

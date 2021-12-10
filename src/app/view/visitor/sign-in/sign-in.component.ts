@@ -10,7 +10,6 @@ import {ActivatedRoute, Router} from "@angular/router";
     styleUrls: ['../../../app.component.css', './sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-
     buttonIsPressed: boolean = false;
     loading = false;
     submitted = false;

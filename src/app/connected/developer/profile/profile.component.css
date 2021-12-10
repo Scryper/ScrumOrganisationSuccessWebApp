@@ -7,8 +7,6 @@ img {
     margin: auto;
 }
 
-
-
 input {
     width: 200px;
 }
@@ -23,6 +21,7 @@ input {
 .labelImage {
     color: blue;
 }
+
 .labelImage:hover {
     cursor:pointer;
     text-decoration: underline;
@@ -49,8 +48,6 @@ input[type="submit"] {
     width: 100px;
 }
 
-
 input[type="submit"]:hover, input[type="button"]:hover {
     cursor: pointer;
 }
-

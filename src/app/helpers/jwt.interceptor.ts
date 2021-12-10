@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
+    HttpRequest,
+    HttpHandler,
+    HttpEvent,
+    HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {AuthenticationService} from "../service/authentication.service";
+import {AuthenticationService} from "../service";
 import {environment} from "../../environments/environment";
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-
   constructor(private authenticationService: AuthenticationService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -26,7 +25,6 @@ export class JwtInterceptor implements HttpInterceptor {
               }
           });
       }
-
       return next.handle(request);
   }
 }

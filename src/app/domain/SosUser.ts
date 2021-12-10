@@ -7,5 +7,6 @@ export interface SosUser {
     birthdate?:Date,
     description?:string,
     portfolio?:string,
-    role?:number
+    role?:number,
+    token?:string
 }

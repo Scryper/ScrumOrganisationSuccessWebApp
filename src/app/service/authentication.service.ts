@@ -13,7 +13,7 @@ export class AuthenticationService {
     public currentUser: Observable<SosUser>;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<SosUser>(JSON.parse(<string>localStorage.getItem('currentUser'))); //CAST??
+        this.currentUserSubject = new BehaviorSubject<SosUser>(JSON.parse(localStorage.getItem('currentUser')||'{}')); //CAST??
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
@@ -29,5 +29,11 @@ export class AuthenticationService {
                 this.currentUserSubject.next(user);
                 return user;
             }));
+    }
+
+    logout() {
+        // remove user from local storage to log user out
+        localStorage.removeItem('currentUser');
+        this.currentUserSubject.next(null!);
     }
 }

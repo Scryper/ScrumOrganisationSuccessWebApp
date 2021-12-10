@@ -14,7 +14,7 @@ export class SignInComponent implements OnInit {
     buttonIsPressed: boolean = false;
     loading = false;
     submitted = false;
-    returnUrl: string="";
+    returnUrl: string | undefined;
     error = '';
 
     form:FormGroup = this.fb.group({
@@ -29,11 +29,11 @@ export class SignInComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
                 private route: ActivatedRoute,
-                private router: Router,) {
+                private router: Router) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) {
+        /*if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/']);
-        }
+        }*/
     }
 
     ngOnInit(): void {
@@ -41,9 +41,6 @@ export class SignInComponent implements OnInit {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    sendData() {
-        console.log(this.form.value);
-    }
 
     autoComplete() {
         this.form.setValue({

@@ -14,15 +14,15 @@ export class SignInComponent implements OnInit {
     buttonIsPressed: boolean = false;
     loading = false;
     submitted = false;
-    returnUrl: string | undefined;
+    returnUrl = '/tutorial';
     error = '';
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
-            email:this.fb.control('', [
+            email: this.fb.control('', [
                 Validators.required, Validators.email
             ]),
-            password:this.fb.control('', Validators.required)
+            password: this.fb.control('', Validators.required)
         })
     })
 
@@ -31,22 +31,18 @@ export class SignInComponent implements OnInit {
                 private route: ActivatedRoute,
                 private router: Router) {
         // redirect to home if already logged in
-        /*if (this.authenticationService.currentUserValue) {
-            this.router.navigate(['/']);
-        }*/
+        if (this.authenticationService.currentUserValue) {
+            this.router.navigate(['/login']);
+        }
     }
 
-    ngOnInit(): void {
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    }
-
+    ngOnInit(): void { }
 
     autoComplete() {
         this.form.setValue({
             main:{
-                email:"damien@gmail.com",
-                password:"1234"
+                email:"florian.mazzeo@gmail.com",
+                password:"scryper"
             }
         })
     }
@@ -61,10 +57,11 @@ export class SignInComponent implements OnInit {
 
     get controls() { return this.form.controls; }
 
-    onSubmit() {/*
+    onSubmit() {
         this.submitted = true;
         this.loading = true;
-        this.authenticationService.login(this.controls.username.value, this.controls.password.value)
+        let rawValue = this.form.getRawValue();
+        this.authenticationService.login(rawValue.main.email, rawValue.main.password)
             .pipe(first())
             .subscribe(
                 data => {
@@ -73,6 +70,6 @@ export class SignInComponent implements OnInit {
                 error => {
                     this.error = error;
                     this.loading = false;
-                });*/
+                });
     }
 }

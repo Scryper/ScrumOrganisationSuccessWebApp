@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { FullCalendarModule } from '@fullcalendar/angular'; // FullCalendar
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
@@ -29,7 +30,8 @@ import { NavbarProductOwnerComponent } from './view/navbar/navbar-connected/navb
 import { ConnectedComponent } from './view/connected/connected.component';
 import { VisitorComponent } from './view/visitor/visitor.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import { NotFoundComponent } from './view/not-found/not-found.component';
+import {ErrorInterceptor, JwtInterceptor} from "./helpers";
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -60,15 +62,20 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         NavbarScrumMasterComponent,
         NavbarProductOwnerComponent,
         ConnectedComponent,
-        VisitorComponent
+        VisitorComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         FullCalendarModule, // FullCalendar
-        AppRoutingModule
+        AppRoutingModule,
+        HttpClientModule
     ],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

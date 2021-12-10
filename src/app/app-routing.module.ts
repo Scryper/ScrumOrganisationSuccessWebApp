@@ -7,6 +7,7 @@ import {FaqComponent} from "./view/visitor/faq/faq.component";
 import {SignUpComponent} from "./view/visitor/sign-up/sign-up.component";
 import {SignInComponent} from "./view/visitor/sign-in/sign-in.component";
 import {HomeComponent} from "./view/visitor/home/home.component";
+import {NotFoundComponent} from "./view/not-found/not-found.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [
     {path: 'faq', component: FaqComponent},
     {path: 'login', component : SignInComponent},
     {path: 'signUp', component : SignUpComponent},
-    {path: 'homeVisiteur', component : HomeComponent}
+    {path: 'homeVisitor', component : HomeComponent},
+    {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({

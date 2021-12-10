@@ -10,7 +10,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class SignUpComponent implements OnInit {
     title: string = "Create an account";
 
-    buttonIsPressed: boolean = false;
+
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -40,6 +40,8 @@ export class SignUpComponent implements OnInit {
         })
     }
 
+    buttonIsPressed: boolean = false;
+
     toggleButtonPress(isPressed:boolean) {
         if(isPressed) {
             this.buttonIsPressed = true;
@@ -47,4 +49,5 @@ export class SignUpComponent implements OnInit {
             this.buttonIsPressed = false;
         }
     }
+
 }

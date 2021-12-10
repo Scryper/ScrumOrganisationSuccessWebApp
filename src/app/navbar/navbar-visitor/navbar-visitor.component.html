@@ -1,1 +1,21 @@
-<p>navbar-visitor works!</p>
+<div [ngClass]="isOpen === true ? 'responsive' : 'topnav'" class="topnav bgHardBlue" id="myTopnav">
+
+    <a routerLink="/homeVisitor" class="logo cursorPointer"><img alt="logo" src="../../assets/img/Logo.png"  routerLink="homeVisiteur"></a>
+    <span class="linkMenu">
+        <a routerLink="/contact" class="linkTxt categorie robotoLight">Contact</a>
+        <a routerLink="/team" class="linkTxt categorie robotoLight">Team</a>
+        <a routerLink="/tutorial" class="linkTxt categorie robotoLight">Tutorial</a>
+        <a routerLink="/faq" class="linkTxt categorie robotoLight">FAQ</a>
+    </span>
+    <span class="logMenu">
+        <a routerLink="/login" class="linkTxt categorie robotoLight logMenu">Login</a>
+        <a routerLink="/signUp" class="linkTxt categorie robotoLight logMenu">Sign Up</a>
+    </span>
+    <a class="icon" (click)="switchIsOpen();">
+        <i class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </i>
+    </a>
+</div>

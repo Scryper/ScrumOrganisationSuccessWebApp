@@ -1,1 +1,23 @@
-<p>navbar-developer works!</p>
+<div [ngClass]="isOpen === true ? 'responsive' : 'topnav'" class="topnav bgHardBlue" id="myTopnav">
+
+    <a routerLink="/today" class="logo cursorPointer"><img alt="logo" src="./assets/img/Logo.png"></a>
+    <span class="linkMenu">
+        <a routerLink="/projects" class="linkTxt categorie robotoLight">Projects</a>
+        <a routerLink="/meetings" class="linkTxt categorie robotoLight">Meetings</a>
+    </span>
+    <span class="logMenu">
+
+        <a routerLink="/profile" class="logoDevImg cursorPointer"><img class="devImg" src="./assets/img/Anonym.png" alt="Anonym"></a>
+        <a routerLink="/profile" class="labelDevImg linkTxt robotoLight">Damien</a>
+        <a class="logoDevImg cursorPointer"><img class="devImg" src="./assets/img/bell.png" alt="bell"></a>
+        <a class="textDev linkTxt robotoLight">Developer</a>
+        <!--routerLink="signUp"-->
+    </span>
+    <a class="icon" (click)="switchIsOpen();">
+        <i class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </i>
+    </a>
+</div>

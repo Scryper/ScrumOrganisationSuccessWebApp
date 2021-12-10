@@ -30,6 +30,12 @@ import { ConnectedComponent } from './connected/connected.component';
 import { VisitorComponent } from './visitor/visitor.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AdditionalInfosComponent } from './visitor/additional-infos/additional-infos.component';
+import { ProfileComponent } from './connected/developer/profile/profile.component';
+import { CreateProjectComponent } from './connected/product-owner/create-project/create-project.component';
+import { ProjectManagerComponent } from './connected/product-owner/project-manager/project-manager.component';
+import { MyProjectComponent } from './connected/product-owner/my-project/my-project.component';
+import { OldProjectsComponent } from './connected/product-owner/old-projects/old-projects.component';
+import { NotificationComponent } from './connected/product-owner/notification/notification.component';
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -62,7 +68,13 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         NavbarProductOwnerComponent,
         ConnectedComponent,
         VisitorComponent,
-        AdditionalInfosComponent
+        AdditionalInfosComponent,
+        ProfileComponent,
+        CreateProjectComponent,
+        ProjectManagerComponent,
+        MyProjectComponent,
+        OldProjectsComponent,
+        NotificationComponent
     ],
     imports: [
         BrowserModule,

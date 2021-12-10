@@ -4,12 +4,11 @@
 }
 
 .logo img {
-    padding-top: 4px;
+    padding-top: 5px;
     width: 100px;
-
 }
 
-.linkMenu a, .logMenu a {
+.linkTxt, linkTxt {
     padding: 15px;
 }
 
@@ -47,7 +46,7 @@
 }
 
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 630px) {
     .linkMenu {display: none;}
     .logMenu {display: none;}
     .topnav a.icon {
@@ -61,6 +60,11 @@
         right: 0;
         top: 0;
     }
+
+    .devImg, .labelDevImg, .textDev {
+        display: none!important;
+    }
+
     .topnav.responsive a, .topnav.responsive span {
         float: none;
         display: block;

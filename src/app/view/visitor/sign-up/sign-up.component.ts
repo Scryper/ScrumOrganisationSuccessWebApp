@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {AuthenticationService, UserService} from "../../../service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {SosUser} from "../../../domain/SosUser";
 
 @Component({
     selector: 'app-sign-up',
@@ -23,18 +26,30 @@ export class SignUpComponent implements OnInit {
     })
 
 
-    constructor(private fb: FormBuilder) { }
+    constructor(private fb: FormBuilder,
+                private authentcationService : AuthenticationService,
+                private route: ActivatedRoute,
+                private router : Router,
+                private userService : UserService) { }
 
     ngOnInit(): void { }
 
-    sendData() {
-        console.log(this.form.value);
+    onSubmit() {
+        let email=this.form.getRawValue().main.email;
+        this.userService.findByEmail(email)
+            .subscribe((data)=> {
+                if(data!=null){
+                    console.log(data);
+                }else{
+                    console.log("pas trouvé");
+                }
+            });
     }
 
     autoComplete() {
         this.form.setValue({
             main:{
-                email:"damien@gmail.com",
+                email:"florian.mazzeo@gmail.com",
                 password:"1234",
                 confirmPassword:"1234"
             }

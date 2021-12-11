@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="sendData()" (dblclick)="autoComplete()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" (dblclick)="autoComplete()">
 
     <div id="logContainer" class="columnStyle signUpContainerSize bgLightBlue radius alignText">
         <div id="logFormsContainer">
@@ -23,14 +23,14 @@
                 (mousedown)="toggleButtonPress(true);"
                 (mouseup)="toggleButtonPress(false);"
                 (mouseleave)="toggleButtonPress(false);"
-                
+
                 [ngClass]="{'isPressedClass': buttonIsPressed === true}"
                 id="btnSignUp"
                 type="submit"
                 value="Sign up"
                 [disabled]="form.invalid"
-                class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
-                routerLink="/AdditionalInfos">
+                class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+                <!--routerLink="/AdditionalInfos"-->
 
             <p class="robotoLight italic fontSizeSmall">
                 <span>Already have an account ? </span><a routerLink="/login" class="red">Sign in</a>

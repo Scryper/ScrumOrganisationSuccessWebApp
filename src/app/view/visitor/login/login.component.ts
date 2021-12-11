@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AuthenticationService } from "../../../service";
+import {AuthenticationService, UserService} from "../../../service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { first } from "rxjs/operators";
 
@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
                 private route: ActivatedRoute,
-                private router: Router) {
+                private router: Router,
+                private userService :UserService) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/login']);
@@ -66,6 +67,19 @@ export class LoginComponent implements OnInit {
                 error => {
                     this.error = error;
                     this.loading = false;
+
                 });
+        this.userService.getAll().subscribe(
+            (data) => console.log(data)
+        );
+
+        this.userService.findById(1).subscribe(
+            (data)=> console.log(data)
+        )
+
+        this.userService.findByEmail("florian.mazzeo@gmail.com").subscribe(
+            (data)=> console.log(data)
+        )
     }
+
 }

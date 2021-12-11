@@ -2,12 +2,12 @@
 
     <h2>{{subtitle[0]}}</h2>
     <ul class="myProject">
-        <li routerLink="/myProject" class="cursorPointer">{{myProjectName}}</li>
+        <li [routerLink]="['/myProject', myProjectName]" class="cursorPointer">{{myProjectName}}</li>
     </ul>
 
     <h2>{{subtitle[1]}}</h2>
     <ul class="oldProjects">
-        <li routerLink="/myProject" class="cursorPointer" *ngFor="let name of oldProjectsName">{{name}}</li>
+        <li [routerLink]="['/myProject', name]" class="cursorPointer" *ngFor="let name of oldProjectsName">{{name}}</li>
     </ul>
 
     <input

@@ -33,6 +33,7 @@ const routes: Routes = [
     {path: 'projectManager', component : ProjectManagerComponent},
     {path: 'createProject', component : CreateProjectComponent},
     {path: 'myProject', component : MyProjectComponent},
+    {path: 'myProject/:nameProject', component : MyProjectComponent},
     {path: 'notification', component : NotificationComponent},
     {path: '**', component: NotFoundComponent}
 ];

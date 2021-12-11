@@ -12,7 +12,10 @@ export class CreateProjectComponent implements OnInit {
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
-            nameProject:this.fb.control('', Validators.required)
+            nameProject:this.fb.control('', Validators.required),
+            deadline:this.fb.control('', Validators.required),
+            description:this.fb.control('', Validators.required),
+            repositoryURL:this.fb.control('', Validators.required)
         })
     })
 

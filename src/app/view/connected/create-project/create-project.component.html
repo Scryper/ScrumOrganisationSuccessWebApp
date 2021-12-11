@@ -2,10 +2,32 @@
     <div class="inputContainer" formGroupName="main">
         <h1>{{title}}</h1>
 
-    <input type="text"
+        <h2>Project Name</h2>
+        <input type="text"
            formControlName="nameProject"
            class="inputLog noOutlineOnFocus radius inputSize paddingLeft"
            placeholder="Project Name">
+
+        <h2>Deadline</h2>
+        <input type="text"
+               formControlName="deadline"
+               class="inputLog noOutlineOnFocus radius inputSize paddingLeft"
+               placeholder="Deadline">
+
+        <h2>Description</h2>
+        <textarea
+            formControlName="description"
+            rows="4" cols="50"></textarea>
+        <!--<input type="text"
+               formControlName="description"
+               class="inputLog noOutlineOnFocus radius inputSize paddingLeft"
+               placeholder="Description">-->
+
+        <h2>Repository URL</h2>
+        <input type="text"
+               formControlName="repositoryURL"
+               class="inputLog noOutlineOnFocus radius inputSize paddingLeft"
+               placeholder="Repository URL">
 
     <input
         (mousedown)="toggleButtonPress(true);"

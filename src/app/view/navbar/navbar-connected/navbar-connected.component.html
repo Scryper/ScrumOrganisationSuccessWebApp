@@ -11,9 +11,11 @@
         <a routerLink="/{{rightMenu[1].router}}" class="logoDevImg cursorPointer">
             <img class="devImg" src="./assets/images/{{rightMenu[1].img}}" alt="Anonym">
         </a>
-        <a
-            [ngClass]="{'colorTomato': userType === 'Developer', 'colorGold' : userType === 'ProductOwner', 'colorAquamarine' : userType === 'ScrumMaster' }"
-            class="textDev linkTxt robotoLight">{{rightMenu[2].name}}</a>
+        <a [ngClass]="{
+            'colorTomato': userType === 'Developer',
+            'colorGold' : userType === 'ProductOwner',
+            'colorAquamarine' : userType === 'ScrumMaster'
+            }" class="textDev linkTxt robotoLight">{{rightMenu[2].name}}</a>
     </span>
     <a class="icon" (click)="switchIsOpen();">
         <i class="hamburger">

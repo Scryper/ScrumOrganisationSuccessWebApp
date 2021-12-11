@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'app-project-manager',
     templateUrl: './project-manager.component.html',
-    styleUrls: ['../../../app.component.css', './project-manager.component.css']
+    styleUrls: ['../../../../app.component.css', './project-manager.component.css']
 })
 export class ProjectManagerComponent implements OnInit {
     buttonMyProjectIsPressed: boolean = false;

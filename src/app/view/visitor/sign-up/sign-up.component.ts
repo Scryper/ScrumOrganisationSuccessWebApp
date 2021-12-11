@@ -1,3 +1,4 @@
+import { NgModule } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
@@ -20,6 +21,7 @@ export class SignUpComponent implements OnInit {
             confirmPassword:this.fb.control('', Validators.required)
         })
     })
+
 
     constructor(private fb: FormBuilder) { }
 

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 @Component({
     selector: 'app-create-project',
     templateUrl: './create-project.component.html',
-    styleUrls: ['../../../app.component.css', './create-project.component.css']
+    styleUrls: ['../../../../app.component.css', './create-project.component.css']
 })
 export class CreateProjectComponent implements OnInit {
     title: string = "Create project";

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'app-notification',
     templateUrl: './notification.component.html',
-    styleUrls: ['../../../../app.component.css', './notification.component.css']
+    styleUrls: ['../../../app.component.css', './notification.component.css']
 })
 export class NotificationComponent implements OnInit {
     constructor() { }

@@ -1,0 +1,26 @@
+<div class="inputContainer">
+
+    <h2>{{subtitle[0]}}</h2>
+    <ul class="myProject">
+        <li routerLink="/myProject" class="cursorPointer">{{myProjectName}}</li>
+    </ul>
+
+    <h2>{{subtitle[1]}}</h2>
+    <ul class="oldProjects">
+        <li routerLink="/myProject" class="cursorPointer" *ngFor="let name of oldProjectsName">{{name}}</li>
+    </ul>
+
+    <input
+        *ngIf="isProductOwner"
+        routerLink="/createProject"
+        type="button"
+        class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
+        value="New project"
+        (mousedown)="toggleButtonPress(true);"
+        (mouseup)="toggleButtonPress(false);"
+        (mouseleave)="toggleButtonPress(false);"
+        [ngClass]="{'isPressedClass': buttonPressed === true}"
+        [disabled]="isProjectAlreadyExist==true"
+    >
+
+</div>

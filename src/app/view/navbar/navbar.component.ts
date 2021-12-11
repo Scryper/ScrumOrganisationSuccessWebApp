@@ -7,13 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class NavbarComponent implements OnInit {
-    isOpen:boolean = false;
 
     constructor() { }
 
     ngOnInit(): void { }
 
-    switchIsOpen() {
-        this.isOpen = !this.isOpen;
-    }
 }

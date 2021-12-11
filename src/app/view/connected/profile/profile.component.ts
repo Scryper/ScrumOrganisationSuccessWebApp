@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['../../../../app.component.css', './profile.component.css']
+    styleUrls: ['../../../app.component.css', './profile.component.css']
 })
 export class ProfileComponent implements OnInit {
     isEditButtonHidden: boolean = true;

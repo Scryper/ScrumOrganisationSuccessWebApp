@@ -1,4 +1,23 @@
-<!--<app-navbar-developer></app-navbar-developer>-->
-
-<!--<app-navbar-scrum-master></app-navbar-scrum-master>-->
-<app-navbar-product-owner></app-navbar-product-owner>
+<div [ngClass]="isOpen === true ? 'responsive' : 'topnav'" class="topnav bgHardBlue" id="myTopnav">
+    <a routerLink="/{{logo.router}}" class="logo cursorPointer"><img alt="logo" src="./assets/images/{{logo.img}}"></a>
+    <span *ngFor="let elt of leftMenu" class="linkMenu">
+        <a routerLink="/{{elt.router}}" class="linkTxt categorie robotoLight">{{elt.name}}</a>
+    </span>
+    <span class="logMenu">
+        <a routerLink="/{{rightMenu[0].router}}" class="logoDevImg cursorPointer">
+            <img class="devImg" src="./assets/images/{{rightMenu[0].img}}" alt="Anonym">
+        </a>
+        <a routerLink="/{{rightMenu[0].router}}" class="labelDevImg linkTxt robotoLight">{{rightMenu[0].name}}</a>
+        <a routerLink="/{{rightMenu[1].router}}" class="logoDevImg cursorPointer">
+            <img class="devImg" src="./assets/images/{{rightMenu[1].img}}" alt="Anonym">
+        </a>
+        <a
+            [ngClass]="{'colorTomato': userType === 'Developer', 'colorGold' : userType === 'ProductOwner', 'colorAquamarine' : userType === 'ScrumMaster' }"
+            class="textDev linkTxt robotoLight">{{rightMenu[2].name}}</a>
+    </span>
+    <a class="icon" (click)="switchIsOpen();">
+        <i class="hamburger">
+            <span *ngFor="let e of [].constructor(3)"></span>
+        </i>
+    </a>
+</div>

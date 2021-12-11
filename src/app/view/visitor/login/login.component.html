@@ -22,11 +22,10 @@
                    (mouseup)="toggleButtonPress(false);"
                    (mouseleave)="toggleButtonPress(false);"
                    [ngClass]="{'isPressedClass': buttonIsPressed === true}"
-                   id="btnSignIn"
                    type="submit"
                    value="Log in"
                    [disabled]="form.invalid"
-                   class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+                   class="btnLogin inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
 
             <p class="robotoLight italic fontSizeSmall">
                 <span  >Don't have an account ? </span><a routerLink="/signUp" class="red">Sign up</a>

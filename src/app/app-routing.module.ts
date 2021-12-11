@@ -12,13 +12,14 @@ import { ProfileComponent } from "./view/connected/developer/profile/profile.com
 
 import { ProjectsComponent } from "./view/connected/developer/projects/projects.component";
 import { TodayComponent } from "./view/connected/developer/today/today.component";
-import {  ProjectManagerComponent } from "./view/connected/product-owner/project-manager/project-manager.component";
+import { ProjectManagerComponent } from "./view/connected/product-owner/project-manager/project-manager.component";
 import { CreateProjectComponent } from "./view/connected/product-owner/create-project/create-project.component";
 import { MyProjectComponent } from "./view/connected/product-owner/my-project/my-project.component";
 import { OldProjectsComponent } from "./view/connected/product-owner/old-projects/old-projects.component";
 import { NotificationComponent } from "./view/connected/product-owner/notification/notification.component";
 import { NotFoundComponent } from "./view/not-found/not-found.component";
 import {MeetingComponent} from "./view/connected/developer/meeting/meeting.component";
+
 
 
 const routes: Routes = [

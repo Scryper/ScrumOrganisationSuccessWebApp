@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
-
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
+import { BrowserModule } from '@angular/platform-browser';
 import { FullCalendarModule } from '@fullcalendar/angular'; // FullCalendar
-import { ReactiveFormsModule } from "@angular/forms";
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './view/visitor/home/home.component';
 import { NavbarComponent } from './view/navbar/navbar.component';
+import { LoginComponent } from './view/visitor/login/login.component';
 import { SignUpComponent } from './view/visitor/sign-up/sign-up.component';
 import { ContactComponent } from './view/visitor/contact/contact.component';
 import { MeetTheTeamComponent } from './view/visitor/meet-the-team/meet-the-team.component';
 import { TutorialComponent } from './view/visitor/tutorial/tutorial.component';
 import { FaqComponent } from './view/visitor/faq/faq.component';
+import {ReactiveFormsModule} from "@angular/forms";
 import { TodayComponent } from './view/connected/developer/today/today.component';
 import { MeetingComponent } from './view/connected/developer/meeting/meeting.component';
 import { ProjectsComponent } from './view/connected/developer/projects/projects.component';
@@ -36,14 +36,15 @@ import { ProjectManagerComponent } from './view/connected/product-owner/project-
 import { MyProjectComponent } from './view/connected/product-owner/my-project/my-project.component';
 import { OldProjectsComponent } from './view/connected/product-owner/old-projects/old-projects.component';
 import { NotificationComponent } from './view/connected/product-owner/notification/notification.component';
-import { NotFoundComponent } from './view/not-found/not-found.component';
-import { ErrorInterceptor, JwtInterceptor } from "./helpers";
-import { LoginComponent } from './view/visitor/login/login.component';
+import {ErrorInterceptor, JwtInterceptor} from "./helpers";
+
+
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
     interactionPlugin
 ]);
+
 
 @NgModule({
     declarations: [
@@ -75,8 +76,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         ProjectManagerComponent,
         MyProjectComponent,
         OldProjectsComponent,
-        NotificationComponent,
-        NotFoundComponent
+        NotificationComponent
+
     ],
     imports: [
         BrowserModule,

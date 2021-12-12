@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {UserService} from "../user.service";
-import {SosUser} from "../../domain/SosUser";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {SosUser} from "../../domain/sos-user";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +19,7 @@ export class SignUpService {
     }
 
     verifyEmail(email:string){
-        return this.userService.findByEmail(email).subscribe(
+        return this.userService.getByEmail(email).subscribe(
             {
                 complete:()=>{
                     console.log("ok");

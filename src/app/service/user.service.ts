@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import { SosUser } from "../domain/SosUser";
+import { HttpClient } from "@angular/common/http";
+import { SosUser } from "../domain/sos-user";
 import { environment } from "../../environments/environment";
-import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
-
 export class UserService {
     constructor(private http: HttpClient) { }
 
@@ -15,11 +13,11 @@ export class UserService {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users`);
     }
 
-    findByEmail(email:string){
+    getByEmail(email:string){
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`);
     }
 
-    findById(id:number){
+    getById(id:number){
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`);
     }
 

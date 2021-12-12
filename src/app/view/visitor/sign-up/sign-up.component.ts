@@ -1,19 +1,14 @@
-import { NgModule } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {AuthenticationService, UserService} from "../../../service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {SosUser} from "../../../domain/SosUser";
-import {SignUpService} from "../../../service/sign-up/sign-up.service";
-import {catchError} from "rxjs/operators";
-import {HttpInterceptor} from "@angular/common/http";
+import { AuthenticationService, UserService } from "../../../service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SignUpService } from "../../../service/sign-up/sign-up.service";
 
 @Component({
     selector: 'app-sign-up',
     templateUrl: './sign-up.component.html',
     styleUrls: ['../../../app.component.css', './sign-up.component.css']
 })
-
 export class SignUpComponent implements OnInit {
     title: string = "Create an account";
     buttonIsPressed: boolean = false;
@@ -48,7 +43,7 @@ export class SignUpComponent implements OnInit {
         //verify if the passwords are the same
         if(psw1==psw2){
             //verify if the email is in the database
-            this.userService.findByEmail(email)
+            this.userService.getByEmail(email)
                 .pipe()
                 .subscribe(
                 error=> {

@@ -11,6 +11,36 @@ export class NavbarVisitorComponent implements OnInit {
 
     constructor() { }
 
+    leftMenu = [
+        {
+            name: "Contact",
+            router:"contact"
+        },
+        {
+            name: "Team",
+            router:"team"
+        },
+        {
+            name: "Tutorial",
+            router:"tutorial"
+        },
+        {
+            name: "FAQ",
+            router:"faq"
+        },
+    ]
+
+    rightMenu = [
+        {
+            name: "Login",
+            router:"login"
+        },
+        {
+            name: "Sign Up",
+            router:"signUp"
+        }
+    ]
+
     ngOnInit(): void { }
 
     switchIsOpen() {

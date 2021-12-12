@@ -15,12 +15,8 @@ import { MeetTheTeamComponent } from './view/visitor/meet-the-team/meet-the-team
 import { TutorialComponent } from './view/visitor/tutorial/tutorial.component';
 import { FaqComponent } from './view/visitor/faq/faq.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import { TodayComponent } from './view/connected/developer/today/today.component';
-import { MeetingComponent } from './view/connected/developer/meeting/meeting.component';
-import { ProjectsComponent } from './view/connected/developer/projects/projects.component';
-import { DeveloperComponent } from './view/connected/developer/developer.component';
-import { ProductOwnerComponent } from './view/connected/product-owner/product-owner.component';
-import { ScrumMasterComponent } from './view/connected/scrum-master/scrum-master.component';
+import { TodayComponent } from './view/connected/today/today.component';
+import { MeetingComponent } from './view/connected/meeting/meeting.component';
 import { NavbarVisitorComponent } from './view/navbar/navbar-visitor/navbar-visitor.component';
 import { NavbarConnectedComponent } from './view/navbar/navbar-connected/navbar-connected.component';
 import { NavbarDeveloperComponent } from './view/navbar/navbar-connected/navbar-developer/navbar-developer.component';
@@ -30,12 +26,11 @@ import { ConnectedComponent } from './view/connected/connected.component';
 import { VisitorComponent } from './view/visitor/visitor.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AdditionalInfosComponent } from './view/visitor/additional-infos/additional-infos.component';
-import { ProfileComponent } from './view/connected/developer/profile/profile.component';
-import { CreateProjectComponent } from './view/connected/product-owner/create-project/create-project.component';
-import { ProjectManagerComponent } from './view/connected/product-owner/project-manager/project-manager.component';
-import { MyProjectComponent } from './view/connected/product-owner/my-project/my-project.component';
-import { OldProjectsComponent } from './view/connected/product-owner/old-projects/old-projects.component';
-import { NotificationComponent } from './view/connected/product-owner/notification/notification.component';
+import { ProfileComponent } from './view/connected/profile/profile.component';
+import { CreateProjectComponent } from './view/connected/create-project/create-project.component';
+import { ProjectManagerComponent } from './view/connected/project-manager/project-manager.component';
+import { MyProjectComponent } from './view/connected/my-project/my-project.component';
+import { NotificationComponent } from './view/connected/notification/notification.component';
 import {ErrorInterceptor, JwtInterceptor} from "./helpers";
 
 
@@ -59,10 +54,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         FaqComponent,
         TodayComponent,
         MeetingComponent,
-        ProjectsComponent,
-        DeveloperComponent,
-        ProductOwnerComponent,
-        ScrumMasterComponent,
         NavbarVisitorComponent,
         NavbarConnectedComponent,
         NavbarDeveloperComponent,
@@ -75,7 +66,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         CreateProjectComponent,
         ProjectManagerComponent,
         MyProjectComponent,
-        OldProjectsComponent,
         NotificationComponent
 
     ],

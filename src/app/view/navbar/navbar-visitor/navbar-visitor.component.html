@@ -1,24 +1,20 @@
 
-
-
 <div [ngClass]="isOpen === true ? 'responsive' : 'topnav'" class="topnav bgHardBlue" id="myTopnav">
     <a routerLink="/homeVisitor" class="logo cursorPointer">
         <img alt="logo" src="./assets/images/Logo.png"  routerLink="homeVisitor"></a>
     <span class="linkMenu">
-        <a routerLink="/contact" class="linkTxt categorie robotoLight">Contact</a>
-        <a routerLink="/team" class="linkTxt categorie robotoLight">Team</a>
-        <a routerLink="/tutorial" class="linkTxt categorie robotoLight">Tutorial</a>
-        <a routerLink="/faq" class="linkTxt categorie robotoLight">FAQ</a>
+        <a *ngFor="let elt of leftMenu"
+           routerLink="/{{elt.router}}"
+           class="linkTxt categorie robotoLight">{{elt.name}}</a>
     </span>
     <span class="logMenu">
-        <a routerLink="/login" class="linkTxt categorie robotoLight logMenu">Login</a>
-        <a routerLink="/signUp" class="linkTxt categorie robotoLight logMenu">Sign Up</a>
+        <a *ngFor="let elt of rightMenu"
+           routerLink="/{{elt.router}}"
+           class="linkTxt categorie robotoLight logMenu">{{elt.name}}</a>
     </span>
     <a class="icon" (click)="switchIsOpen();">
         <i class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span *ngFor="let e of [].constructor(3)"></span>
         </i>
     </a>
 </div>

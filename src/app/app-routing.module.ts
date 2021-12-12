@@ -8,19 +8,14 @@ import { SignUpComponent } from "./view/visitor/sign-up/sign-up.component";
 import { LoginComponent } from "./view/visitor/login/login.component";
 import { HomeComponent } from "./view/visitor/home/home.component";
 import { AdditionalInfosComponent } from "./view/visitor/additional-infos/additional-infos.component";
-import { ProfileComponent } from "./view/connected/developer/profile/profile.component";
-
-import { ProjectsComponent } from "./view/connected/developer/projects/projects.component";
-import { TodayComponent } from "./view/connected/developer/today/today.component";
-import { ProjectManagerComponent } from "./view/connected/product-owner/project-manager/project-manager.component";
-import { CreateProjectComponent } from "./view/connected/product-owner/create-project/create-project.component";
-import { MyProjectComponent } from "./view/connected/product-owner/my-project/my-project.component";
-import { OldProjectsComponent } from "./view/connected/product-owner/old-projects/old-projects.component";
-import { NotificationComponent } from "./view/connected/product-owner/notification/notification.component";
+import { ProfileComponent } from "./view/connected/profile/profile.component";
+import { TodayComponent } from "./view/connected/today/today.component";
+import { ProjectManagerComponent } from "./view/connected/project-manager/project-manager.component";
+import { CreateProjectComponent } from "./view/connected/create-project/create-project.component";
+import { MyProjectComponent } from "./view/connected/my-project/my-project.component";
+import { NotificationComponent } from "./view/connected/notification/notification.component";
 import { NotFoundComponent } from "./view/not-found/not-found.component";
-import {MeetingComponent} from "./view/connected/developer/meeting/meeting.component";
-
-
+import {MeetingComponent} from "./view/connected/meeting/meeting.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -34,12 +29,11 @@ const routes: Routes = [
     {path: 'AdditionalInfos', component : AdditionalInfosComponent},
     {path: 'profile', component : ProfileComponent},
     {path: 'meetings', component : MeetingComponent},
-    {path: 'projects', component : ProjectsComponent},
     {path: 'today', component : TodayComponent},
     {path: 'projectManager', component : ProjectManagerComponent},
     {path: 'createProject', component : CreateProjectComponent},
     {path: 'myProject', component : MyProjectComponent},
-    {path: 'oldProjects', component : OldProjectsComponent},
+    {path: 'myProject/:nameProject', component : MyProjectComponent},
     {path: 'notification', component : NotificationComponent},
     {path: '**', component: NotFoundComponent}
 ];

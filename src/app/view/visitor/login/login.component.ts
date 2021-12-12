@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {AuthenticationService, UserService} from "../../../service";
+import {AuthenticationService, UserService} from "../../../services";
 import { ActivatedRoute, Router } from "@angular/router";
 import { first } from "rxjs/operators";
 

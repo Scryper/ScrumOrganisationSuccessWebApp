@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {UserService} from "../user.service";
+import {UserService} from "../users/user.service";
 import {SosUser} from "../../domain/sos-user";
 
 @Injectable({
@@ -14,8 +14,7 @@ export class SignUpService {
     }
 
     verifyPasswords(psw1:string, psw2 : string){
-        if(psw1==psw2) return true;
-        else return false;
+        return psw1 == psw2;
     }
 
     verifyEmail(email:string){

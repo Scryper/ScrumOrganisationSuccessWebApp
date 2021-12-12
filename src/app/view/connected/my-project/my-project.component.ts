@@ -15,4 +15,10 @@ export class MyProjectComponent implements OnInit {
     ngOnInit(): void {
         this.nameProject = this.route.snapshot.paramMap.get("nameProject");
     }
+
+    buttonIsPressed: boolean = false;
+
+    toggleButtonPress(isPressed:boolean) {
+        this.buttonIsPressed = isPressed;
+    }
 }

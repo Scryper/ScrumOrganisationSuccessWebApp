@@ -21,8 +21,13 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.authenticationService.logout();
                 location.reload(true);
             }
+            if (err.status === 400) {
+                // show that the data has not been found in the database
+
+            }
 
             const error = err.error.message || err.statusText;
+            console.log(error);
             return throwError(error);
         }))
     }

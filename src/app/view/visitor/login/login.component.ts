@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
-                private route: ActivatedRoute,
                 private router: Router,
                 private userService :UserService) {
         // redirect to home if already logged in
@@ -58,28 +57,18 @@ export class LoginComponent implements OnInit {
         this.submitted = true;
         this.loading = true;
         let rawValue = this.form.getRawValue();
-        this.authenticationService.login(rawValue.main.email, rawValue.main.password)
+        let userObservable = this.authenticationService.login(rawValue.main.email, rawValue.main.password)
             .pipe(first())
             .subscribe(
                 () => {
-                    this.router.navigate([this.returnUrl])
+                    //need to change the route based on the role of the user
+                    this.router.navigate([this.returnUrl]);
                 },
                 error => {
                     this.error = error;
                     this.loading = false;
-
                 });
-        this.userService.getAll().subscribe(
-            (data) => console.log(data)
-        );
-
-        this.userService.findById(1).subscribe(
-            (data)=> console.log(data)
-        )
-
-        this.userService.findByEmail("florian.mazzeo@gmail.com").subscribe(
-            (data)=> console.log(data)
-        )
+        //passer cet observable a l'autre component et unsubscribe puisqu'on a pu passer à la page suivante.
+        //userObservable.unsubscribe();
     }
-
 }

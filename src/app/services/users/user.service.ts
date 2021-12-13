@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { SosUser } from "../../domain/sos-user";
 import { environment } from "../../../environments/environment";
 
@@ -22,6 +22,9 @@ export class UserService {
     }
 
     async addUser(user: SosUser) {
-        return this.http.post<SosUser>(`${environment.apiUrl}/users`, user).toPromise();
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type': 'application/json'})
+        }
+        return this.http.post<SosUser>(`${environment.apiUrl}/users`, JSON.stringify(user), httpOptions).toPromise();
     }
 }

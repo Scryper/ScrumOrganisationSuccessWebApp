@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService, UserService } from "../../../services";
 import { ActivatedRoute, Router } from "@angular/router";
+import {SignUpService} from "../../../services/sign-up/sign-up.service";
 
 @Component({
     selector: 'app-sign-up',
@@ -28,7 +29,8 @@ export class SignUpComponent implements OnInit {
                 private authenticationService : AuthenticationService,
                 private route: ActivatedRoute,
                 private router : Router,
-                private userService : UserService) { }
+                private userService : UserService,
+                private signUpService : SignUpService) { }
 
     ngOnInit(): void { }
 
@@ -40,6 +42,7 @@ export class SignUpComponent implements OnInit {
 
         //verify if the passwords are the same
         if(password == passwordConfirmation) {
+            this.signUpService.setValues(password,email);
             //verify if the email is in the database
             this.userService.getByEmail(email).then(result => {
                 if(result == null) {

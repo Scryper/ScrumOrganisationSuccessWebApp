@@ -1,18 +1,36 @@
 import { Injectable } from '@angular/core';
-import {UserService} from "../users/user.service";
-import {SosUser} from "../../domain/sos-user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SignUpService {
-    userData : SosUser;
 
-    constructor(private userService : UserService) {
-        this.userData = null as any;
+    private _password : string ='';
+    private _email : string ='';
+
+    constructor() {
     }
 
     verifyPasswords(password: string, passwordConfirmation: string){
         return password == passwordConfirmation;
     }
+
+    get password(): string {
+        return this._password;
+    }
+
+    get email(): string {
+        return this._email;
+    }
+
+    reset(){
+        this._email='';
+        this._password='';
+    }
+
+    setValues(psw:string, email:string){
+        this._password=psw;
+        this._email=email;
+    }
+
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthenticationService, UserService } from "../../../services";
 import { ActivatedRoute, Router } from "@angular/router";
-import { SignUpService } from "../../../services/sign-up/sign-up.service";
 
 @Component({
     selector: 'app-sign-up',
@@ -13,6 +12,7 @@ export class SignUpComponent implements OnInit {
     title: string = "Create an account";
     buttonIsPressed: boolean = false;
     returnUrl: string = 'AdditionalInfos';
+    userExists: boolean = false;
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -24,32 +24,31 @@ export class SignUpComponent implements OnInit {
         })
     })
 
-
     constructor(private fb: FormBuilder,
-                private authentcationService : AuthenticationService,
+                private authenticationService : AuthenticationService,
                 private route: ActivatedRoute,
                 private router : Router,
-                private userService : UserService,
-                private signupService : SignUpService) { }
+                private userService : UserService) { }
 
     ngOnInit(): void { }
 
     onSubmit() {
         //get the value of the email
-        let email=this.form.getRawValue().main.email;
-        let psw1 = this.form.getRawValue().main.password;
-        let psw2 = this.form . getRawValue().main.confirmPassword;
+        let email: string =this.form.getRawValue().main.email;
+        let password: string = this.form.getRawValue().main.password;
+        let passwordConfirmation: string = this.form . getRawValue().main.confirmPassword;
 
         //verify if the passwords are the same
-        if(psw1==psw2){
+        if(password == passwordConfirmation) {
             //verify if the email is in the database
-            this.userService.getByEmail(email)
-                .pipe()
-                .subscribe(
-                error=> {
-
+            this.userService.getByEmail(email).then(result => {
+                if(result == null) {
+                    this.router.navigate([this.returnUrl]);
                 }
-            );
+                else {
+                    this.userExists = true;
+                }
+            });
         }
     }
 
@@ -66,5 +65,4 @@ export class SignUpComponent implements OnInit {
     toggleButtonPress(isPressed:boolean) {
         this.buttonIsPressed = isPressed;
     }
-
 }

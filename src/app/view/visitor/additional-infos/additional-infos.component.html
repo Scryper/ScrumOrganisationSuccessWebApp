@@ -2,18 +2,23 @@
 
     <div id="logContainer" class="columnStyle addInfosContainerSize bgLightBlue radius alignText">
         <div id="logFormsContainer">
-
             <div id="formSign" formGroupName="main">
                 <p class="titleSize robotoMedium textShadowBottom">{{title}}</p>
                 <input type="text"
-                       formControlName="lastName"
+                       formControlName="lastname"
                        class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
                        placeholder="LastName">
                 <br/>
                 <input type="text"
-                       formControlName="firstName"
+                       formControlName="firstname"
                        class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
                        placeholder="Firstname">
+
+                <br/>
+                <input type="date"
+                       formControlName="birthdate"
+                       class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
+                       min="1960-01-01">
 
                 <div id="radioButtonContainer">
                     <label *ngFor="let name of typeUserNames">

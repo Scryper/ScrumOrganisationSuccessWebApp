@@ -6,24 +6,13 @@ import {SosUser} from "../../domain/sos-user";
   providedIn: 'root'
 })
 export class SignUpService {
-
     userData : SosUser;
 
     constructor(private userService : UserService) {
-        this.userData=null as any;
+        this.userData = null as any;
     }
 
-    verifyPasswords(psw1:string, psw2 : string){
-        return psw1 == psw2;
-    }
-
-    verifyEmail(email:string){
-        return this.userService.getByEmail(email).subscribe(
-            {
-                complete:()=>{
-                    console.log("ok");
-                }
-            },
-        );
+    verifyPasswords(password: string, passwordConfirmation: string){
+        return password == passwordConfirmation;
     }
 }

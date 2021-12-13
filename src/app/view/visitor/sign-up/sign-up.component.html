@@ -1,5 +1,4 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" (dblclick)="autoComplete()">
-
     <div id="logContainer" class="columnStyle signUpContainerSize bgLightBlue radius alignText">
         <div id="logFormsContainer">
 
@@ -34,7 +33,10 @@
             <p class="robotoLight italic fontSizeSmall">
                 <span>Already have an account ? </span><a routerLink="/login" class="red">Sign in</a>
             </p>
-
+            <p *ngIf="userExists"
+                class="robotoLight red">
+                This email is already linked to an existing account
+            </p>
         </div>
     </div>
 </form>

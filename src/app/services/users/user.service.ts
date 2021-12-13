@@ -13,15 +13,15 @@ export class UserService {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users`);
     }
 
-    getByEmail(email:string){
-        return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`);
+    async getByEmail(email:string){
+        return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`).toPromise();
     }
 
     getById(id:number){
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`);
     }
 
-    addUser(){
-
+    async addUser(user: SosUser) {
+        return this.http.post<SosUser>(`${environment.apiUrl}/users`, user).toPromise();
     }
 }

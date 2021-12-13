@@ -9,7 +9,11 @@ import {AuthenticationService} from "../../services";
 
 export class NavbarComponent implements OnInit {
 
-    role:Number = 0;
+    private _role:Number = 0;
+
+    get role(): Number {
+        return this._role;
+    }
 
     constructor(private authenticationService: AuthenticationService) {
 
@@ -22,9 +26,14 @@ export class NavbarComponent implements OnInit {
     private changeRole() {
         let currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
         if(currentUser != null) {
-            this.role = currentUser.role;
+            this._role = currentUser.role;
+        } else {
+            this._role = 0;
+
         }
 
     }
+
+
 
 }

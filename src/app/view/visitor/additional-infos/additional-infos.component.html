@@ -40,6 +40,9 @@
                    value="Confirm"
                    [disabled]="form.invalid"
                    class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+
+            <br/>
+            <p *ngIf="!isMajor">You should be 18 years old to sign up on SOS.</p>
         </div>
     </div>
 </form>

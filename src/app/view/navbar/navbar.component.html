@@ -1,5 +1,5 @@
-<app-navbar-visitor></app-navbar-visitor>
+<app-navbar-visitor *ngIf="role===0"></app-navbar-visitor>
 
-<!--<app-navbar-developer></app-navbar-developer>-->
-<!--<app-navbar-product-owner></app-navbar-product-owner>-->
-<!--<app-navbar-scrum-master></app-navbar-scrum-master>-->
+<app-navbar-developer *ngIf="role===1"></app-navbar-developer>
+<app-navbar-scrum-master *ngIf="role===2"></app-navbar-scrum-master>
+<app-navbar-product-owner *ngIf="role===3"></app-navbar-product-owner>

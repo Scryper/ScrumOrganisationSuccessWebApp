@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
     buttonIsPressed: boolean = false;
     loading: boolean = false;
     submitted: boolean = false;
-    returnUrl: string = '/tutorial';
+    returnUrl: string = '/today';
     error: string  = '';
     title: string = "Login";
 
@@ -62,6 +62,8 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 () => {
                     //need to change the route based on the role of the user
+                    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+                    this.router.onSameUrlNavigation = 'reload';
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {

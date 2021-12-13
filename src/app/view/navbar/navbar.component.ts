@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthenticationService} from "../../services";
 
 @Component({
     selector: 'app-navbar',
@@ -8,8 +9,22 @@ import { Component, OnInit } from '@angular/core';
 
 export class NavbarComponent implements OnInit {
 
-    constructor() { }
+    role:Number = 0;
 
-    ngOnInit(): void { }
+    constructor(private authenticationService: AuthenticationService) {
+
+    }
+
+    ngOnInit(): void {
+        this.authenticationService.currentUser.subscribe(()=>this.changeRole());
+    }
+
+    private changeRole() {
+        let currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+        if(currentUser != null) {
+            this.role = currentUser.role;
+        }
+
+    }
 
 }

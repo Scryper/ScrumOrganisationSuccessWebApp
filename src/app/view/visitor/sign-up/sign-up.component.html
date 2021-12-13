@@ -39,6 +39,10 @@
                 class="robotoLight red">
                 This email is already linked to an existing account
             </p>
+            <p *ngIf="differentPasswords"
+               class="robotoLight red">
+                The passwords are different
+            </p>
         </div>
     </div>
 </form>

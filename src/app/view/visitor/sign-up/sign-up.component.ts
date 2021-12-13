@@ -14,6 +14,7 @@ export class SignUpComponent implements OnInit {
     buttonIsPressed: boolean = false;
     returnUrl: string = 'AdditionalInfos';
     userExists: boolean = false;
+    differentPasswords: boolean = false;
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -35,6 +36,10 @@ export class SignUpComponent implements OnInit {
     ngOnInit(): void { }
 
     onSubmit() {
+        //reset the error messages
+        this.userExists = false;
+        this.userExists = false;
+
         //get the value of the email
         let email: string =this.form.getRawValue().main.email;
         let password: string = this.form.getRawValue().main.password;
@@ -42,6 +47,7 @@ export class SignUpComponent implements OnInit {
 
         //verify if the passwords are the same
         if(password == passwordConfirmation) {
+
             this.signUpService.setValues(password,email);
             //verify if the email is in the database
             this.userService.getByEmail(email).then(result => {
@@ -52,6 +58,8 @@ export class SignUpComponent implements OnInit {
                     this.userExists = true;
                 }
             });
+        }else{
+            this.differentPasswords = true;
         }
     }
 

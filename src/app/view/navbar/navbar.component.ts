@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
     }
 
     private changeRole() {
-        let currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+        let currentUser = JSON.parse(<string>sessionStorage.getItem('currentUser'));
         if(currentUser != null) {
             this._role = currentUser.role;
         } else {

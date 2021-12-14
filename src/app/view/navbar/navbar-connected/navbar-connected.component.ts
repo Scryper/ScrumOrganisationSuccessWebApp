@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {AuthenticationService} from "../../../services";
 
 @Component({
     selector: 'app-navbar-connected',
@@ -47,13 +48,19 @@ export class NavbarConnectedComponent implements OnInit {
         }
     ]
 
-    constructor() { }
+    constructor(private authenticationService: AuthenticationService) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+
+    }
 
     isOpen:boolean = false;
 
     switchIsOpen() {
         this.isOpen = !this.isOpen;
+    }
+
+    logOut() {
+        this.authenticationService.logout();
     }
 }

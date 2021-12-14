@@ -16,6 +16,8 @@
             'colorGold' : userType === 'ProductOwner',
             'colorAquamarine' : userType === 'ScrumMaster'
             }" class="textDev linkTxt robotoLight">{{rightMenu[2].name}}</a>
+
+         <a (click)="logOut()" class="categorie labelDevImg linkTxt robotoLight">Log out</a>
     </span>
     <a class="icon" (click)="switchIsOpen();">
         <i class="hamburger">

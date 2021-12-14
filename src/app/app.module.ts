@@ -33,8 +33,6 @@ import { MyProjectComponent } from './view/connected/my-project/my-project.compo
 import { NotificationComponent } from './view/connected/notification/notification.component';
 import {ErrorInterceptor, JwtInterceptor} from "./helpers";
 
-
-
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
     interactionPlugin
@@ -66,7 +64,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         CreateProjectComponent,
         ProjectManagerComponent,
         MyProjectComponent,
-        NotificationComponent
+        NotificationComponent,
 
     ],
     imports: [

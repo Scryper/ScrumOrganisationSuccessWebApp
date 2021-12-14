@@ -9,12 +9,11 @@ h2 {
     padding-top: 20px;
 }
 
-.txtStyleMyProject {
+.txtStyleProject {
     width: 460px;
 
     font-weight: bold;
     border: solid black 2px;
-    background-color: sandybrown;
     list-style-type: none;
     border-radius: 10px;
     padding: 15px;
@@ -25,4 +24,25 @@ h2 {
 
 input {
     margin-top: 30px;
+}
+
+.hidden {
+    display: none;
+}
+
+.active p{
+    display:none;
+}
+
+
+
+.alignCenter {
+    text-align: center;
+}
+
+.pageContainer {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content:space-evenly;
 }

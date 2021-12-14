@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
     buttonIsPressed: boolean = false;
     loading: boolean = false;
     submitted: boolean = false;
-    returnUrl: string = '/tutorial';
+    returnUrl: string = '/today';
     error: string  = '';
     title: string = "Login";
 

@@ -12,23 +12,27 @@ export class NavbarProductOwnerComponent implements OnInit {
     logo = {
         img: "Logo.png",
         router: "today"
-    }
+    };
 
     leftMenu = [
         {
-            name: "Projects",
+            name: "My Projects",
             router:"projectManager"
         },
         {
             name: "Meetings",
             router:"meetings"
+        },
+        {
+            name: "Project Request",
+            router:"projectRequest"
         }
-    ]
+    ];
 
     rightMenu = [
         {
             img: "Anonym.png",
-            name: "Damien",
+            name: "",
             router:"profile"
         },
         {
@@ -41,7 +45,7 @@ export class NavbarProductOwnerComponent implements OnInit {
             name: "ProductOwner",
             router:""
         }
-    ]
+    ];
 
     constructor() { }
 

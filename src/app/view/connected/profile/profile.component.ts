@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
     }
 
     fillProfile() {
-        let currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+        let currentUser = JSON.parse(<string>sessionStorage.getItem('currentUser'));
         if(currentUser != null) {
             this.form.controls['main'].setValue({
                 lastName: currentUser.lastname,

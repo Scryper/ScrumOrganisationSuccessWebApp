@@ -24,8 +24,8 @@ export class NavbarProductOwnerComponent implements OnInit {
             router:"meetings"
         },
         {
-            name: "Project Request",
-            router:"projectRequest"
+            name: "Users Request",
+            router:"usersRequest"
         }
     ];
 

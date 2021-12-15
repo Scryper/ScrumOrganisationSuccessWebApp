@@ -7,6 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JoinProjectComponent implements OnInit {
 
+    projectsName:string[] = [
+        "TCP-IP",
+        "Zelda",
+        "Mario"
+    ]
+
   constructor() { }
 
   ngOnInit(): void {

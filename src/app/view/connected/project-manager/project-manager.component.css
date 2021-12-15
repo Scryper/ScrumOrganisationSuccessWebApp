@@ -1,34 +1,11 @@
+li {
+    margin-bottom: 10px;
 
-.myProject > * {
-    padding: 10px 100px 10px 100px;
-
-    border: solid black 2px;
-    background-color: #dddddd;
-    list-style-type: none;
-    border-radius: 10px;
-}
-
-.oldProjects > * {
-    padding: 10px 100px 10px 100px;
-    margin-top: 10px;
-    border: solid black 2px;
-    background-color: sandybrown;
-    list-style-type: none;
-    border-radius: 10px;
-}
-
-.oldProjects > *:first-of-type {
-    margin: 0;
-}
-.myProject > *:first-of-type {
-    margin: 0;
 }
 
 h2 {
-    padding: 10px 100px 10px 0;
-    /*border: solid black 1px;*/
+    padding-bottom: 20px;
     margin-top: 40px;
-    text-align: left;
 }
 
 input {

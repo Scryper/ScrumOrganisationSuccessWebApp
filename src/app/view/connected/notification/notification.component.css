@@ -1,16 +1,8 @@
-h1 {
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+li {
+    margin-bottom: 20px;
 }
 
-.notifList > * {
-    padding: 10px 100px 10px 100px;
-
-    border: solid black 2px;
-    background-color: sandybrown;
-    list-style-type: none;
-    border-radius: 10px;
-    margin-top: 10px;
+h2 {
+    padding-top: 40px;
+    padding-bottom: 20px;
 }

@@ -2,17 +2,17 @@
 
     <h2>{{subtitle[0]}}</h2>
     <ul class="myProject">
-        <li [routerLink]="['/myProject', myProjectName]" class="cursorPointer">{{myProjectName}}</li>
+        <li [routerLink]="['/myProject', myProjectName]" class="cursorPointer radius standardCard">{{myProjectName}}</li>
     </ul>
 
     <h2>{{subtitle[1]}}</h2>
     <ul class="oldProjects">
-        <li [routerLink]="['/myProject', name]" class="cursorPointer" *ngFor="let name of oldProjectsName">{{name}}</li>
+        <li [routerLink]="['/myProject', name]" class="cursorPointer radius standardCard" *ngFor="let name of oldProjectsName">{{name}}</li>
     </ul>
 
     <input
+        [routerLink]="['/createProject']"
         *ngIf="isProductOwner"
-        routerLink="/createProject"
         type="button"
         class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
         value="New project"

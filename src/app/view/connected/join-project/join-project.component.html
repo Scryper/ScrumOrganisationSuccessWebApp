@@ -3,7 +3,7 @@
     <h2>List of projects</h2>
     <div class="projectContainer" *ngFor="let name of projectsName">
         <ul class="oldProjects" >
-            <li>{{name}}</li>
+            <li class="standardCard radius">{{name}}</li>
         </ul>
         <p (click)="joint(name)" class="cursorPointer colorGreen">Request to join</p>
     </div>

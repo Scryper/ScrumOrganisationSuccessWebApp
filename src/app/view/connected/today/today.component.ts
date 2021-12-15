@@ -11,7 +11,7 @@ export class TodayComponent implements OnInit {
 
     subtitle: string[] = [
         "Meetings",
-        "Todos"
+        "User stories"
     ]
 
     meetingsName:string[] = [
@@ -21,9 +21,9 @@ export class TodayComponent implements OnInit {
     ]
 
     todosName:string[] = [
-        "Do that 1",
-        "Do that 2",
-        "Do that 3"
+        "User story 1",
+        "User story 3",
+        "User story 5"
     ]
 
     constructor() { }

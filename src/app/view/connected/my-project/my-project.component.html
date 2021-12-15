@@ -2,24 +2,23 @@
 
     <div class="infosProjectContainer">
         <h2>Project name</h2>
-        <p class="txtStyleProject">{{nameProject}}</p>
+        <p class="standardCard radius">{{nameProject}}</p>
 
         <h2>Deadline</h2>
-        <p class="txtStyleProject">24/12/2021</p>
+        <p class="standardCard radius">24/12/2021</p>
 
         <h2>Description</h2>
-        <p class="txtStyleProject">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        <p class="standardCard radius">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Id cursus metus aliquam eleifend. Ipsum consequat nisl vel pretium lectus.
-            Sit amet consectetur adipiscing elit.</p>
+            Id cursus metus aliquam eleifend.</p>
 
         <h2>Repository URL</h2>
-        <p class="txtStyleProject">https://github.com/Scryper/ScrumOrganisationSuccessWebApp.git</p>
+        <p class="standardCard radius">https://github.com/Scryper/ScrumOrganisationSuccessWebApp.git</p>
 
         <input
+            [routerLink]="['/productBacklog']"
             type="button"
             value="Product Backlog"
-            routerLink="/productBacklog"
             (mousedown)="toggleButtonPress(true);"
             (mouseup)="toggleButtonPress(false);"
             (mouseleave)="toggleButtonPress(false);"
@@ -39,7 +38,7 @@
             <input
                 type="button"
                 value="{{sprintActual.name}} - Actual"
-                class="cursorPointer txtStyleProject">
+                class="cursorPointer standardCard radius">
             <p *ngFor="let eltUS of sprintActual.US">{{eltUS}}</p>
         </div>
 
@@ -53,7 +52,7 @@
             <input
                 type="button"
                 value="{{eltSprint.name}}"
-                class="cursorPointer txtStyleProject">
+                class="cursorPointer standardCard radius">
             <p *ngFor="let eltUS of eltSprint.US">{{eltUS}}</p>
         </div>
     </div>

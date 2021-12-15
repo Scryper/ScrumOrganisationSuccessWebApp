@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services";
-import {Route, Router} from "@angular/router";
+import {Router} from "@angular/router";
+import {SosUser} from "../../../domain/sos-user";
 
 @Component({
     selector: 'app-navbar-connected',
@@ -9,6 +10,8 @@ import {Route, Router} from "@angular/router";
 })
 
 export class NavbarConnectedComponent implements OnInit {
+    isOpen:boolean = false;
+
     @Input()
     userType:string = "";
 
@@ -53,10 +56,8 @@ export class NavbarConnectedComponent implements OnInit {
                 private router : Router) { }
 
     ngOnInit(): void {
-
+        this.authenticationService.currentUser.subscribe(user => this.changeName(user));
     }
-
-    isOpen:boolean = false;
 
     switchIsOpen() {
         this.isOpen = !this.isOpen;
@@ -64,6 +65,16 @@ export class NavbarConnectedComponent implements OnInit {
 
     logOut() {
         this.authenticationService.logout();
-        this.router.navigate([""]);
+        this.router.navigate(["login"]);
+    }
+
+    private changeName(user: SosUser) {
+        if(user != null) {
+            // Actualise name of User in rightMenu
+            if (user.profilePicture != null) {
+                this.rightMenu[0].img = user.profilePicture;
+            }
+            this.rightMenu[0].name = user.firstname;
+        }
     }
 }

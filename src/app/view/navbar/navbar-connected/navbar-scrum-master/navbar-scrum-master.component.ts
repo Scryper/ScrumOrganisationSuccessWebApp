@@ -10,7 +10,7 @@ export class NavbarScrumMasterComponent implements OnInit {
     userType:string = "ScrumMaster";
 
     logo = {
-        img: "Logo.png",
+        img: "sos_logo.png",
         router: "today"
     }
 
@@ -27,8 +27,8 @@ export class NavbarScrumMasterComponent implements OnInit {
 
     rightMenu = [
         {
-            img: "anonym_round.png",
-            name: "Damien",
+            img: "anonym.png",
+            name: "",
             router:"profile"
         },
         {
@@ -46,5 +46,4 @@ export class NavbarScrumMasterComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void { }
-
 }

@@ -1,20 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../../../services";
 
 @Component({
     selector: 'app-navbar-developer',
     templateUrl: './navbar-developer.component.html',
     styleUrls: ['../../../../app.component.css', '../../navbar.component.css', './navbar-developer.component.css']
 })
-
 export class NavbarDeveloperComponent implements OnInit {
-
     userType:string = "Developer";
 
     logo = {
-        img: "Logo.png",
+        img: "sos_logo.png",
         router: "today"
-    }
+    };
 
     leftMenu = [
         {
@@ -25,11 +22,11 @@ export class NavbarDeveloperComponent implements OnInit {
             name: "Meetings",
             router:"meetings"
         }
-    ]
+    ];
 
     rightMenu = [
         {
-            img: "anonym_round.png",
+            img: "",
             name: "",
             router:"profile"
         },
@@ -43,20 +40,9 @@ export class NavbarDeveloperComponent implements OnInit {
             name: "Developer",
             router:""
         }
-    ]
+    ];
 
-    constructor(private authenticationService: AuthenticationService) { }
+    constructor() { }
 
-    ngOnInit(): void {
-        this.authenticationService.currentUser.subscribe(()=>this.changeName());
-    }
-
-    private changeName() {
-        let currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
-        if(currentUser != null) {
-            // Actualise name of User in rightMenu
-            this.rightMenu[0].name = currentUser.firstname;
-        }
-    }
-
+    ngOnInit(): void { }
 }

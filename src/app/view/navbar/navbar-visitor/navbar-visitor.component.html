@@ -1,16 +1,16 @@
 
 <div [ngClass]="isOpen === true ? 'responsive' : 'topnav'" class="topnav bgHardBlue" id="myTopnav">
     <a routerLink="/homeVisitor" class="logo cursorPointer">
-        <img alt="logo" src="./assets/images/Logo.png"  routerLink="homeVisitor"></a>
+        <img alt="logo" src="../../../../assets/images/others/sos_logo.png" routerLink="homeVisitor"></a>
     <span class="linkMenu">
         <a *ngFor="let elt of leftMenu"
            routerLink="/{{elt.router}}"
-           class="linkTxt categorie robotoLight">{{elt.name}}</a>
+           class="linkTxt category robotoLight">{{elt.name}}</a>
     </span>
     <span class="logMenu">
         <a *ngFor="let elt of rightMenu"
            routerLink="/{{elt.router}}"
-           class="linkTxt categorie robotoLight logMenu">{{elt.name}}</a>
+           class="linkTxt category robotoLight logMenu">{{elt.name}}</a>
     </span>
     <a class="icon" (click)="switchIsOpen();">
         <i class="hamburger">

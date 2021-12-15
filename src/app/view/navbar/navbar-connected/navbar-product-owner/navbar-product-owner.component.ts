@@ -10,9 +10,9 @@ export class NavbarProductOwnerComponent implements OnInit {
     userType:string = "ProductOwner";
 
     logo = {
-        img: "Logo.png",
+        img: "sos_logo.png",
         router: "today"
-    }
+    };
 
     leftMenu = [
         {
@@ -23,12 +23,12 @@ export class NavbarProductOwnerComponent implements OnInit {
             name: "Meetings",
             router:"meetings"
         }
-    ]
+    ];
 
     rightMenu = [
         {
-            img: "anonym_round.png",
-            name: "Damien",
+            img: "anonym.png",
+            name: "",
             router:"profile"
         },
         {
@@ -41,10 +41,9 @@ export class NavbarProductOwnerComponent implements OnInit {
             name: "ProductOwner",
             router:""
         }
-    ]
+    ];
 
     constructor() { }
 
     ngOnInit(): void { }
-
 }

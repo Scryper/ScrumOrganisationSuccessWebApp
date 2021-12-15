@@ -32,6 +32,7 @@ import { ProjectManagerComponent } from './view/connected/project-manager/projec
 import { MyProjectComponent } from './view/connected/my-project/my-project.component';
 import { NotificationComponent } from './view/connected/notification/notification.component';
 import {ErrorInterceptor, JwtInterceptor} from "./helpers";
+import { JitsiComponent } from './view/video-call/jitsi/jitsi.component';
 
 
 
@@ -66,7 +67,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         CreateProjectComponent,
         ProjectManagerComponent,
         MyProjectComponent,
-        NotificationComponent
+        NotificationComponent,
+        JitsiComponent
 
     ],
     imports: [

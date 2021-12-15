@@ -35,6 +35,9 @@ import {ErrorInterceptor, JwtInterceptor} from "./helpers";
 import { ProductBacklogComponent } from './view/connected/product-backlog/product-backlog.component';
 import { JoinProjectComponent } from './view/connected/join-project/join-project.component';
 import { ProjectRequestComponent } from './view/connected/project-request/project-request.component';
+import { JitsiComponent } from './view/video-call/jitsi/jitsi.component';
+
+
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -67,10 +70,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         CreateProjectComponent,
         ProjectManagerComponent,
         MyProjectComponent,
-        NotificationComponent,
-        ProductBacklogComponent,
-        JoinProjectComponent,
-        ProjectRequestComponent,
+        NotificationComponent
 
     ],
     imports: [

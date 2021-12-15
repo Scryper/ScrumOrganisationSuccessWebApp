@@ -19,8 +19,8 @@ export class MeetingsService {
         return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings/bySprint/${idSprint}`);
     }
 
-    getByIdUser(idUser: number): Observable<Meeting[]> {
-        return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings/byUser/${idUser}`);
+    async getByIdUser(idUser: number): Promise<Meeting[]> {
+        return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings/byUser/${idUser}`).toPromise();
     }
 
     getById(id: number): Observable<Meeting> {

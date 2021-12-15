@@ -13,7 +13,7 @@ export class UserService {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users`);
     }
 
-    async getByEmail(email:string){
+    async getByEmail(email:string): Promise<SosUser> {
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`).toPromise();
     }
 

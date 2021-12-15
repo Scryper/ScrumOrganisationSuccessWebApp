@@ -17,6 +17,9 @@ import { NotificationComponent } from "./view/connected/notification/notificatio
 import { NotFoundComponent } from "./view/not-found/not-found.component";
 import {MeetingComponent} from "./view/connected/meeting/meeting.component";
 import { AuthGuard } from './helpers';
+import {ProductBacklogComponent} from "./view/connected/product-backlog/product-backlog.component";
+import {JoinProjectComponent} from "./view/connected/join-project/join-project.component";
+import {ProjectRequestComponent} from "./view/connected/project-request/project-request.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -36,6 +39,9 @@ const routes: Routes = [
     {path: 'myProject', component : MyProjectComponent,canActivate:[AuthGuard]},
     {path: 'myProject/:nameProject', component : MyProjectComponent,canActivate:[AuthGuard]},
     {path: 'notification', component : NotificationComponent,canActivate:[AuthGuard]},
+    {path: 'productBacklog', component : ProductBacklogComponent,canActivate:[AuthGuard]},
+    {path: 'joinProject', component : JoinProjectComponent,canActivate:[AuthGuard]},
+    {path: 'projectRequest', component : ProjectRequestComponent,canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];
 

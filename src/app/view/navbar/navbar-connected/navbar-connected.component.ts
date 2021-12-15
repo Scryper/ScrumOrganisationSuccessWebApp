@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services";
-import {Route, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-navbar-connected',
@@ -53,7 +53,7 @@ export class NavbarConnectedComponent implements OnInit {
                 private router : Router) { }
 
     ngOnInit(): void {
-
+        this.authenticationService.currentUser.subscribe(()=>this.changeName());
     }
 
     isOpen:boolean = false;
@@ -65,5 +65,13 @@ export class NavbarConnectedComponent implements OnInit {
     logOut() {
         this.authenticationService.logout();
         this.router.navigate([""]);
+    }
+
+    private changeName() {
+        let currentUser = JSON.parse(<string>sessionStorage.getItem('currentUser'));
+        if(currentUser != null) {
+            // Actualise name of User in rightMenu
+            this.rightMenu[0].name = currentUser.firstname;
+        }
     }
 }

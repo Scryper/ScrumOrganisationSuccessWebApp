@@ -12,23 +12,27 @@ export class NavbarScrumMasterComponent implements OnInit {
     logo = {
         img: "Logo.png",
         router: "today"
-    }
+    };
 
     leftMenu = [
         {
-            name: "Projects",
+            name: "My Projects",
             router:"projectManager"
         },
         {
             name: "Meetings",
             router:"meetings"
+        },
+        {
+            name: "Join Project",
+            router:"joinProject"
         }
-    ]
+    ];
 
     rightMenu = [
         {
             img: "Anonym.png",
-            name: "Damien",
+            name: "",
             router:"profile"
         },
         {
@@ -41,7 +45,7 @@ export class NavbarScrumMasterComponent implements OnInit {
             name: "ScrumMaster",
             router:""
         }
-    ]
+    ];
 
     constructor() { }
 

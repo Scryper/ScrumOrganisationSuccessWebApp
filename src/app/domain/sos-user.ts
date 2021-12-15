@@ -1,3 +1,5 @@
+import {Role} from "./role";
+
 export interface SosUser {
     id?:number,
     firstname:string,
@@ -8,6 +10,6 @@ export interface SosUser {
     birthdate:Date,
     description?:string,
     portfolio?:string,
-    role:number,
+    role:Role,
     token?:string
 }

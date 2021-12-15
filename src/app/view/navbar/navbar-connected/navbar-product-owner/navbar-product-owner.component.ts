@@ -27,7 +27,7 @@ export class NavbarProductOwnerComponent implements OnInit {
 
     rightMenu = [
         {
-            img: "Anonym.png",
+            img: "anonym_round.png",
             name: "Damien",
             router:"profile"
         },

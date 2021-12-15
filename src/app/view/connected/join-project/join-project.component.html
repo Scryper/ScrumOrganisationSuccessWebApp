@@ -1,9 +1,11 @@
-<h1 class="titleSize robotoLight">Join Project</h1>
 <div class="inputContainer">
 
-    <h2>Projects</h2>
-    <ul class="oldProjects">
-        <li class="cursorPointer" *ngFor="let name of projectsName">{{name}}</li>
-    </ul>
+    <h2>List of projects</h2>
+    <div class="projectContainer" *ngFor="let name of projectsName">
+        <ul class="oldProjects" >
+            <li>{{name}}</li>
+        </ul>
+        <p (click)="joint(name)" class="cursorPointer colorGreen">Request to join</p>
+    </div>
 
 </div>

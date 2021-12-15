@@ -18,4 +18,7 @@ export class JoinProjectComponent implements OnInit {
   ngOnInit(): void {
   }
 
+    joint(item:any) {
+        console.log("Join " + item);
+    }
 }

@@ -1,11 +1,11 @@
 <div class="inputContainer">
 
-    <h2>{{subtitle[0]}}</h2>
+    <h1>{{subtitle[0]}}</h1>
     <ul class="myProject">
         <li [routerLink]="['/myProject', myProjectName]" class="cursorPointer">{{myProjectName}}</li>
     </ul>
 
-    <h2>{{subtitle[1]}}</h2>
+    <h1>{{subtitle[1]}}</h1>
     <ul class="oldProjects">
         <li [routerLink]="['/myProject', name]" class="cursorPointer" *ngFor="let name of oldProjectsName">{{name}}</li>
     </ul>
@@ -20,7 +20,5 @@
         (mouseup)="toggleButtonPress(false);"
         (mouseleave)="toggleButtonPress(false);"
         [ngClass]="{'isPressedClass': buttonPressed === true}"
-        [disabled]="isProjectAlreadyExist==true"
-    >
-
+        [disabled]="isProjectAlreadyExist==true">
 </div>

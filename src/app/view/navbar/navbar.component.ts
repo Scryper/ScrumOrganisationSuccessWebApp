@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../../services";
 
+import {Role} from "../../domain/role";
+
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
@@ -9,15 +11,10 @@ import {AuthenticationService} from "../../services";
 
 export class NavbarComponent implements OnInit {
 
-    private _role:Number = 0;
+    RoleEnum = Role;
+    role:Role = Role.Visitor;
 
-    get role(): Number {
-        return this._role;
-    }
-
-    constructor(private authenticationService: AuthenticationService) {
-
-    }
+    constructor(private authenticationService: AuthenticationService) { }
 
     ngOnInit(): void {
         this.authenticationService.currentUser.subscribe(()=>this.changeRole());
@@ -26,9 +23,10 @@ export class NavbarComponent implements OnInit {
     private changeRole() {
         let currentUser = JSON.parse(<string>sessionStorage.getItem('currentUser'));
         if(currentUser != null) {
-            this._role = currentUser.role;
+            this.role = currentUser.role;
         } else {
-            this._role = 0;
+            this.role = Role.Visitor;
         }
     }
+
 }

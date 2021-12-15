@@ -70,8 +70,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         CreateProjectComponent,
         ProjectManagerComponent,
         MyProjectComponent,
-        NotificationComponent
-
+        NotificationComponent,
+        JitsiComponent
     ],
     imports: [
         BrowserModule,

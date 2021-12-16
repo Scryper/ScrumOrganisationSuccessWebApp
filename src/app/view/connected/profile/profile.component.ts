@@ -12,8 +12,9 @@ export class ProfileComponent implements OnInit {
     private _lastName = '';
     private _firstName = '';
     private _email = '';
-    profilePicture: string | undefined = "anonym";
-
+    profilePicture: string | undefined = "./assets/images/profilePictures/anonym.jpg";
+    selectedTechnology: string | undefined;
+    ChosenTechnologies: string[] = [];
     isEditButtonHidden: boolean = true;
     buttonIsPressed: boolean = false;
 
@@ -25,16 +26,16 @@ export class ProfileComponent implements OnInit {
         }),
         technology: this.fb.group({
          })
-
-    })
+    });
 
     technologies = [
         "Angular",
         "React",
         "VueJS"
-    ]
+    ];
 
-    constructor(private fb: FormBuilder,private authenticationService: AuthenticationService) { }
+    constructor(private fb: FormBuilder,
+                private authenticationService: AuthenticationService) { }
 
     ngOnInit(): void {
         this.authenticationService.currentUser.subscribe(user => this.fillProfile(user));
@@ -51,6 +52,7 @@ export class ProfileComponent implements OnInit {
 
     fillProfile(user: SosUser) {
         if(user != null) {
+            this.profilePicture = user.profilePicture;
             this.form.controls['main'].setValue({
                 lastName: user.lastname,
                 firstName: user.firstname,
@@ -74,8 +76,6 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    selectedTechnology: string | undefined;
-    ChosenTechnologies:string[] = [];
     addToChosenTechnologies() {
         if (this.selectedTechnology != null && !this.ChosenTechnologies.includes(this.selectedTechnology)) {
             this.ChosenTechnologies.push(this.selectedTechnology);

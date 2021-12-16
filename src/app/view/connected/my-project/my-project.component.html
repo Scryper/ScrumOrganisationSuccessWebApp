@@ -34,7 +34,7 @@
                 type="button"
                 value="{{actualSprint.name}}"
                 class="cursorPointer standardCard radius">
-            <p *ngFor="let eltUS of sprintActual.US"
+            <p *ngFor="let eltUS of actualSprint.US"
                class="robotoLight">{{eltUS}}</p>
         </div>
 
@@ -45,21 +45,22 @@
                  (click)="clicked = (clicked === eltSprint ? null :eltSprint)"
                  class="alignCenter">
 
+                <input
+                    type="button"
+                    value="{{eltSprint.name}}"
+                    class="cursorPointer standardCard radius robotoLight">
+                <p *ngFor="let eltUS of eltSprint.US"
+                   class="robotoLight">{{eltUS}}</p>
+            </div>
             <input
+                [routerLink]="['/createSprint']"
                 type="button"
-                value="{{eltSprint.name}}"
-                class="cursorPointer standardCard radius robotoLight">
-            <p *ngFor="let eltUS of eltSprint.US"
-               class="robotoLight">{{eltUS}}</p>
+                value="New Sprint"
+                (mousedown)="toggleButtonPress(true);"
+                (mouseup)="toggleButtonPress(false);"
+                (mouseleave)="toggleButtonPress(false);"
+                [ngClass]="{'isPressedClass': buttonIsPressed === true}"
+                class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
         </div>
-        <input
-            [routerLink]="['/createSprint']"
-            type="button"
-            value="New Sprint"
-            (mousedown)="toggleButtonPress(true);"
-            (mouseup)="toggleButtonPress(false);"
-            (mouseleave)="toggleButtonPress(false);"
-            [ngClass]="{'isPressedClass': buttonIsPressed === true}"
-            class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
     </div>
 </div>

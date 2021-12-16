@@ -6,7 +6,7 @@ export interface SosUser {
     lastname:string,
     password:string,
     email:string,
-    profile_picture?:string,
+    profilePicture?:string,
     birthdate:Date,
     description?:string,
     portfolio?:string,

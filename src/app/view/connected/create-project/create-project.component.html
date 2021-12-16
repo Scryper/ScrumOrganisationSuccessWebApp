@@ -1,4 +1,5 @@
-<form [formGroup]="form" (ngSubmit)="sendData()">
+<form [formGroup]="form" (ngSubmit)="sendData()"
+      (dblclick)="autoComplete()">
     <div class="inputContainer" formGroupName="main">
         <h1 class="robotoMedium title">{{title}}</h1>
 
@@ -34,7 +35,6 @@
         (mousedown)="toggleButtonPress(true);"
         (mouseup)="toggleButtonPress(false);"
         (mouseleave)="toggleButtonPress(false);"
-        (dblclick)="autoComplete()"
         [ngClass]="{'isPressedClass': buttonIsPressed === true}"
         id="btnSignUp"
         type="submit"

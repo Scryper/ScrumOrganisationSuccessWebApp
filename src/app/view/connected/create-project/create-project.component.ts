@@ -32,6 +32,7 @@ export class CreateProjectComponent implements OnInit {
     }
 
     autoComplete() {
+        console.log("test");
         this.form.setValue({
             main: {
                 nameProject: "Your project name.",

@@ -1,13 +1,17 @@
 <div class="inputContainer">
+    <h1 class="robotoMedium title">{{username}}'s projects</h1>
 
-    <h1>{{subtitle[0]}}</h1>
-    <ul class="myProject">
-        <li [routerLink]="['/myProject', myProjectName]" class="cursorPointer">{{myProjectName}}</li>
+    <h2 class="robotoMedium">{{subtitles[0]}}</h2>
+    <ul class="myProject robotoLight">
+        <li [routerLink]="['/myProject', name]"
+            class="cursorPointer"
+            *ngFor="let name of activeProjectsNames">
+            {{name}}</li>
     </ul>
 
-    <h1>{{subtitle[1]}}</h1>
-    <ul class="oldProjects">
-        <li [routerLink]="['/myProject', name]" class="cursorPointer" *ngFor="let name of oldProjectsName">{{name}}</li>
+    <h2 class="robotoMedium">{{subtitles[1]}}</h2>
+    <ul class="oldProjects robotoLight">
+        <li [routerLink]="['/myProject', name]" class="cursorPointer" *ngFor="let name of oldProjectsNames">{{name}}</li>
     </ul>
 
     <input

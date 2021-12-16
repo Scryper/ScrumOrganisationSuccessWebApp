@@ -22,12 +22,7 @@ export class MeetingComponent implements OnInit {
                 private authenticationService: AuthenticationService) { }
 
     ngOnInit(): void {
-        this.authenticationService.currentUser.subscribe(user => {
-            if (user.id != null) {
-                this.loadEvents(user.id);
-            }
-            this.username = user.firstname;
-        });
+        this.getUserInfo();
     }
 
     handleDateClick(arg: any) {
@@ -41,6 +36,15 @@ export class MeetingComponent implements OnInit {
                  events.push({title: meetings[i].description, date: meetings[i].schedule});
             }
             this.calendarOptions.events = events;
+        });
+    }
+
+    private getUserInfo() {
+        this.authenticationService.currentUser.subscribe(user => {
+            if (user.id != null) {
+                this.loadEvents(user.id);
+            }
+            this.username = user.firstname;
         });
     }
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MeetingsService} from "../../../services/meetings/meetings.service";
+import {AuthenticationService} from "../../../services";
+import {Meeting} from "../../../domain/meeting";
 
 @Component({
     selector: 'app-today',
@@ -8,26 +11,63 @@ import { Component, OnInit } from '@angular/core';
 
 export class TodayComponent implements OnInit {
     title: string = "Today";
+    subtitle: string = "Meetings";
+    meetingsName:string[] = ["No meetings today."];
+    NUMBER_OF_PARTS: number = 3;
 
-    subtitle: string[] = [
-        "Meetings",
-        "Todos"
-    ]
+    constructor(private meetingService: MeetingsService,
+                private authenticationService: AuthenticationService) { }
 
-    meetingsName:string[] = [
-        "meeting 1",
-        "meeting 2",
-        "meeting 3"
-    ]
+    ngOnInit(): void {
+        this.getUserId();
+    }
 
-    todosName:string[] = [
-        "Do that 1",
-        "Do that 2",
-        "Do that 3"
-    ]
+    private getUserId() {
+        this.authenticationService.currentUser.subscribe(user => {
+            if (user.id != null) {
+                this.loadEvents(user.id);
+            }
+        });
+    }
 
-    constructor() { }
+    private loadEvents(id: number) {
+        this.meetingService.getByIdUser(id).then(meetings => {
+            for (let i = 0 ; i < meetings.length ; i++) {
+                let meeting: Meeting = meetings[i];
+                let todayAsDate: Date = new Date();
+                let meetingAsDate: Date = new Date(meeting.schedule);
 
-    ngOnInit(): void {}
+                // Offset which allows to know if a meeting is between now and the end of the day
+                let slicedTodaysDate: number[] = this.sliceDateParts(todayAsDate);
+                let slicedMeetingDate: number[] = this.sliceDateParts(meetingAsDate);
 
+                // if the date of the meeting is today
+                // add it to the list of meetings
+                if(this.isSameDate(slicedTodaysDate, slicedMeetingDate)) {
+                    if(this.meetingsName[0] == "No meetings today.") {
+                        this.meetingsName.pop();
+                    }
+                    this.meetingsName.push(meeting.description);
+                }
+            }
+        });
+    }
+
+    // Slices the date in different parts (day, month, year)
+    private sliceDateParts(todayAsDate: Date): number[] {
+        let slices: number[] = [];
+
+        slices.push(todayAsDate.getDate());
+        slices.push(todayAsDate.getMonth());
+        slices.push(todayAsDate.getFullYear());
+
+        return slices;
+    }
+
+    private isSameDate(slicedTodaysDate: number[], slicedMeetingDate: number[]): boolean {
+        for (let i = 0; i < this.NUMBER_OF_PARTS; i++) {
+            if(slicedTodaysDate[i] != slicedMeetingDate[i]) return false;
+        }
+        return true;
+    }
 }

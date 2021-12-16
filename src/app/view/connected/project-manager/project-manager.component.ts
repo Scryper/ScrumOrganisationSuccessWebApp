@@ -29,11 +29,15 @@ export class ProjectManagerComponent implements OnInit {
 
     ngOnInit(): void {
         this.authenticationService.currentUser.subscribe(user => {
-            this.username = user.firstname;
-            if(user.id != undefined) {
-                this.idUser = user.id;
+
+            if(user != null) {
+                this.username = user.firstname;
+                if(user.id != undefined) {
+                    this.idUser = user.id;
+                }
+                this.isProductOwner = user.role == 3;
             }
-            this.isProductOwner = user.role == 3;
+
         });
         this.loadProjects();
     }

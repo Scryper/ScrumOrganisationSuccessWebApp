@@ -47,7 +47,7 @@ export class MeetingComponent implements OnInit {
                 }
                 this.username = user.firstname;
             }
-            
+
         });
     }
 }

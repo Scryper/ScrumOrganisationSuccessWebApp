@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import { MeetingsService } from "../../../services/meetings/meetings.service";
 import { AuthenticationService } from "../../../services";
 import { Meeting } from "../../../domain/meeting";
-import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-today',

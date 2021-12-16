@@ -23,11 +23,11 @@
     </div>
 
     <div class="sprintContainer">
-        <h1 class="robotoMedium">Active Sprint</h1>
-
+        <h1 *ngIf="actualSprint.name != ''" class="robotoMedium">Active sprint</h1>
         <div [class.active]="clicked !== projectName"
              (click)="clicked = (clicked === projectName ? null :projectName)"
-             class="alignCenter">
+             class="alignCenter"
+             *ngIf="actualSprint.name != ''">
 
             <input
                 type="button"
@@ -37,19 +37,21 @@
                class="robotoLight">{{eltUS}}</p>
         </div>
 
+        <div *ngIf="oldSprints.length != 0">
+            <h1 class="robotoMedium">Old sprints</h1>
+            <div *ngFor="let eltSprint of oldSprints; let i = index;"
+                 [class.active]="clicked !== eltSprint"
+                 (click)="clicked = (clicked === eltSprint ? null :eltSprint)"
+                 class="alignCenter">
 
-        <h1 class="robotoMedium">Old Sprint</h1>
-        <div *ngFor="let eltSprint of oldSprints; let i = index;"
-             [class.active]="clicked !== eltSprint"
-             (click)="clicked = (clicked === eltSprint ? null :eltSprint)"
-             class="alignCenter">
-
-            <input
-                type="button"
-                value="{{eltSprint.name}}"
-                class="cursorPointer txtStyleProject robotoLight">
-            <p *ngFor="let eltUS of eltSprint.US"
-                class="robotoLight">{{eltUS}}</p>
+                <input
+                    type="button"
+                    value="{{eltSprint.name}}"
+                    class="cursorPointer txtStyleProject robotoLight">
+                <p *ngFor="let eltUS of eltSprint.US"
+                   class="robotoLight">{{eltUS}}</p>
+            </div>
         </div>
+
     </div>
 </div>

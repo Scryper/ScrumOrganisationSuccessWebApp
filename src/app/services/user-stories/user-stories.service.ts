@@ -19,8 +19,8 @@ export class UserStoriesService {
         return this.http.get<UserStory[]>(`${environment.apiUrl}/userStories/byProject/${idProject}`);
     }
 
-    getByIdSprint(idSprint: number): Observable<UserStory[]> {
-        return this.http.get<UserStory[]>(`${environment.apiUrl}/userStories/bySprint/${idSprint}`);
+    async getByIdSprint(idSprint: number): Promise<UserStory[]> {
+        return this.http.get<UserStory[]>(`${environment.apiUrl}/userStories/bySprint/${idSprint}`).toPromise();
     }
 
     getById(id: number): Observable<UserStory> {

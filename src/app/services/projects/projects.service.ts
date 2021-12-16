@@ -23,11 +23,11 @@ export class ProjectsService {
         return this.http.get<Project[]>(`${environment.apiUrl}/projects/byScrumMaster/${idScrumMaster}`);
     }
 
-    async getById(id: number): Promise<Project> {
+    getById(id: number): Promise<Project> {
         return this.http.get<Project>(`${environment.apiUrl}/projects/byId/${id}`).toPromise();
     }
 
-    async getByProjectName(projectName: string | null): Promise<Project> {
+    getByProjectName(projectName: string | null): Promise<Project> {
         return this.http.get<Project>(`${environment.apiUrl}/projects/byName/${projectName}`).toPromise();
     }
 

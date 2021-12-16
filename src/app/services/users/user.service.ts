@@ -13,7 +13,7 @@ export class UserService {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users`);
     }
 
-    async getByEmail(email:string): Promise<SosUser> {
+    getByEmail(email:string): Promise<SosUser> {
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`).toPromise();
     }
 
@@ -21,7 +21,7 @@ export class UserService {
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`);
     }
 
-    async addUser(user: SosUser) {
+    addUser(user: SosUser) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }

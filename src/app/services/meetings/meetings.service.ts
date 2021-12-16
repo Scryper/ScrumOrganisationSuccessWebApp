@@ -19,7 +19,7 @@ export class MeetingsService {
         return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings/bySprint/${idSprint}`);
     }
 
-    async getByIdUser(idUser: number): Promise<Meeting[]> {
+    getByIdUser(idUser: number): Promise<Meeting[]> {
         return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings/byUser/${idUser}`).toPromise();
     }
 

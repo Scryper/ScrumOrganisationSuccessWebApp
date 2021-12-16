@@ -3,6 +3,5 @@ export interface UserStory {
     idProject: number,
     name: string,
     description: string,
-    priority: number,
-    isDone: boolean
+    priority: number
 }

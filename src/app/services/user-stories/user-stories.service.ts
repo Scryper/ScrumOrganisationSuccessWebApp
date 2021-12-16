@@ -19,12 +19,8 @@ export class UserStoriesService {
         return this.http.get<UserStory[]>(`${environment.apiUrl}/userStories/byProject/${idProject}`);
     }
 
-    async getByIdSprint(idSprint: number): Promise<UserStory[]> {
-        return this.http.get<UserStory[]>(`${environment.apiUrl}/userStories/bySprint/${idSprint}`).toPromise();
-    }
-
-    getById(id: number): Observable<UserStory> {
-        return this.http.get<UserStory>(`${environment.apiUrl}/userStories/byId/${id}`);
+    getById(id: number): Promise<UserStory> {
+        return this.http.get<UserStory>(`${environment.apiUrl}/userStories/byId/${id}`).toPromise();
     }
 
     // Post requests

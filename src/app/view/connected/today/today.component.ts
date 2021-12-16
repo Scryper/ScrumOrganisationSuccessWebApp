@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { MeetingsService } from "../../../services/meetings/meetings.service";
 import { AuthenticationService } from "../../../services";
 import { Meeting } from "../../../domain/meeting";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-today',
@@ -23,8 +24,10 @@ export class TodayComponent implements OnInit {
 
     private getUserId() {
         this.authenticationService.currentUser.subscribe(user => {
-            if (user.id != null) {
-                this.loadEvents(user.id);
+            if (user != null) {
+                if (user.id != null) {
+                    this.loadEvents(user.id);
+                }
             }
         });
     }

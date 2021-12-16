@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services";
 import {Router} from "@angular/router";
 import {SosUser} from "../../../domain/sos-user";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-navbar-connected',
@@ -9,7 +10,7 @@ import {SosUser} from "../../../domain/sos-user";
     styleUrls: ['./navbar-connected.component.css', '../../../app.component.css', '../navbar.component.css']
 })
 
-export class NavbarConnectedComponent implements OnInit {
+export class NavbarConnectedComponent implements OnInit, OnDestroy {
     isOpen:boolean = false;
 
     @Input()
@@ -51,12 +52,17 @@ export class NavbarConnectedComponent implements OnInit {
             router:""
         }
     ]
+    private subscription: Subscription | undefined;
 
     constructor(private authenticationService: AuthenticationService,
                 private router : Router) { }
 
+    ngOnDestroy(): void {
+        this.subscription?.unsubscribe();
+    }
+
     ngOnInit(): void {
-        this.authenticationService.currentUser.subscribe(user => this.changeName(user));
+        this.subscription = this.authenticationService.currentUser.subscribe(user => this.changeName(user));
     }
 
     switchIsOpen() {

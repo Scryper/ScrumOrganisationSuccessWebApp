@@ -3,7 +3,7 @@ export interface Project {
     idProductOwner: number,
     idScrumMaster: number,
     name: string,
-    deadLine: Date,
+    deadline: Date,
     description: string,
     repositoryUrl: string,
     status: number

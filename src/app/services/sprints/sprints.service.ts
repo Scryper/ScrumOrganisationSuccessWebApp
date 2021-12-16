@@ -15,8 +15,8 @@ export class SprintsService {
         return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints`);
     }
 
-    getByIdProject(idProject: number): Observable<Sprint[]> {
-        return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints/byProject/${idProject}`);
+    getByIdProject(idProject: number): Promise<Sprint[]> {
+        return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints/byProject/${idProject}`).toPromise();
     }
 
     getById(id: number): Observable<Sprint> {
@@ -26,11 +26,6 @@ export class SprintsService {
     // Post requests
     addSprint(sprint: Sprint): Observable<Sprint> {
         return this.http.post<Sprint>(`${environment.apiUrl}/sprints`, sprint);
-    }
-
-    // Put requests
-    updateProgression(id: number, progression: number): Observable<boolean> {
-        return this.http.put<boolean>(`${environment.apiUrl}/sprints/${id}`, progression);
     }
 
     // Delete requests

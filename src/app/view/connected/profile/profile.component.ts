@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../../services";
+import {SosUser} from "../../../domain/sos-user";
 
 @Component({
     selector: 'app-profile',
@@ -11,6 +12,7 @@ export class ProfileComponent implements OnInit {
     private _lastName = '';
     private _firstName = '';
     private _email = '';
+    profilePicture: string | undefined = "anonym";
 
     isEditButtonHidden: boolean = true;
     buttonIsPressed: boolean = false;
@@ -35,7 +37,7 @@ export class ProfileComponent implements OnInit {
     constructor(private fb: FormBuilder,private authenticationService: AuthenticationService) { }
 
     ngOnInit(): void {
-        this.authenticationService.currentUser.subscribe(()=>this.fillProfile());
+        this.authenticationService.currentUser.subscribe(user => this.fillProfile(user));
     }
 
     sendData() {
@@ -47,13 +49,12 @@ export class ProfileComponent implements OnInit {
         this.buttonIsPressed = isPressed;
     }
 
-    fillProfile() {
-        let currentUser = JSON.parse(<string>sessionStorage.getItem('currentUser'));
-        if(currentUser != null) {
+    fillProfile(user: SosUser) {
+        if(user != null) {
             this.form.controls['main'].setValue({
-                lastName: currentUser.lastname,
-                firstName: currentUser.firstname,
-                email: currentUser.email
+                lastName: user.lastname,
+                firstName: user.firstname,
+                email: user.email
             });
         } else {
             this.form.controls['main'].setValue({

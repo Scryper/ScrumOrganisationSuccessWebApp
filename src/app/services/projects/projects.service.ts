@@ -23,8 +23,12 @@ export class ProjectsService {
         return this.http.get<Project[]>(`${environment.apiUrl}/projects/byScrumMaster/${idScrumMaster}`);
     }
 
-    getById(id: number): Observable<Project> {
-        return this.http.get<Project>(`${environment.apiUrl}/projects/byId/${id}`);
+    getById(id: number): Promise<Project> {
+        return this.http.get<Project>(`${environment.apiUrl}/projects/byId/${id}`).toPromise();
+    }
+
+    getByProjectName(projectName: string | null): Promise<Project> {
+        return this.http.get<Project>(`${environment.apiUrl}/projects/byName/${projectName}`).toPromise();
     }
 
     // Post requests

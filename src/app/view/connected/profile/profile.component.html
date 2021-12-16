@@ -3,30 +3,30 @@
         <div id="profilePictureContainer"
              (mouseenter)="isEditButtonHidden=false;"
              (mouseleave)="isEditButtonHidden=true;">
-            <img src="../../../../assets/images/Anonym.png" alt="">
+            <img src="{{profilePicture}}" alt="">
             <input id="editButton"
                    type="button"
                    value="Edit"
-                   class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
+                   class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom robotoMedium"
                    [hidden]="isEditButtonHidden">
         </div>
 
         <div class="inputContainer" formGroupName="main">
 
-            <label>LastName</label>
+            <label class="robotoMedium">LastName</label>
             <input type="text"
                    formControlName="lastName"
-                   class="inputSize radius noOutlineOnFocus paddingLeft">
+                   class="inputSize radius noOutlineOnFocus paddingLeft robotoLight">
 
-            <label>FirstName</label>
+            <label class="robotoMedium">FirstName</label>
             <input type="text"
                    formControlName="firstName"
-                   class="inputSize radius noOutlineOnFocus paddingLeft">
+                   class="inputSize radius noOutlineOnFocus paddingLeft robotoLight">
 
-            <label>E-mail</label>
+            <label class="robotoMedium">E-mail</label>
             <input type="email"
                    formControlName="email"
-                   class="inputSize radius noOutlineOnFocus paddingLeft">
+                   class="inputSize radius noOutlineOnFocus paddingLeft robotoLight">
 
             <h2>Choose technologies</h2>
             <select  #Select (change)="assignToSelected(Select.value)" >

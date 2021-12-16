@@ -5,19 +5,17 @@ import {Component, OnInit} from '@angular/core';
     templateUrl: './navbar-developer.component.html',
     styleUrls: ['../../../../app.component.css', '../../navbar.component.css', './navbar-developer.component.css']
 })
-
 export class NavbarDeveloperComponent implements OnInit {
-
     userType:string = "Developer";
 
     logo = {
-        img: "Logo.png",
+        img: "sos_logo.png",
         router: "today"
     };
 
     leftMenu = [
         {
-            name: "My Projects",
+            name: "Projects",
             router:"projectManager"
         },
         {
@@ -32,7 +30,7 @@ export class NavbarDeveloperComponent implements OnInit {
 
     rightMenu = [
         {
-            img: "Anonym.png",
+            img: "",
             name: "",
             router:"profile"
         },
@@ -50,8 +48,5 @@ export class NavbarDeveloperComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit(): void {
-
-    }
-
+    ngOnInit(): void { }
 }

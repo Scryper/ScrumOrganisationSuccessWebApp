@@ -43,12 +43,11 @@ export class SignUpComponent implements OnInit {
         //get the value of the email
         let email: string =this.form.getRawValue().main.email;
         let password: string = this.form.getRawValue().main.password;
-        let passwordConfirmation: string = this.form . getRawValue().main.confirmPassword;
+        let passwordConfirmation: string = this.form.getRawValue().main.confirmPassword;
 
         //verify if the passwords are the same
         if(password == passwordConfirmation) {
-
-            this.signUpService.setValues(password,email);
+            this.signUpService.setValues(password, email);
             //verify if the email is in the database
             this.userService.getByEmail(email).then(result => {
                 if(result == null) {
@@ -58,7 +57,7 @@ export class SignUpComponent implements OnInit {
                     this.userExists = true;
                 }
             });
-        }else{
+        } else {
             this.differentPasswords = true;
         }
     }

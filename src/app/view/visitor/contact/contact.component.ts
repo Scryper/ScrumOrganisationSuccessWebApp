@@ -11,13 +11,13 @@ export class ContactComponent implements OnInit {
 
     imgsSocialNetwork:any = [
         {
-            img: "linkedinLogo"
+            img: "linkedin"
         },
         {
-            img: "facebookLogo"
+            img: "facebook"
         },
         {
-            img: "twitterLogo"
+            img: "twitter"
         }
     ];
 

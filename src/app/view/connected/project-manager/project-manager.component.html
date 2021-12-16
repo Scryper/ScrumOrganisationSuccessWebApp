@@ -1,13 +1,20 @@
 <div class="inputContainer">
+    <h1 class="robotoMedium title">{{username}}'s projects</h1>
 
-    <h2>{{subtitle[0]}}</h2>
+    <h2 class="robotoMedium">{{subtitles[0]}}</h2>
     <ul class="myProject">
-        <li [routerLink]="['/myProject', myProjectName]" class="cursorPointer radius standardCard">{{myProjectName}}</li>
+        <li [routerLink]="['/myProject', name]"
+            class="cursorPointer radius standardCard"
+            *ngFor="let name of activeProjectsNames">
+            {{name}}</li>
     </ul>
 
-    <h2>{{subtitle[1]}}</h2>
+    <h2 class="robotoMedium">{{subtitles[1]}}</h2>
     <ul class="oldProjects">
-        <li [routerLink]="['/myProject', name]" class="cursorPointer radius standardCard" *ngFor="let name of oldProjectsName">{{name}}</li>
+        <li [routerLink]="['/myProject', name]"
+            class="cursorPointer radius standardCard robotoLight"
+            *ngFor="let name of oldProjectsName">
+            {{name}}</li>
     </ul>
 
     <input
@@ -20,7 +27,5 @@
         (mouseup)="toggleButtonPress(false);"
         (mouseleave)="toggleButtonPress(false);"
         [ngClass]="{'isPressedClass': buttonPressed === true}"
-        [disabled]="isProjectAlreadyExist==true"
-    >
-
+        [disabled]="isProjectAlreadyExist==true">
 </div>

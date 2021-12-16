@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {SosUser} from "../../../domain/sos-user";
+import {UserService} from "../../../services";
 
 @Component({
     selector: 'app-meet-the-team',
@@ -6,77 +8,63 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['../../../app.component.css', './meet-the-team.component.css']
 })
 export class MeetTheTeamComponent implements OnInit {
-    team:any = [
+    title: string = "Meet the team";
+    team: SosUser[] = [
         {
-            imgProfil: "imgDamien",
-            email: "Damien@gmail.com",
-            imgSocialNetwork: "linkedinLogo"
+            firstname: "",
+            lastname: "",
+            password: "",
+            email: "",
+            profilePicture: undefined,
+            birthdate: new Date(),
+            role: 0
         },
         {
-            imgProfil: "imgMartin",
-            email: "Martin@gmail.com",
-            imgSocialNetwork: "linkedinLogo"
+            firstname: "",
+            lastname: "",
+            password: "",
+            email: "",
+            profilePicture: undefined,
+            birthdate: new Date(),
+            role: 0
         },
         {
-            imgProfil: "imgFlorian",
-            email: "Florian@gmail.com",
-            imgSocialNetwork: "linkedinLogo"
+            firstname: "",
+            lastname: "",
+            password: "",
+            email: "",
+            profilePicture: undefined,
+            birthdate: new Date(),
+            role: 0
         },
         {
-            imgProfil: "imgFloran",
-            email: "Floran@gmail.com",
-            imgSocialNetwork: "linkedinLogo"
+            firstname: "",
+            lastname: "",
+            password: "",
+            email: "",
+            profilePicture: undefined,
+            birthdate: new Date(),
+            role: 0
         }
     ];
 
-    /*imgsTeam:any = [
-        {
-            img: "imgDamien"
-        },
-        {
-            img: "imgMartin"
-        },
-        {
-            img: "imgFlorian"
-        },
-        {
-            img: "imgFloran"
+    constructor(private userService: UserService) { }
+
+    ngOnInit(): void {
+        this.initTeam();
+    }
+
+    private initTeam(): void {
+        let mails: string[] = ["damsover@gmail.com", "martin.maes100.000@gmail.com", "la199788@student.helha.be",
+            "florian.mazzeo@gmail.com"];
+
+        for(let i = 0 ; i < mails.length ; i++) {
+            this.userService.getByEmail(mails[i]).then(user => {
+                this.team[i].firstname = user.firstname;
+                this.team[i].lastname = user.lastname;
+                this.team[i].email = user.email;
+                this.team[i].profilePicture = user.profilePicture;
+            });
         }
-    ];
-
-    emails:any = [
-        {
-            email: "Damien@gmail.com"
-        },
-        {
-            email: "Martin@gmail.com"
-        },
-        {
-            email: "Florian@gmail.com"
-        },
-        {
-            email: "Floran@gmail.com"
-        }
-    ];
-
-    imgsSocialNetwork:any = [
-        {
-            img: "linkedinLogo"
-        },
-        {
-            img: "linkedinLogo"
-        },
-        {
-            img: "linkedinLogo"
-        },
-        {
-            img: "linkedinLogo"
-        }
-    ];*/
-
-    title:string = "Meet the team";
-
-    constructor() { }
-
-    ngOnInit(): void { }
+    }
 }

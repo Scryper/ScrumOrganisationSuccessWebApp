@@ -28,12 +28,25 @@
                    formControlName="email"
                    class="inputSize radius noOutlineOnFocus paddingLeft">
 
+            <h2>Choose technologies</h2>
+            <select  #Select (change)="assignToSelected(Select.value)" >
+                <option value="" >--Select an user story--</option>
+                <option *ngFor="let elt of technologies" value="{{elt}}">{{elt}}</option>
+            </select>
+            <input (click)="addToChosenTechnologies()" class="radius cursorPointer bgWhiteBlue addBtn" type="button" value="add">
+
+            <h2>Chosen Technologies</h2>
+            <div class="chosenContainer">
+                <p  *ngFor="let elt of ChosenTechnologies">{{elt}}</p>
+            </div>
+
             <input type="submit" value="Save"
                    (mousedown)="toggleButtonPress(true);"
                    (mouseup)="toggleButtonPress(false);"
                    (mouseleave)="toggleButtonPress(false);"
                    [ngClass]="{'isPressedClass': buttonIsPressed === true}"
                    class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+
         </div>
     </div>
 </form>

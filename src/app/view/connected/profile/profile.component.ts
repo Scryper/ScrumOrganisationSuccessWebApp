@@ -20,8 +20,17 @@ export class ProfileComponent implements OnInit {
             lastName:this.fb.control(this._lastName, Validators.required),
             firstName:this.fb.control(this._firstName, Validators.required),
             email:this.fb.control({value:this._email, disabled: true}, Validators.required)
-        })
+        }),
+        technology: this.fb.group({
+         })
+
     })
+
+    technologies = [
+        "Angular",
+        "React",
+        "VueJS"
+    ]
 
     constructor(private fb: FormBuilder,private authenticationService: AuthenticationService) { }
 
@@ -34,6 +43,7 @@ export class ProfileComponent implements OnInit {
     }
 
     toggleButtonPress(isPressed: boolean) {
+        this.addChosenTechnologiesToForm();
         this.buttonIsPressed = isPressed;
     }
 
@@ -52,5 +62,26 @@ export class ProfileComponent implements OnInit {
                 email: ""
             });
         }
+    }
+
+    addChosenTechnologiesToForm() {
+        const main = this.form.get(`technology`) as FormGroup;
+        let i = 0;
+        for(let elt of this.ChosenTechnologies) {
+            i++;
+            main.addControl("T"+i, this.fb.control(elt, Validators.required))
+        }
+    }
+
+    selectedTechnology: string | undefined;
+    ChosenTechnologies:string[] = [];
+    addToChosenTechnologies() {
+        if (this.selectedTechnology != null && !this.ChosenTechnologies.includes(this.selectedTechnology)) {
+            this.ChosenTechnologies.push(this.selectedTechnology);
+        }
+    }
+
+    assignToSelected(selected:string) {
+        this.selectedTechnology = selected;
     }
 }

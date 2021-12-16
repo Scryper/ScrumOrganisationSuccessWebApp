@@ -7,8 +7,8 @@ img {
     margin: auto;
 }
 
-input {
-    width: 200px;
+.addBtn {
+  width: 50px;
 }
 
 #profilePictureContainer {
@@ -37,6 +37,7 @@ label {
 
 input[type="submit"] {
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 #editButton {
@@ -51,3 +52,9 @@ input[type="submit"] {
 input[type="submit"]:hover, input[type="button"]:hover {
     cursor: pointer;
 }
+
+h2 {
+    padding-top: 20px;
+}
+
+

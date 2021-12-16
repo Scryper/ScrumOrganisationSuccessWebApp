@@ -17,6 +17,8 @@ export class CreateSprintComponent implements OnInit {
         main: this.fb.group({
             deadline:this.fb.control('', Validators.required),
             description:this.fb.control('', Validators.required)
+        }),
+        UserStory: this.fb.group({
         })
     });
 
@@ -41,7 +43,7 @@ export class CreateSprintComponent implements OnInit {
     }
 
     addChosenUserStoriesToForm() {
-        const main = this.form.get(`main`) as FormGroup;
+        const main = this.form.get(`UserStory`) as FormGroup;
         let i = 0;
         for(let elt of this.ChosenUserStories) {
             i++;

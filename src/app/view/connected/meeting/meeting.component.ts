@@ -41,10 +41,13 @@ export class MeetingComponent implements OnInit {
 
     private getUserInfo() {
         this.authenticationService.currentUser.subscribe(user => {
-            if (user.id != null) {
-                this.loadEvents(user.id);
+            if (user != null) {
+                if (user.id != null) {
+                    this.loadEvents(user.id);
+                }
+                this.username = user.firstname;
             }
-            this.username = user.firstname;
+            
         });
     }
 }

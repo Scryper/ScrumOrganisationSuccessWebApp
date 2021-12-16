@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {MeetingsService} from "../../../services/meetings/meetings.service";
-import {AuthenticationService} from "../../../services";
-import {Meeting} from "../../../domain/meeting";
+import { MeetingsService } from "../../../services/meetings/meetings.service";
+import { AuthenticationService } from "../../../services";
+import { Meeting } from "../../../domain/meeting";
 
 @Component({
     selector: 'app-today',
     templateUrl: './today.component.html',
     styleUrls: ['../../../app.component.css', './today.component.css']
 })
-
 export class TodayComponent implements OnInit {
     title: string = "Today";
     subtitle: string = "Meetings";
@@ -47,7 +46,11 @@ export class TodayComponent implements OnInit {
                     if(this.meetingsName[0] == "No meetings today.") {
                         this.meetingsName.pop();
                     }
-                    this.meetingsName.push(meeting.description);
+
+                    let meetingHourSchedule: string = " ";
+                    meetingHourSchedule += meetingAsDate.getHours() + "h";
+                    meetingHourSchedule += (meetingAsDate.getMinutes() == 0) ? "00" : meetingAsDate.getMinutes();
+                    this.meetingsName.push(meeting.description + meetingHourSchedule);
                 }
             }
         });

@@ -34,9 +34,9 @@ export class TodayComponent implements OnInit {
             for (let i = 0 ; i < meetings.length ; i++) {
                 let meeting: Meeting = meetings[i];
                 let todayAsDate: Date = new Date();
-                let meetingAsDate: Date = new Date(meeting.schedule);
+                let meetingAsDate: Date = new Date(meeting.schedule); // converting db date to angular date
 
-                // Offset which allows to know if a meeting is between now and the end of the day
+                // slice day month and year to compare dates
                 let slicedTodaysDate: number[] = this.sliceDateParts(todayAsDate);
                 let slicedMeetingDate: number[] = this.sliceDateParts(meetingAsDate);
 
@@ -47,6 +47,7 @@ export class TodayComponent implements OnInit {
                         this.meetingsName.pop();
                     }
 
+                    // displays the schedule to xxhxx
                     let meetingHourSchedule: string = " ";
                     meetingHourSchedule += meetingAsDate.getHours() + "h";
                     meetingHourSchedule += (meetingAsDate.getMinutes() == 0) ? "00" : meetingAsDate.getMinutes();
@@ -60,7 +61,7 @@ export class TodayComponent implements OnInit {
     private sliceDateParts(todayAsDate: Date): number[] {
         let slices: number[] = [];
 
-        slices.push(todayAsDate.getDate());
+        slices.push(todayAsDate.getDate()); // getDate -> X because getDate returns the day's number
         slices.push(todayAsDate.getMonth());
         slices.push(todayAsDate.getFullYear());
 
@@ -68,6 +69,7 @@ export class TodayComponent implements OnInit {
     }
 
     private isSameDate(slicedTodaysDate: number[], slicedMeetingDate: number[]): boolean {
+        // compare the different parts, if one is different : it is not today
         for (let i = 0; i < this.NUMBER_OF_PARTS; i++) {
             if(slicedTodaysDate[i] != slicedMeetingDate[i]) return false;
         }

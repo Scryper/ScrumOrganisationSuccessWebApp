@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
                 email:"florian.mazzeo@gmail.com",
                 password:"scryper"
             }
-        })
+        });
     }
 
     toggleButtonPress(isPressed:boolean) {

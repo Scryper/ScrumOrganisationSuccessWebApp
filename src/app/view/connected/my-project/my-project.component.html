@@ -55,6 +55,15 @@
                 class="cursorPointer standardCard radius">
             <p *ngFor="let eltUS of eltSprint.US">{{eltUS}}</p>
         </div>
+        <input
+            [routerLink]="['/createSprint']"
+            type="button"
+            value="New Sprint"
+            (mousedown)="toggleButtonPress(true);"
+            (mouseup)="toggleButtonPress(false);"
+            (mouseleave)="toggleButtonPress(false);"
+            [ngClass]="{'isPressedClass': buttonIsPressed === true}"
+            class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
     </div>
 
 </div>

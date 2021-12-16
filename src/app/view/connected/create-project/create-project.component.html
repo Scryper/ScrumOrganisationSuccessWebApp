@@ -9,19 +9,15 @@
            placeholder="Project Name">
 
         <h2>Deadline</h2>
-        <input type="text"
+        <input type="date"
                formControlName="deadline"
                class="inputLog noOutlineOnFocus radius inputSize paddingLeft"
-               placeholder="Deadline">
+               min="1960-01-01">
 
         <h2>Description</h2>
         <textarea
             formControlName="description"
             rows="4" cols="50"></textarea>
-        <!--<input type="text"
-               formControlName="description"
-               class="inputLog noOutlineOnFocus radius inputSize paddingLeft"
-               placeholder="Description">-->
 
         <h2>Repository URL</h2>
         <input type="text"

@@ -14,7 +14,7 @@ import { ContactComponent } from './view/visitor/contact/contact.component';
 import { MeetTheTeamComponent } from './view/visitor/meet-the-team/meet-the-team.component';
 import { TutorialComponent } from './view/visitor/tutorial/tutorial.component';
 import { FaqComponent } from './view/visitor/faq/faq.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TodayComponent } from './view/connected/today/today.component';
 import { MeetingComponent } from './view/connected/meeting/meeting.component';
 import { NavbarVisitorComponent } from './view/navbar/navbar-visitor/navbar-visitor.component';
@@ -36,6 +36,7 @@ import { ProductBacklogComponent } from './view/connected/product-backlog/produc
 import { JoinProjectComponent } from './view/connected/join-project/join-project.component';
 import { JitsiComponent } from './view/video-call/jitsi/jitsi.component';
 import { UsersRequestComponent } from './view/connected/users-request/users-request.component';
+import { CreateSprintComponent } from './view/connected/create-sprint/create-sprint.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -72,14 +73,16 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         JitsiComponent,
         UsersRequestComponent,
         JoinProjectComponent,
-        ProductBacklogComponent
+        ProductBacklogComponent,
+        CreateSprintComponent
     ],
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         FullCalendarModule, // FullCalendar
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

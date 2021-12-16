@@ -1,9 +1,3 @@
-.pageContainer {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    justify-content:space-evenly;
-}
 
 h2 {
     padding-top: 20px;

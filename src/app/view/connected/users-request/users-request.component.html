@@ -3,12 +3,12 @@
     <h2>Users Request</h2>
     <div *ngFor="let eltUsers of requestUsers; let i = index;"
          [class.active]="clicked !== eltUsers"
-         (click)="clicked = (clicked === eltUsers ? null :eltUsers)"
          class="alignCenter requestUsersContainer">
 
         <input
             type="button"
             value="{{eltUsers.name}}"
+            (click)="clicked = (clicked === eltUsers ? null :eltUsers)"
             class="cursorPointer radius standardCard">
 
         <div class="options radius alignCenter">

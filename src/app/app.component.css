@@ -153,3 +153,10 @@ a:hover {
 
     border: solid black 2px;
 }
+
+.pageContainer {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content:space-evenly;
+}

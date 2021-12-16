@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductBacklogComponent implements OnInit {
 
-  constructor() { }
+    productBacklog = [
+        "US 1 - Move Player",
+        "US 2 - Fight Player",
+        "US 3 - Defend Player",
+        "US 4 - Special attack"
+    ];
 
-  ngOnInit(): void {
-  }
+    constructor() {}
+
+    ngOnInit(): void {
+
+    }
 
 }

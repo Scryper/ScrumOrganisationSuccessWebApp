@@ -20,6 +20,7 @@ import { AuthGuard } from './helpers';
 import {ProductBacklogComponent} from "./view/connected/product-backlog/product-backlog.component";
 import {JoinProjectComponent} from "./view/connected/join-project/join-project.component";
 import {UsersRequestComponent} from "./view/connected/users-request/users-request.component";
+import {CreateSprintComponent} from "./view/connected/create-sprint/create-sprint.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
     {path: 'productBacklog', component : ProductBacklogComponent,canActivate:[AuthGuard]},
     {path: 'joinProject', component : JoinProjectComponent,canActivate:[AuthGuard]},
     {path: 'usersRequest', component : UsersRequestComponent,canActivate:[AuthGuard]},
+    {path: 'createSprint', component : CreateSprintComponent,canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];
 

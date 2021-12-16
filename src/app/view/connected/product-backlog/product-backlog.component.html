@@ -1,1 +1,17 @@
-<h1 class="titleSize robotoLight">Product Backlog</h1>
+<div class="pageContainer">
+
+    <div class="productBacklogContainer">
+
+        <h2>Product Backlog</h2>
+        <div *ngFor="let eltSprint of productBacklog; let i = index;"
+             class="alignCenter">
+
+            <input
+                type="button"
+                value="{{eltSprint}}"
+                class="cursorPointer standardCard radius">
+
+        </div>
+    </div>
+
+</div>

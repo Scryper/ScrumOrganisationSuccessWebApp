@@ -14,6 +14,14 @@ export class DevelopersProjectsService {
         return this.http.get<DeveloperProject[]>(`${environment.apiUrl}/developerProject/byIdDeveloper/${idDeveloper}`).toPromise();
     }
 
+    getByIdDeveloperIsAppliance(idDeveloper : number) : Promise<DeveloperProject[]>{
+        return this.http.get<DeveloperProject[]>(`${environment.apiUrl}/developerProject/byIdDeveloperIsAppliance/${idDeveloper}`).toPromise();
+    }
+
+    getByIdDeveloperIdProject(idDeveloper:number,idProject:number) : Promise<DeveloperProject>{
+        return this.http.get<DeveloperProject>(`${environment.apiUrl}/developerProject/byIdDeveloperIdProject/${idDeveloper}`).toPromise();
+    }
+
     // Post requests
 
     // Put requests

@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Project } from "../../domain/project";
 import { environment } from "../../../environments/environment";
+import {DeveloperProject} from "../../domain/developer-project";
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +12,8 @@ export class ProjectsService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    getAll(): Observable<Project[]> {
-        return this.http.get<Project[]>(`${environment.apiUrl}/projects`);
+    getAll(): Promise<Project[]> {
+        return this.http.get<Project[]>(`${environment.apiUrl}/projects`).toPromise();
     }
 
     getByIdProductOwner(idProductOwner: number): Observable<Project[]> {

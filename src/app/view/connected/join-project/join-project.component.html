@@ -1,11 +1,13 @@
 <div class="inputContainer">
 
     <h2>List of projects</h2>
-    <div class="projectContainer" *ngFor="let name of projectsName">
+    <div *ngIf="unassigned">You are already assigned to a project</div>
+    <div class="projectContainer" *ngFor="let project of projects">
         <ul class="oldProjects" >
-            <li class="standardCard radius">{{name}}</li>
+            <li class="standardCard radius">{{project.name}}</li>
+
         </ul>
-        <p (click)="joint(name)" class="cursorPointer colorGreen">Request to join</p>
+        <button [disabled]="unassigned" (click)="joint(project)" class="cursorPointer colorGreen">Request to join</button>
     </div>
 
 </div>

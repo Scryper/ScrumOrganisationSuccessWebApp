@@ -159,3 +159,8 @@ a:hover {
     text-align: center;
     justify-content:space-evenly;
 }
+
+.paddingSubtitle {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}

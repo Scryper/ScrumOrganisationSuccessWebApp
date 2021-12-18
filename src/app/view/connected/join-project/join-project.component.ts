@@ -46,17 +46,15 @@ export class JoinProjectComponent implements OnInit {
             idProject : project.id!,
             isAppliance : true
         }
-        //envoyer la requete
-        this.developersProjectsService.addDeveloperProject(devProject).then(tmp => {
-                // TODO
+        // send request
+        this.developersProjectsService.addDeveloperProject(devProject).then(() => {
+            // change the appliance's value to avoid making multiple requests for the same project
+            for(let i = 0 ; i < this.projects.length ; i++){
+                if(this.projects[i].id == project.id){
+                    this.projectsIsApply[i] = true;
+                }
             }
-        );
-        //par sécurité on change la ligne a false pour éviter de faire plusieurs requêtes
-        for(let i = 0 ; i < this.projects.length ; i++){
-            if(this.projects[i].id == project.id){
-                this.projectsIsApply[i] = true;
-            }
-        }
+        });
     }
 
     private loadProjectNames() {

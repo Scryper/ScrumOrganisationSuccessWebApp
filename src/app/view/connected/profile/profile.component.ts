@@ -25,7 +25,6 @@ export class ProfileComponent implements OnInit {
     buttonIsPressed: boolean = false;
 
     idTechnologies:number[] = [];
-
     isHisTechnologies:boolean[] = [];
 
     form:FormGroup = this.fb.group({
@@ -44,6 +43,7 @@ export class ProfileComponent implements OnInit {
                 private route:Router) { }
 
     ngOnInit(): void {
+
         this.fillProfile(JSON.parse(<string>localStorage.getItem('currentUser')));
         this.loadAvailableTechnologies();
         this.fillIdTechnologies();
@@ -145,11 +145,11 @@ export class ProfileComponent implements OnInit {
             token:"",
             portfolio:""
         };
-
-        this.userService.updateFirstNameLastName(tmpUser).then((tmp) => {
-            this.authenticationService.logout();
-            this.route.navigate(['/login']);
-        });
-
+        if(confirm("You need to logout to save your changes.\nDo you want to logout ?")) {
+            this.userService.updateFirstNameLastName(tmpUser).then((tmp) => {
+                    this.authenticationService.logout();
+                    this.route.navigate(['/login']);
+            });
+        }
     }
 }

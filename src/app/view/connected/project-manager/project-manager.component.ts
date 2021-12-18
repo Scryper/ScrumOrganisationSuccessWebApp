@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../../../services";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {DevelopersProjectsService} from "../../../services/developers-projects/developers-projects.service";
+import {Project} from "../../../domain/project";
 
 @Component({
     selector: 'app-project-manager',
@@ -21,8 +22,8 @@ export class ProjectManagerComponent implements OnInit {
         "Old projects"
     ];
 
-    activeProjectsNames: string[] = [];
-    oldProjectsNames: string[] = [];
+    activeProjects:Project[] = [];
+    oldProjects:Project[] = [];
 
     constructor(private authenticationService: AuthenticationService,
                 private developerProjectService: DevelopersProjectsService,
@@ -48,6 +49,8 @@ export class ProjectManagerComponent implements OnInit {
     }
 
     private loadProjects() {
+        this.activeProjects = [];
+        this.oldProjects = [];
         this.developerProjectService.getByIdDeveloper(this.idUser).then(developerProjects => {
             for (let i = 0 ; i < developerProjects.length ; i++) {
                 this.getProjectName(developerProjects[i].idProject);
@@ -58,10 +61,18 @@ export class ProjectManagerComponent implements OnInit {
     private getProjectName(idProject: number) {
         this.projectService.getById(idProject).then(project => {
             if(project.status == this.STATUS_ACTIVE) {
-                this.activeProjectsNames.push(project.name);
+
+                this.activeProjects.push(project);
             } else {
-                this.oldProjectsNames.push(project.name);
+                this.oldProjects.push(project);
             }
+        });
+    }
+
+    terminate(project:Project) {
+        project.status = 3;
+        this.projectService.updateStatus(project).then((elt)=>{
+            this.loadProjects();
         });
     }
 }

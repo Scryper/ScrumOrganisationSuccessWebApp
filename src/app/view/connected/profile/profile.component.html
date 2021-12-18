@@ -27,15 +27,17 @@
                    formControlName="email"
                    class="inputSize radius noOutlineOnFocus paddingLeft robotoLight">
 
-            <h2 class="robotoMedium">Technologies</h2>
-            <div *ngFor="let elt of technologies; let index=index"><span>{{elt.name}} </span><input type="checkbox" (change)="doDeleteOrAddTechnology($event, elt);" [checked]="isHisTechnologies[index]"></div>
-
-            <input type="submit" value="Save"
+            <input type="submit" value="Save & Logout"
                    (mousedown)="toggleButtonPress(true);"
                    (mouseup)="toggleButtonPress(false);"
                    (mouseleave)="toggleButtonPress(false);"
                    [ngClass]="{'isPressedClass': buttonIsPressed === true}"
                    class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+
+            <h2 class="robotoMedium">Technologies</h2>
+            <div *ngFor="let elt of technologies; let index=index"><span>{{elt.name}} </span><input type="checkbox" (change)="doDeleteOrAddTechnology($event, elt);" [checked]="isHisTechnologies[index]"></div>
+
+
         </div>
     </div>
 </form>

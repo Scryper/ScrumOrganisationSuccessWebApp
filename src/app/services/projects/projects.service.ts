@@ -3,8 +3,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Project } from "../../domain/project";
 import { environment } from "../../../environments/environment";
-import {DeveloperProject} from "../../domain/developer-project";
-import {SosUser} from "../../domain/sos-user";
 
 @Injectable({
     providedIn: 'root'
@@ -31,8 +29,6 @@ export class ProjectsService {
         return this.http.post<Project>(`${environment.apiUrl}/projects`, JSON.stringify(project),httpOptions).toPromise();
     }
 
-
-
     // Put  requests
     updateRepositoryUrl(id: number, repositoryUrl: string): Observable<boolean> {
         return this.http.put<boolean>(`${environment.apiUrl}/projects/${id}`, repositoryUrl);
@@ -41,5 +37,12 @@ export class ProjectsService {
     // Delete requests
     deleteProject(id: number): Observable<boolean> {
         return this.http.delete<boolean>(`${environment.apiUrl}/projects/${id}`);
+    }
+
+    updateStatus(project: Project) {
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type': 'application/json'})
+        }
+        return this.http.put<Project>(`${environment.apiUrl}/projects/updateStatus/${project.id}`, JSON.stringify(project), httpOptions).toPromise();
     }
 }

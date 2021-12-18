@@ -11,3 +11,7 @@ h2 {
 input {
     margin-top: 40px;
 }
+
+.marginLeft {
+    margin-left: 10px;
+}

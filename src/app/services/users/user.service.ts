@@ -29,7 +29,6 @@ export class UserService {
     }
 
     updateFirstNameLastName(user: SosUser) {
-        console.log(user);
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }

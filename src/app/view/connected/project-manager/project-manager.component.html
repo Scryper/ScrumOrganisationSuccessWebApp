@@ -2,19 +2,22 @@
     <h1 class="robotoMedium title">{{username}}'s projects</h1>
 
     <h2 class="robotoMedium">{{subtitles[0]}}</h2>
-    <ul class="myProject">
-        <li [routerLink]="['/myProject', name]"
-            class="cursorPointer radius standardCard robotoLight"
-            *ngFor="let name of activeProjectsNames">
-            {{name}}</li>
-    </ul>
+
+        <div *ngFor="let project of activeProjects; let index = index;" class="myProject">
+            <span [routerLink]="['/myProject', project.name]"
+                 class="cursorPointer radius standardCard robotoLight">
+                <span>{{project.name}}</span>
+            </span>
+            <button class="marginLeft" (click)="terminate(project);">Terminate</button>
+        </div>
+
 
     <h2 class="robotoMedium">{{subtitles[1]}}</h2>
     <ul class="oldProjects">
-        <li [routerLink]="['/myProject', name]"
+        <li [routerLink]="['/myProject', project.name]"
             class="cursorPointer radius standardCard robotoLight"
-            *ngFor="let name of oldProjectsNames">
-            {{name}}</li>
+            *ngFor="let project of oldProjects">
+            {{project.name}}</li>
     </ul>
 
     <input

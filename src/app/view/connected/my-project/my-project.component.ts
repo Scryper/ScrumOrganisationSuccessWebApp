@@ -7,6 +7,7 @@ import {SprintsService} from "../../../services/sprints/sprints.service";
 import {Sprint} from "../../../domain/sprint";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
+import {Role} from "../../../domain/role";
 
 @Component({
     selector: 'app-my-project',
@@ -48,11 +49,11 @@ export class MyProjectComponent implements OnInit {
 
     ngOnInit(): void {
         this.projectName = this.route.snapshot.paramMap.get("projectName");
-        console.log(this.projectName);
         if(this.projectName == this.NO_PROJECT) {
             this.router.navigate(["/**"]);
         }
         else {
+            this.isProductOwner = JSON.parse(<string>localStorage.getItem('currentUser')).role == Role.ProductOwner;
             this.loadProjectInfo();
         }
     }

@@ -47,7 +47,6 @@ export class ProfileComponent implements OnInit {
         this.fillProfile(JSON.parse(<string>localStorage.getItem('currentUser')));
         this.loadAvailableTechnologies();
         this.fillIdTechnologies();
-
     }
 
     fillIdTechnologies() {
@@ -150,6 +149,5 @@ export class ProfileComponent implements OnInit {
             this.authenticationService.logout();
             this.route.navigate(['/login']);
         });
-
     }
 }

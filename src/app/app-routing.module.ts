@@ -39,7 +39,7 @@ const routes: Routes = [
     {path: 'productBacklog/:projectName', component : ProductBacklogComponent, canActivate:[AuthGuard]},
     {path: 'joinProject', component : JoinProjectComponent, canActivate:[AuthGuard]},
     {path: 'usersRequest', component : UsersRequestComponent, canActivate:[AuthGuard]},
-    {path: 'createSprint', component : CreateSprintComponent, canActivate:[AuthGuard]},
+    {path: 'createSprint/:projectName', component : CreateSprintComponent, canActivate:[AuthGuard]},
     {path: 'projectPreview/:projectName', component : ProjectPreviewComponent, canActivate:[AuthGuard]},
     {path: 'videocall', component : VideoComponent,canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}

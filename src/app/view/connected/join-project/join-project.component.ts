@@ -34,23 +34,27 @@ export class JoinProjectComponent implements OnInit {
       this.userId = (this.currentUser.id==undefined)?0:this.currentUser.id;
       this.loadProjects();
       this.isAssigned();
-      this.isApply();
   }
 
     private loadProjects() {
         this.projectService.getAll().then(tmpProjects => {
             this.projects = tmpProjects;
             this.loadProjectNames();
+            this.isApply();
         });
     }
 
+    private loadWorkingProject(){
+
+    }
 
     joint(item:Project) {
-        //verif si candidature existe
-        //requete qui ajoute la candidature pour ce dev et ce projet
+        //envoyer la requete
+        //réupdate le data
     }
 
     private loadProjectNames() {
+        this.projectsName = [];
         for (let elt of this.projects) {
             this.projectsName.push(elt.name);
         }
@@ -71,13 +75,9 @@ export class JoinProjectComponent implements OnInit {
     isApply() {
         for(let i = 0 ; i< this.projects.length;i++){
             this.developersProjectsService.getByIdDeveloperIdProject(this.userId,this.projects[i].id).then(tmp=>{
-                if(tmp==null)this.projectsIsapply[i]
+                if(tmp!=null)this.projectsIsapply[i] = true;
+                else this.projectsIsapply[i] = false;
             });
         }
-        //this.developersProjectsService.getByIdDeveloperIdProject(this.userId,project.id).then(tmp=> {
-            //if(tmp==null)return false;
-            //else return false
-        //})
-        return true;
     }
 }

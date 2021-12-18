@@ -19,10 +19,11 @@ export class DevelopersProjectsService {
     }
 
     getByIdDeveloperIdProject(idDeveloper:number,idProject:number) : Promise<DeveloperProject>{
-        return this.http.get<DeveloperProject>(`${environment.apiUrl}/developerProject/byIdDeveloperIdProject/${idDeveloper}`).toPromise();
+        return this.http.get<DeveloperProject>(`${environment.apiUrl}/developerProject/byIdDeveloperIdProject/${idDeveloper},${idProject}`).toPromise();
     }
 
     // Post requests
+    //createDeveloperProject(idDeveloper:number)
 
     // Put requests
 

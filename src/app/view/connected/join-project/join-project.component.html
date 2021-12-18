@@ -2,12 +2,11 @@
 
     <h2>List of projects</h2>
     <div *ngIf="unassigned">You are already assigned to a project</div>
-    <div class="projectContainer" *ngFor="let project of projects">
+    <div class="projectContainer" *ngFor="let project of projects; let i = index;">
         <ul class="oldProjects" >
             <li class="standardCard radius">{{project.name}}</li>
-
+            <p *ngIf="projectsIsapply[i]">You already applied to this project</p>
         </ul>
-        <button [disabled]="unassigned" (click)="joint(project)" class="cursorPointer colorGreen">Request to join</button>
+        <button [hidden]="projectsIsapply[i]" [disabled]="unassigned" (click)="joint(project)" class="cursorPointer colorGreen">Request to join</button>
     </div>
-
 </div>

@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {UserStory} from "../../../domain/user-story";
+import {ActivatedRoute} from "@angular/router";
+import {ProjectsService} from "../../../services/projects/projects.service";
+import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 
 @Component({
-  selector: 'app-create-sprint',
-  templateUrl: './create-sprint.component.html',
-  styleUrls: ['../../../app.component.css', './create-sprint.component.css']
+    selector: 'app-create-sprint',
+    templateUrl: './create-sprint.component.html',
+    styleUrls: ['../../../app.component.css', './create-sprint.component.css']
 })
 export class CreateSprintComponent implements OnInit {
-
     title: string = "Create sprint";
     selectedUserStory: string | undefined;
-    ChosenUserStories:string[] = [];
+    ChosenUserStories: string[] = [];
     buttonIsPressed: boolean = false;
+    projectName: string | null = "";
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -29,8 +33,14 @@ export class CreateSprintComponent implements OnInit {
         "US 4 - Special attack"
     ];
 
-    constructor(private fb: FormBuilder) {}
-    ngOnInit(): void {}
+    constructor(private fb: FormBuilder,
+                private route: ActivatedRoute,
+                private projectService: ProjectsService,
+                private userStoryService: UserStoriesService) { }
+
+    ngOnInit(): void {
+        this.projectName = this.route.snapshot.paramMap.get("projectName");
+    }
 
     addToChosenUserStories() {
         if (this.selectedUserStory != null && !this.ChosenUserStories.includes(this.selectedUserStory)) {
@@ -60,4 +70,24 @@ export class CreateSprintComponent implements OnInit {
         this.buttonIsPressed = isPressed;
     }
 
+    private loadProductBacklog() {
+        this.getProject();
+    }
+
+    private getProject() {
+        this.projectService.getByProjectName(this.projectName).then(project => {
+            if (project.id != null) {
+                this.getUserStories(project.id);
+            }
+        });
+    }
+
+    private getUserStories(id: number) {
+        this.userStoryService.getByIdProject(id).then(userStories => {
+            for (let i = 0 ; i < userStories.length ; i++) {
+                let userStory: UserStory = userStories[i];
+                this.productBacklog.push("US" + userStory.priority + " : " + userStory.description);
+            }
+        });
+    }
 }

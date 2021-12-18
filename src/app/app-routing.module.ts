@@ -37,14 +37,12 @@ const routes: Routes = [
     {path: 'today', component : TodayComponent, canActivate:[AuthGuard]},
     {path: 'projectManager', component : ProjectManagerComponent, canActivate:[AuthGuard]},
     {path: 'createProject', component : CreateProjectComponent, canActivate:[AuthGuard]},
-    {path: 'myProject', component : MyProjectComponent, canActivate:[AuthGuard]},
     {path: 'myProject/:projectName', component : MyProjectComponent, canActivate:[AuthGuard]},
     {path: 'notification', component : NotificationComponent, canActivate:[AuthGuard]},
-    {path: 'productBacklog', component : ProductBacklogComponent, canActivate:[AuthGuard]},
+    {path: 'productBacklog/:projectName', component : ProductBacklogComponent, canActivate:[AuthGuard]},
     {path: 'joinProject', component : JoinProjectComponent, canActivate:[AuthGuard]},
     {path: 'usersRequest', component : UsersRequestComponent, canActivate:[AuthGuard]},
     {path: 'createSprint', component : CreateSprintComponent, canActivate:[AuthGuard]},
-    {path: 'projectPreview', component : ProjectPreviewComponent, canActivate:[AuthGuard]},
     {path: 'projectPreview/:projectName', component : ProjectPreviewComponent, canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];

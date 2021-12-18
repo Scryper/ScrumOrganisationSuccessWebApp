@@ -13,7 +13,7 @@
         <p class="standardCard radius robotoLight">{{repositoryUrl}}</p>
 
         <input
-            [routerLink]="['/productBacklog']"
+            [routerLink]="['/productBacklog', projectName]"
             type="button"
             value="Product Backlog"
             (mousedown)="toggleButtonPress(true);"

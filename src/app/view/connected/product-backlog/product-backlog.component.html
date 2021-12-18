@@ -1,14 +1,21 @@
 <div class="pageContainer">
     <div class="productBacklogContainer">
         <h1 class="title robotoMedium">Product Backlog</h1>
-        <div *ngFor="let eltSprint of productBacklog; let i = index;"
+        <ul *ngFor="let eltSprint of productBacklog; let i = index;"
              class="alignCenter">
 
-            <input
-                type="button"
-                value="{{eltSprint}}"
-                class="cursorPointer standardCard radius robotoLight">
-        </div>
-    </div>
+            <li class="standardCard radius robotoLight">{{eltSprint}}</li>
+        </ul>
 
+        <br/>
+        <input
+            [routerLink]="['/myProject', projectName]"
+            type="button"
+            value="Back"
+            (mousedown)="toggleButtonPress(true);"
+            (mouseup)="toggleButtonPress(false);"
+            (mouseleave)="toggleButtonPress(false);"
+            [ngClass]="{'isPressedClass': isButtonPressed === true}"
+            class="cursorPointer inputSizeBack robotoMedium bgLightRed radius noBorder fontSizeMedium shadowBottom">
+    </div>
 </div>

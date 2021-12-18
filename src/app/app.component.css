@@ -152,6 +152,8 @@ a:hover {
     justify-content : center;
 
     border: solid black 2px;
+
+    margin: 5px;
 }
 
 .pageContainer {

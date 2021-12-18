@@ -21,10 +21,3 @@ input {
 .infosProjectContainer input {
    margin-top: 20px;
 }
-
-.columnContainer {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content:space-evenly;
-}

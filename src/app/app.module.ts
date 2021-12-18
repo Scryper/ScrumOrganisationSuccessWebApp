@@ -12,8 +12,6 @@ import { LoginComponent } from './view/visitor/login/login.component';
 import { SignUpComponent } from './view/visitor/sign-up/sign-up.component';
 import { ContactComponent } from './view/visitor/contact/contact.component';
 import { MeetTheTeamComponent } from './view/visitor/meet-the-team/meet-the-team.component';
-import { TutorialComponent } from './view/visitor/tutorial/tutorial.component';
-import { FaqComponent } from './view/visitor/faq/faq.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TodayComponent } from './view/connected/today/today.component';
 import { MeetingComponent } from './view/connected/meeting/meeting.component';
@@ -38,6 +36,7 @@ import { UsersRequestComponent } from './view/connected/users-request/users-requ
 import { CreateSprintComponent } from './view/connected/create-sprint/create-sprint.component';
 import { VideoComponent } from './view/video-call/video/video.component';
 import { ProjectPreviewComponent } from './view/connected/project-preview/project-preview.component';
+import {NotFoundComponent} from "./view/not-found/not-found.component";
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -54,8 +53,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         SignUpComponent,
         ContactComponent,
         MeetTheTeamComponent,
-        TutorialComponent,
-        FaqComponent,
         TodayComponent,
         MeetingComponent,
         NavbarVisitorComponent,
@@ -76,7 +73,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         ProductBacklogComponent,
         ProjectPreviewComponent,
         CreateSprintComponent,
-        VideoComponent
+        VideoComponent,
+        NotFoundComponent
     ],
     imports: [
         BrowserModule,

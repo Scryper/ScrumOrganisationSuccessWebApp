@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MeetTheTeamComponent } from "./view/visitor/meet-the-team/meet-the-team.component";
 import { ContactComponent } from "./view/visitor/contact/contact.component";
-import { TutorialComponent } from "./view/visitor/tutorial/tutorial.component";
-import { FaqComponent } from "./view/visitor/faq/faq.component";
 import { SignUpComponent } from "./view/visitor/sign-up/sign-up.component";
 import { LoginComponent } from "./view/visitor/login/login.component";
 import { HomeComponent } from "./view/visitor/home/home.component";
@@ -15,13 +13,12 @@ import { MyProjectComponent } from "./view/connected/my-project/my-project.compo
 import { NotificationComponent } from "./view/connected/notification/notification.component";
 import { NotFoundComponent } from "./view/not-found/not-found.component";
 import {MeetingComponent} from "./view/connected/meeting/meeting.component";
-import { AuthGuard } from './helpers/guard/auth.guard';
+import { AuthGuard } from './helpers';
 import {ProductBacklogComponent} from "./view/connected/product-backlog/product-backlog.component";
 import {JoinProjectComponent} from "./view/connected/join-project/join-project.component";
 import {UsersRequestComponent} from "./view/connected/users-request/users-request.component";
 import {CreateSprintComponent} from "./view/connected/create-sprint/create-sprint.component";
 import {VisitorGuard} from "./helpers/guard/visitor.guard";
-import {JitsiComponent} from "./view/video-call/jitsi/jitsi.component";
 import {VideoComponent} from "./view/video-call/video/video.component";
 import { ProjectPreviewComponent } from "./view/connected/project-preview/project-preview.component";
 
@@ -29,8 +26,6 @@ const routes: Routes = [
     {path: '', component : HomeComponent},
     {path: 'team', component: MeetTheTeamComponent},
     {path: 'contact', component: ContactComponent},
-    {path: 'tutorial', component: TutorialComponent},
-    {path: 'faq', component: FaqComponent},
     {path: 'login', component : LoginComponent, canActivate:[VisitorGuard]},
     {path: 'signUp', component : SignUpComponent, canActivate:[VisitorGuard]},
     {path: 'homeVisitor', component : HomeComponent},

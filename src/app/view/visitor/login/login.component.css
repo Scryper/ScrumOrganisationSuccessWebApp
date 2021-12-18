@@ -20,3 +20,17 @@
     box-shadow: 0 -2px 4px black;
     background-color: #009B86;
 }
+
+#formSign p {
+    margin-bottom: 20px;
+}
+
+input:first-of-type {
+    margin-bottom: 15px;
+}
+
+.msgError {
+    width: 300px;
+    text-align: center;
+    margin: 20px auto;
+}

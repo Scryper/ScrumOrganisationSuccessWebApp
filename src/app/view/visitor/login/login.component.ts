@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
     submitted: boolean = false;
     returnUrl: string = '/today';
     error: string  = '';
+    isError:boolean=false;
     title: string = "Login";
 
     form:FormGroup = this.fb.group({
@@ -57,14 +58,17 @@ export class LoginComponent implements OnInit {
         this.submitted = true;
         this.loading = true;
         let rawValue = this.form.getRawValue();
+
         let userObservable = this.authenticationService.login(rawValue.main.email, rawValue.main.password)
             .pipe(first())
             .subscribe(
-                () => {
+                (result) => {
+                    this.isError = false;
                     //need to change the route based on the role of the user
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
+                    this.isError = true;
                     this.error = error;
                     this.loading = false;
                 });

@@ -25,15 +25,7 @@
 }
 
 #logContainer {
-    margin: 100px auto auto;
-}
-
-#formSign>* {
-    margin-bottom: 15px;
-}
-
-#formSign>*:last-child {
-    margin-bottom: 0;
+    margin: 50px auto auto;
 }
 
 a:hover {
@@ -158,4 +150,12 @@ a:hover {
     flex-direction: row;
     text-align: center;
     justify-content:space-evenly;
+}
+
+.border {
+    border: solid black 1px;
+}
+
+.padding {
+    padding: 5px;
 }

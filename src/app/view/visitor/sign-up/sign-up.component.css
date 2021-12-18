@@ -1,14 +1,45 @@
 .signUpContainerSize {
-    height: 370px;
-    width: 380px;
+    width: 420px;
 }
 
-#logFormsContainer>*:first-child {
-    padding-top: 35px;
+#radioButtonContainer {
+    padding-top: 10px;
 }
 
-#btnSignUp {
-    margin-top: 25px;
+input[type="radio"] {
+    margin-top: -2px;
+    vertical-align: middle;
+}
+
+.partOne {
+    height: 220px;
+    margin-bottom: 30px!important;
+    vertical-align: middle;
+}
+
+.partTwo {
+    height: 260px;
+    margin-bottom: 20px!important;
+    vertical-align: middle;
+}
+
+.partThree {
+    height: 80px;
+}
+
+.partOne input, .partTwo input {
     margin-bottom: 10px;
 }
 
+.partThree input {
+    margin-bottom: 5px;
+}
+
+.partOne p, .partTwo p {
+    padding-top: 15px;
+    padding-bottom: 12px;
+}
+
+.partTwo p {
+    font-size: 35px;
+}

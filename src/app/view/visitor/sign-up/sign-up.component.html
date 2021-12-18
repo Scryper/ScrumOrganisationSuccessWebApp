@@ -1,48 +1,88 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" (dblclick)="autoComplete()">
-    <div id="logContainer" class="columnStyle signUpContainerSize bgLightBlue radius alignText">
+    <div id="logContainer" class="columnStyle signUpContainerSize alignText">
         <div id="logFormsContainer">
-
             <div id="formSign" formGroupName="main">
-            <p class="titleSize robotoMedium textShadowBottom">{{title}}</p>
-            <input type="email"
-                   formControlName="email"
-                   class="inputLog noOutlineOnFocus radius inputSize noBorder paddingLeft"
-                   placeholder="Email">
-            <input type="password"
-                   formControlName="password"
-                   class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
-                   placeholder="Password">
-            <input type="password"
-                   formControlName="confirmPassword"
-                   class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
-                   placeholder="Confirm Password">
+                <div class="partOne bgLightBlue radius">
+                    <p class="titleSize robotoMedium textShadowBottom">{{title}}</p>
+                    <input type="email"
+                           formControlName="email"
+                           class="inputLog noOutlineOnFocus radius inputSize noBorder paddingLeft"
+                           placeholder="Email">
+                    <input type="password"
+                           formControlName="password"
+                           class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
+                           placeholder="Password">
+                    <input type="password"
+                           formControlName="confirmPassword"
+                           class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
+                           placeholder="Confirm Password">
+
+                </div>
+
+                <!--Additional Information-->
+                <div class="partTwo bgLightBlue radius">
+                    <p class="titleSize robotoMedium textShadowBottom">Additional Information</p>
+                    <input type="text"
+                           formControlName="lastname"
+                           class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
+                           placeholder="Lastname">
+                    <br/>
+                    <input type="text"
+                           formControlName="firstname"
+                           class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
+                           placeholder="Firstname">
+
+                    <br/>
+                    <input type="date"
+                           formControlName="birthdate"
+                           class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
+                           min="1960-01-01">
+
+                    <div id="radioButtonContainer">
+                        <label *ngFor="let name of typeUserNames" class="robotoLight">
+                            <input  type="radio"
+                                    value="{{name}}"
+                                    formControlName="userType"
+                                    name="userType"
+                                    class="radioSize noOutlineOnFocus">
+                            {{name}}
+                        </label>
+                    </div>
+                </div>
+                <!--Additional Information FIN-->
             </div>
 
-            <input
-                (mousedown)="toggleButtonPress(true);"
-                (mouseup)="toggleButtonPress(false);"
-                (mouseleave)="toggleButtonPress(false);"
+            <div class="partThree">
+                <input
+                    (mousedown)="toggleButtonPress(true);"
+                    (mouseup)="toggleButtonPress(false);"
+                    (mouseleave)="toggleButtonPress(false);"
 
-                [ngClass]="{'isPressedClass': buttonIsPressed === true}"
-                id="btnSignUp"
-                type="submit"
-                value="Sign up"
-                [disabled]="form.invalid"
-                class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+                    [ngClass]="{'isPressedClass': buttonIsPressed === true}"
+                    id="btnSignUp"
+                    type="submit"
+                    value="Sign up"
+                    [disabled]="form.invalid"
+                    class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
 
-            <p class="robotoLight italic fontSizeSmall">
-                <span>Already have an account ? </span><a routerLink="/login" class="red">Sign in</a>
-            </p>
+                <p class="robotoLight italic fontSizeSmall">
+                    <span>Already have an account ? </span><a routerLink="/login" class="red">Sign in</a>
+                </p>
 
-            <br/>
-            <p *ngIf="userExists"
-                class="robotoLight red">
-                This email is already linked to an existing account
-            </p>
-            <p *ngIf="differentPasswords"
-               class="robotoLight red">
-                The passwords are different
-            </p>
+                <br/>
+                <p *ngIf="userExists"
+                    class="robotoMedium red bgWhiteBlue radius border padding">
+                    This email is already linked to an existing account
+                </p>
+                <p *ngIf="differentPasswords"
+                   class="robotoMedium red bgWhiteBlue radius border padding">
+                    The passwords are different
+                </p>
+                <p *ngIf="!isMajor"
+                   class="robotoMedium red bgWhiteBlue radius border padding">
+                    You are not major
+                </p>
+            </div>
         </div>
     </div>
 </form>

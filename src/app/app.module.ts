@@ -25,7 +25,6 @@ import { NavbarProductOwnerComponent } from './view/navbar/navbar-connected/navb
 import { ConnectedComponent } from './view/connected/connected.component';
 import { VisitorComponent } from './view/visitor/visitor.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AdditionalInfosComponent } from './view/visitor/additional-infos/additional-infos.component';
 import { ProfileComponent } from './view/connected/profile/profile.component';
 import { CreateProjectComponent } from './view/connected/create-project/create-project.component';
 import { ProjectManagerComponent } from './view/connected/project-manager/project-manager.component';
@@ -64,7 +63,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         NavbarProductOwnerComponent,
         ConnectedComponent,
         VisitorComponent,
-        AdditionalInfosComponent,
         ProfileComponent,
         CreateProjectComponent,
         ProjectManagerComponent,

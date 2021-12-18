@@ -30,7 +30,11 @@
             <p class="robotoLight italic fontSizeSmall">
                 <span>Don't have an account ? </span><a routerLink="/signUp" class="red">Sign up</a>
             </p>
-
         </div>
     </div>
 </form>
+
+<p *ngIf="isError"
+   class="robotoMedium red bgWhiteBlue radius border padding msgError">
+    Username or password is incorrect
+</p>

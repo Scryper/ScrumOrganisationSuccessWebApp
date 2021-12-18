@@ -7,7 +7,6 @@ import { FaqComponent } from "./view/visitor/faq/faq.component";
 import { SignUpComponent } from "./view/visitor/sign-up/sign-up.component";
 import { LoginComponent } from "./view/visitor/login/login.component";
 import { HomeComponent } from "./view/visitor/home/home.component";
-import { AdditionalInfosComponent } from "./view/visitor/additional-infos/additional-infos.component";
 import { ProfileComponent } from "./view/connected/profile/profile.component";
 import { TodayComponent } from "./view/connected/today/today.component";
 import { ProjectManagerComponent } from "./view/connected/project-manager/project-manager.component";
@@ -31,7 +30,6 @@ const routes: Routes = [
     {path: 'login', component : LoginComponent},
     {path: 'signUp', component : SignUpComponent},
     {path: 'homeVisitor', component : HomeComponent},
-    {path: 'AdditionalInfos', component : AdditionalInfosComponent},
     {path: 'profile', component : ProfileComponent, canActivate:[AuthGuard]},
     {path: 'meetings', component : MeetingComponent,canActivate:[AuthGuard]},
     {path: 'today', component : TodayComponent,canActivate:[AuthGuard]},

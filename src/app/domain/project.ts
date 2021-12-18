@@ -1,7 +1,5 @@
 export interface Project {
-    id: number,
-    idProductOwner: number,
-    idScrumMaster: number,
+    id?: number,
     name: string,
     deadline: Date,
     description: string,

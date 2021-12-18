@@ -57,7 +57,7 @@ export class MyProjectComponent implements OnInit {
             this.deadline = this.datePipe.transform(project.deadline, this.DATE_FORMAT);
             this.description = project.description;
             this.repositoryUrl = project.repositoryUrl;
-            this.idProject = project.id;
+            this.idProject = project.id!;
             this.getSprints(this.idProject);
         });
     }

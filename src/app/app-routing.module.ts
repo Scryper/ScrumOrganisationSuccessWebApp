@@ -16,11 +16,12 @@ import { MyProjectComponent } from "./view/connected/my-project/my-project.compo
 import { NotificationComponent } from "./view/connected/notification/notification.component";
 import { NotFoundComponent } from "./view/not-found/not-found.component";
 import {MeetingComponent} from "./view/connected/meeting/meeting.component";
-import { AuthGuard } from './helpers';
+import { AuthGuard } from './helpers/guard/auth.guard';
 import {ProductBacklogComponent} from "./view/connected/product-backlog/product-backlog.component";
 import {JoinProjectComponent} from "./view/connected/join-project/join-project.component";
 import {UsersRequestComponent} from "./view/connected/users-request/users-request.component";
 import {CreateSprintComponent} from "./view/connected/create-sprint/create-sprint.component";
+import {VisitorGuard} from "./helpers/guard/visitor.guard";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -28,8 +29,8 @@ const routes: Routes = [
     {path: 'contact', component: ContactComponent},
     {path: 'tutorial', component: TutorialComponent},
     {path: 'faq', component: FaqComponent},
-    {path: 'login', component : LoginComponent},
-    {path: 'signUp', component : SignUpComponent},
+    {path: 'login', component : LoginComponent,canActivate:[VisitorGuard]},
+    {path: 'signUp', component : SignUpComponent, canActivate:[VisitorGuard]},
     {path: 'homeVisitor', component : HomeComponent},
     {path: 'AdditionalInfos', component : AdditionalInfosComponent},
     {path: 'profile', component : ProfileComponent, canActivate:[AuthGuard]},

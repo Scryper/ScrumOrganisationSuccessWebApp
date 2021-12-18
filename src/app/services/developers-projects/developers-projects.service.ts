@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {DeveloperProject} from "../../domain/developer-project";
 import {environment} from "../../../environments/environment";
+import {SosUser} from "../../domain/sos-user";
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,12 @@ export class DevelopersProjectsService {
     }
 
     // Post requests
-    //createDeveloperProject(idDeveloper:number)
+    addDeveloperProject(developerProject : DeveloperProject) {
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type': 'application/json'})
+        }
+        return this.http.post<DeveloperProject>(`${environment.apiUrl}/developerProject`, JSON.stringify(developerProject), httpOptions).toPromise();
+    }
 
     // Put requests
 

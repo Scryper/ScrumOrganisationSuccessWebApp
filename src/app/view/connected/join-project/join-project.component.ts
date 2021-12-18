@@ -4,6 +4,7 @@ import {AuthenticationService} from "../../../services";
 import {DevelopersProjectsService} from "../../../services/developers-projects/developers-projects.service";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {SosUser} from "../../../domain/sos-user";
+import {DeveloperProject} from "../../../domain/developer-project";
 
 @Component({
   selector: 'app-join-project',
@@ -48,9 +49,24 @@ export class JoinProjectComponent implements OnInit {
 
     }
 
-    joint(item:Project) {
+    joinProject(project:Project) {
+        //create developerProject
+        let devProject:DeveloperProject = {
+            idDeveloper : this.userId,
+            idProject : project.id,
+            isAppliance : true
+        }
         //envoyer la requete
-        //réupdate le data
+        this.developersProjectsService.addDeveloperProject(devProject).then(tmp=>{
+
+            }
+        );
+        //par sécurité on change la ligne a false pour éviter de faire plusieurs requêtes
+        for(let i = 0 ; i<this.projects.length;i++){
+            if(this.projects[i].id==project.id){
+                this.projectsIsapply[i] = true;
+            }
+        }
     }
 
     private loadProjectNames() {

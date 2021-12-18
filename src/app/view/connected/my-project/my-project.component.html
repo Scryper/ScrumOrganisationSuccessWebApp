@@ -19,7 +19,7 @@
             (mousedown)="toggleButtonPress(true);"
             (mouseup)="toggleButtonPress(false);"
             (mouseleave)="toggleButtonPress(false);"
-            [ngClass]="{'isPressedClass': buttonIsPressed === true}"
+            [ngClass]="{'isPressedClass': isButtonPressed === true}"
             class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
     </div>
 
@@ -60,7 +60,7 @@
                 (mousedown)="toggleButtonPress(true);"
                 (mouseup)="toggleButtonPress(false);"
                 (mouseleave)="toggleButtonPress(false);"
-                [ngClass]="{'isPressedClass': buttonIsPressed === true}"
+                [ngClass]="{'isPressedClass': isButtonPressed === true}"
                 class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
         </div>
     </div>

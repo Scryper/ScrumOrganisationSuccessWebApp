@@ -25,7 +25,7 @@
         </div>
 
         <div class="sprintContainer elementMyProject"
-             *ngIf="actualSprint.name != '' && oldSprints.length != 0">
+             *ngIf="actualSprint.name != '' || oldSprints.length != 0">
             <h1 *ngIf="actualSprint.name != ''" class="robotoMedium">Active sprint</h1>
             <div [class.active]="clicked !== projectName"
                  (click)="clicked = (clicked === projectName ? null : projectName)"

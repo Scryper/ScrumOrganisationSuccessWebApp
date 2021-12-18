@@ -39,7 +39,7 @@ export class MeetingComponent implements OnInit {
                  events.push({title: meetings[i].description,
                         date: meetings[i].schedule,
                         url : 'videocall',
-                        roomName : meetings[i].url
+                        roomName : meetings[i].meetingUrl
                  });
             }
             this.calendarOptions.events = events;

@@ -74,8 +74,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         UsersRequestComponent,
         JoinProjectComponent,
         ProductBacklogComponent,
-        CreateSprintComponent,
-        ProjectPreviewComponent
+        ProjectPreviewComponent,
         CreateSprintComponent,
         VideoComponent
     ],

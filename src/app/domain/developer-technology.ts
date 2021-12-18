@@ -1,4 +1,4 @@
 export interface DeveloperTechnology {
-    idDeveloper: number,
+    idUser: number,
     idTechnology: number
 }

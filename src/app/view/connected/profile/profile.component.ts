@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthenticationService} from "../../../services";
+import {AuthenticationService, UserService} from "../../../services";
 import {SosUser} from "../../../domain/sos-user";
 import {Technology} from "../../../domain/technology";
 import {TechnologiesService} from "../../../services/technologies/technologies.service";
 import {DevelopersTechnologiesService} from "../../../services/developers-technologies/developers-technologies.service";
+import {DeveloperTechnology} from "../../../domain/developer-technology";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-profile',
@@ -15,45 +17,69 @@ export class ProfileComponent implements OnInit {
     private _lastName = '';
     private _firstName = '';
     private _email = '';
-    private idUser: number = 0;
+    idUser: number = 0;
     profilePicture: string | undefined = "./assets/images/profilePictures/anonym.jpg";
-    selectedTechnology: string | undefined;
-    chosenTechnologies: string[] = [];
+
     technologies: Technology[] = [];
     isEditButtonHidden: boolean = true;
     buttonIsPressed: boolean = false;
+
+    idTechnologies:number[] = [];
+
+    isHisTechnologies:boolean[] = [];
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
             lastName:this.fb.control(this._lastName, Validators.required),
             firstName:this.fb.control(this._firstName, Validators.required),
             email:this.fb.control({value:this._email, disabled: true}, Validators.required)
-        }),
-        technology: this.fb.group({
-         })
+        })
     });
 
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
                 private technologyService: TechnologiesService,
-                private developerTechnology: DevelopersTechnologiesService) { }
+                private developerTechnology: DevelopersTechnologiesService,
+                private userService:UserService,
+                private route:Router) { }
 
     ngOnInit(): void {
-        this.authenticationService.currentUser.subscribe(user => this.fillProfile(user));
+        this.fillProfile(JSON.parse(<string>localStorage.getItem('currentUser')));
         this.loadAvailableTechnologies();
-        this.loadUserTechnologies();
+        this.fillIdTechnologies();
+
     }
 
-    sendData() {
-        console.log(this.form.value);
+    fillIdTechnologies() {
+        let tmpDeveloperTechnology:DeveloperTechnology[];
+        this.developerTechnology.getByDeveloperId(this.idUser).then(developerTechnologies => {
+            tmpDeveloperTechnology = developerTechnologies;
+            for(let elt of tmpDeveloperTechnology) {
+                this.idTechnologies.push(elt.idTechnology);
+            }
+            this.fillIsHisTechnologies();
+        });
+    }
+
+    fillIsHisTechnologies() {
+        for(let elt of this.technologies) {
+            if(this.idTechnologies.includes(elt.id)) {
+                this.isHisTechnologies.push(true);
+            }else {
+                this.isHisTechnologies.push(false);
+            }
+        }
     }
 
     toggleButtonPress(isPressed: boolean) {
-        this.addChosenTechnologiesToForm();
         this.buttonIsPressed = isPressed;
     }
 
     fillProfile(user: SosUser) {
+        this._lastName = user.lastname;
+        this._firstName = user.firstname;
+        this._email = user.email;
+
         if(user != null) {
             if (user.id != null) {
                 this.idUser = user.id;
@@ -73,23 +99,6 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    addChosenTechnologiesToForm() {
-        const main = this.form.get(`technology`) as FormGroup;
-        for (let i = 0 ; i < this.chosenTechnologies.length ; i++) {
-            main.addControl("T" + i, this.fb.control(this.chosenTechnologies[i], Validators.required));
-        }
-    }
-
-    addToChosenTechnologies() {
-        if (this.selectedTechnology != null && !this.chosenTechnologies.includes(this.selectedTechnology)) {
-            this.chosenTechnologies.push(this.selectedTechnology);
-        }
-    }
-
-    assignToSelected(selected:string) {
-        this.selectedTechnology = selected;
-    }
-
     private loadAvailableTechnologies() {
         this.technologyService.getAll().then(technologies => {
             for (let i = 0 ; i < technologies.length ; i++) {
@@ -98,17 +107,49 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    private loadUserTechnologies() {
-        this.developerTechnology.getByDeveloperId(this.idUser).then(developerTechnologies => {
-            for (let i = 0 ; i < developerTechnologies.length ; i++) {
-                this.getTechnologyName(developerTechnologies[i].idTechnology);
-            }
+    deleteTechnology(idTechnology: number) {
+        this.developerTechnology.deleteDeveloperTechnology(this.idUser, idTechnology).then((elt) => {
+
         });
     }
 
-    private getTechnologyName(idTechnology: number) {
-        this.technologyService.getById(idTechnology).then(technology => {
-            this.chosenTechnologies.push(technology.name);
+    addTechnology(idTechnology: number) {
+        let tmpDeveloperTechnology:DeveloperTechnology = {
+            idUser:this.idUser,
+            idTechnology:idTechnology
+        };
+        this.developerTechnology.addDeveloperTechnology(tmpDeveloperTechnology).then((elt) => {
+
         });
+    }
+
+    doDeleteOrAddTechnology(event:any, elt:Technology) {
+        if(event.target.checked) {
+            this.addTechnology(elt.id);
+        } else {
+            this.deleteTechnology(elt.id);
+        }
+    }
+
+    sendData() {
+        let tmpUser:SosUser = {
+            id:this.idUser,
+            firstname:this.form.getRawValue().main.firstName,
+            lastname:this.form.getRawValue().main.lastName,
+            email:"",
+            profilePicture:"",
+            birthdate:new Date(),
+            password:"",
+            description:"",
+            role:0,
+            token:"",
+            portfolio:""
+        };
+
+        this.userService.updateFirstNameLastName(tmpUser).then((tmp) => {
+            this.authenticationService.logout();
+            this.route.navigate(['/login']);
+        });
+
     }
 }

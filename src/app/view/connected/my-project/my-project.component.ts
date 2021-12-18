@@ -15,7 +15,7 @@ import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/
 })
 export class MyProjectComponent implements OnInit {
     buttonIsPressed: boolean = false;
-    isProductOwner: boolean = false;
+    isProductOwner: boolean = true;
     clicked: any;
     idProject: number = 0;
     projectName: string | null = "";

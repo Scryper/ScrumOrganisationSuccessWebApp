@@ -27,17 +27,8 @@
                    formControlName="email"
                    class="inputSize radius noOutlineOnFocus paddingLeft robotoLight">
 
-            <h2 class="robotoMedium">Choose technologies</h2>
-            <select  #Select (change)="assignToSelected(Select.value)" >
-                <option value="" >--Select an user story--</option>
-                <option *ngFor="let elt of technologies" value="{{elt.name}}">{{elt.name}}</option>
-            </select>
-            <input (click)="addToChosenTechnologies()" class="radius cursorPointer bgWhiteBlue addBtn" type="button" value="add">
-
-            <h2 class="robotoMedium">Chosen Technologies</h2>
-            <div class="chosenContainer">
-                <p class="robotoLight" *ngFor="let elt of chosenTechnologies">{{elt}}</p>
-            </div>
+            <h2 class="robotoMedium">Technologies</h2>
+            <div *ngFor="let elt of technologies; let index=index"><span>{{elt.name}} </span><input type="checkbox" (change)="doDeleteOrAddTechnology($event, elt);" [checked]="isHisTechnologies[index]"></div>
 
             <input type="submit" value="Save"
                    (mousedown)="toggleButtonPress(true);"

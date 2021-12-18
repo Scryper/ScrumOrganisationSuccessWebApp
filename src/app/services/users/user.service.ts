@@ -27,4 +27,12 @@ export class UserService {
         }
         return this.http.post<SosUser>(`${environment.apiUrl}/users`, JSON.stringify(user), httpOptions).toPromise();
     }
+
+    updateFirstNameLastName(user: SosUser) {
+        console.log(user);
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type': 'application/json'})
+        }
+        return this.http.put<SosUser>(`${environment.apiUrl}/users/firstNameLastNameUpdate/${user.id}`, JSON.stringify(user), httpOptions).toPromise();
+    }
 }

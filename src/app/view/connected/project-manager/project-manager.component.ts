@@ -24,26 +24,8 @@ export class ProjectManagerComponent implements OnInit {
         "Old projects"
     ];
 
-    activeProjects:Project[] = [
-        {
-            id: 0,
-            name: "No projects found.",
-            status: 0,
-            description: "",
-            deadline: new Date(),
-            repositoryUrl: ""
-        }
-    ];
-    oldProjects:Project[] = [
-        {
-            id: 0,
-            name: "No projects found.",
-            status: 0,
-            description: "",
-            deadline: new Date(),
-            repositoryUrl: ""
-        }
-    ];
+    activeProjects:Project[] = [];
+    oldProjects:Project[] = [];
 
     constructor(private authenticationService: AuthenticationService,
                 private developerProjectService: DevelopersProjectsService,
@@ -68,8 +50,26 @@ export class ProjectManagerComponent implements OnInit {
     }
 
     private loadProjects() {
-        this.activeProjects = [];
-        this.oldProjects = [];
+        this.activeProjects = [
+            {
+                id: 0,
+                name: "No projects found.",
+                status: 0,
+                description: "",
+                deadline: new Date(),
+                repositoryUrl: ""
+            }
+        ];
+        this.oldProjects = [
+            {
+                id: 0,
+                name: "No projects found.",
+                status: 0,
+                description: "",
+                deadline: new Date(),
+                repositoryUrl: ""
+            }
+        ];
         this.developerProjectService.getByIdDeveloper(this.idUser).then(developerProjects => {
             for (let i = 0 ; i < developerProjects.length ; i++) {
                 this.getProjectName(developerProjects[i].idProject);

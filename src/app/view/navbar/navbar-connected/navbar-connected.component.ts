@@ -77,8 +77,12 @@ export class NavbarConnectedComponent implements OnInit, OnDestroy {
     private changeName(user: SosUser) {
         if(user != null) {
             // Actualise name of User in rightMenu
-            if (user.profilePicture != null) {
-                this.rightMenu[0].img = user.profilePicture;
+            if (user.profilePicture != "") {
+                if (user.profilePicture != null) {
+                    this.rightMenu[0].img = user.profilePicture;
+                }
+            } else {
+                this.rightMenu[0].img = "./assets/images/profilePictures/anonym.jpg";
             }
             this.rightMenu[0].name = user.firstname;
         }

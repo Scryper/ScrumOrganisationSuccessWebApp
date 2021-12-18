@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {AuthenticationService, UserService} from "../../../services";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { first } from "rxjs/operators";
 
 @Component({
@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit {
     loading: boolean = false;
     submitted: boolean = false;
     returnUrl: string = '/today';
-    error: string  = '';
-    isError:boolean=false;
+    error: string = '';
+    isError:boolean = false;
     title: string = "Login";
 
     form:FormGroup = this.fb.group({
@@ -29,8 +29,7 @@ export class LoginComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
-                private router: Router,
-                private userService :UserService) {
+                private router: Router) {
         // redirect to home if already logged in
         if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/login']);

@@ -17,10 +17,10 @@
                 [routerLink]="['/productBacklog', projectName]"
                 type="button"
                 value="Product Backlog"
-                (mousedown)="toggleButtonPress(true);"
-                (mouseup)="toggleButtonPress(false);"
-                (mouseleave)="toggleButtonPress(false);"
-                [ngClass]="{'isPressedClass': isButtonPressed === true}"
+                (mousedown)="toggleProductBacklogButtonPress();"
+                (mouseup)="toggleProductBacklogButtonPress();"
+                (mouseleave)="toggleProductBacklogButtonPress();"
+                [ngClass]="{'isPressedClass': isProductBacklogButtonPressed === true}"
                 class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
         </div>
 
@@ -58,10 +58,10 @@
                     type="button"
                     value="New Sprint"
                     *ngIf="isProductOwner"
-                    (mousedown)="toggleButtonPress(true);"
-                    (mouseup)="toggleButtonPress(false);"
-                    (mouseleave)="toggleButtonPress(false);"
-                    [ngClass]="{'isPressedClass': isButtonPressed === true}"
+                    (mousedown)="toggleCreateSprintButtonPress();"
+                    (mouseup)="toggleCreateSprintButtonPress();"
+                    (mouseleave)="toggleCreateSprintButtonPress();"
+                    [ngClass]="{'isPressedClass': isCreateSprintButtonPressed === true}"
                     class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
             </div>
         </div>
@@ -73,10 +73,10 @@
                 [routerLink]="['/projectManager']"
                 type="button"
                 value="Back"
-                (mousedown)="toggleButtonPress(true);"
-                (mouseup)="toggleButtonPress(false);"
-                (mouseleave)="toggleButtonPress(false);"
-                [ngClass]="{'isPressedClass': isButtonPressed === true}"
+                (mousedown)="toggleBackButtonPress();"
+                (mouseup)="toggleBackButtonPress();"
+                (mouseleave)="toggleBackButtonPress();"
+                [ngClass]="{'isPressedClass': isBackButtonPressed === true}"
                 class="cursorPointer inputSizeBack robotoMedium bgLightRed radius noBorder fontSizeMedium shadowBottom">
         </div>
     </div>

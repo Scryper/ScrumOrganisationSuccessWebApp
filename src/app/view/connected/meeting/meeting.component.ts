@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/angular';
+import { CalendarOptions} from '@fullcalendar/angular';
 import {MeetingsService} from "../../../services/meetings/meetings.service";
 import {AuthenticationService} from "../../../services";
 
@@ -13,10 +13,13 @@ export class MeetingComponent implements OnInit {
 
     calendarOptions: CalendarOptions = {
         initialView: 'dayGridMonth',
-        dateClick: this.handleDateClick.bind(this),
+        eventClick : function (event){
+            localStorage.setItem('roomName', event.event.extendedProps.roomName);
+        },
         weekends: false,
         locale: 'fr'
     };
+
 
     constructor(private meetingService: MeetingsService,
                 private authenticationService: AuthenticationService) { }
@@ -26,14 +29,18 @@ export class MeetingComponent implements OnInit {
     }
 
     handleDateClick(arg: any) {
-        console.log('clic sur la date : ' + arg.dateStr);
+        console.log('clic sur la date : ' + arg.link);
     }
 
     loadEvents(id: number) {
         this.meetingService.getByIdUser(id).then(meetings => {
             let events = [];
             for (let i = 0; i < meetings.length; i++) {
-                 events.push({title: meetings[i].description, date: meetings[i].schedule});
+                 events.push({title: meetings[i].description,
+                        date: meetings[i].schedule,
+                        url : 'videocall',
+                        roomName : meetings[i].url
+                 });
             }
             this.calendarOptions.events = events;
         });
@@ -47,7 +54,6 @@ export class MeetingComponent implements OnInit {
                 }
                 this.username = user.firstname;
             }
-
         });
     }
 }

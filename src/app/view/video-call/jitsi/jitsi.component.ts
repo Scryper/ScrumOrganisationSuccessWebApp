@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import {SosUser} from "../../../domain/sos-user";
 
 declare var JitsiMeetExternalAPI: any;
 
@@ -10,11 +11,13 @@ declare var JitsiMeetExternalAPI: any;
 })
 export class JitsiComponent implements OnInit {
 
-    domain: string = "meet.jit.si"; // For self hosted use your domain
+    domain: string = "meet.jit.si";
     room: any;
     options: any;
     api: any;
     user: any;
+    currentUser: SosUser = null!;
+    userName: string = '';
 
     // For Custom Controls
     isAudioMuted = false;
@@ -24,24 +27,24 @@ export class JitsiComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.room = 'nom de room'; // Set your room name
+        this.room = <string>localStorage.getItem('roomName'); // Set your room name
+        this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
+        this.userName = (this.currentUser.firstname==undefined)?"":this.currentUser.firstname;
         this.user = {
-            name: 'dotniLeBoss' // Set your username
+            name: this.userName // Set your username
         }
     }
 
     ngAfterViewInit(): void {
         this.options = {
             roomName: this.room,
-            width: 900,
-            height: 500,
+            width: 1500,
+            height: 800,
             configOverwrite: {prejoinPageEnabled: false},
-            interfaceConfigOverwrite: {
-                // overwrite interface properties
-            },
+            interfaceConfigOverwrite: {},
             parentNode: document.querySelector('#jitsi-iframe'),
             userInfo: {
-                displayName: this.user.name
+               displayName: this.user.name
             }
         }
 
@@ -80,7 +83,7 @@ export class JitsiComponent implements OnInit {
 
     handleVideoConferenceLeft = () => {
         console.log("handleVideoConferenceLeft");
-        this.router.navigate(['/thank-you']);
+        this.router.navigate(['/meetings']);
     }
 
     handleMuteStatus = (audio: any) => {
@@ -101,10 +104,6 @@ export class JitsiComponent implements OnInit {
 
     executeCommand(command: string) {
         this.api.executeCommand(command);;
-        if(command == 'hangup') {
-            this.router.navigate(['/thank-you']);
-            return;
-        }
 
         if(command == 'toggleAudio') {
             this.isAudioMuted = !this.isAudioMuted;

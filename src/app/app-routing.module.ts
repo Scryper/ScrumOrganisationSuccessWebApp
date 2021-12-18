@@ -21,6 +21,8 @@ import {JoinProjectComponent} from "./view/connected/join-project/join-project.c
 import {UsersRequestComponent} from "./view/connected/users-request/users-request.component";
 import {CreateSprintComponent} from "./view/connected/create-sprint/create-sprint.component";
 import {VisitorGuard} from "./helpers/guard/visitor.guard";
+import {JitsiComponent} from "./view/video-call/jitsi/jitsi.component";
+import {VideoComponent} from "./view/video-call/video/video.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -43,7 +45,8 @@ const routes: Routes = [
     {path: 'joinProject', component : JoinProjectComponent,canActivate:[AuthGuard]},
     {path: 'usersRequest', component : UsersRequestComponent,canActivate:[AuthGuard]},
     {path: 'createSprint', component : CreateSprintComponent,canActivate:[AuthGuard]},
-    {path: '**', component: NotFoundComponent}
+    {path: 'videocall', component : VideoComponent,canActivate:[AuthGuard]},
+    {path: '**', component : HomeComponent}
 ];
 
 @NgModule({

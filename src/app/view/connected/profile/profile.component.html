@@ -12,7 +12,6 @@
         </div>
 
         <div class="inputContainer" formGroupName="main">
-
             <label class="robotoMedium">LastName</label>
             <input type="text"
                    formControlName="lastName"
@@ -28,16 +27,16 @@
                    formControlName="email"
                    class="inputSize radius noOutlineOnFocus paddingLeft robotoLight">
 
-            <h2>Choose technologies</h2>
+            <h2 class="robotoMedium">Choose technologies</h2>
             <select  #Select (change)="assignToSelected(Select.value)" >
                 <option value="" >--Select an user story--</option>
-                <option *ngFor="let elt of technologies" value="{{elt}}">{{elt}}</option>
+                <option *ngFor="let elt of technologies" value="{{elt.name}}">{{elt.name}}</option>
             </select>
             <input (click)="addToChosenTechnologies()" class="radius cursorPointer bgWhiteBlue addBtn" type="button" value="add">
 
-            <h2>Chosen Technologies</h2>
+            <h2 class="robotoMedium">Chosen Technologies</h2>
             <div class="chosenContainer">
-                <p  *ngFor="let elt of ChosenTechnologies">{{elt}}</p>
+                <p class="robotoLight" *ngFor="let elt of chosenTechnologies">{{elt}}</p>
             </div>
 
             <input type="submit" value="Save"

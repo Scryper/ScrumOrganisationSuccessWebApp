@@ -5,7 +5,7 @@
     <div class="projectContainer" *ngFor="let project of projects; let i = index;">
         <ul class="oldProjects" >
             <li class="standardCard radius">{{project.name}}</li>
-            <p *ngIf="projectsIsapply[i]">You already applied to this project</p>
+            <p class="alreadyApplied" *ngIf="projectsIsapply[i]">You already applied to this project</p>
         </ul>
         <button [hidden]="projectsIsapply[i]" [disabled]="unassigned" (click)="joinProject(project)" class="cursorPointer colorGreen">Request to join</button>
     </div>

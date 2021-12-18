@@ -9,6 +9,7 @@ import {DevelopersProjectsService} from "../../../services/developers-projects/d
     styleUrls: ['../../../app.component.css', './project-manager.component.css']
 })
 export class ProjectManagerComponent implements OnInit {
+    private STATUS_INACTIVE: number = 1;
     private STATUS_ACTIVE: number = 2;
     isProjectAlreadyExist: boolean = false;
     buttonPressed: boolean = false;
@@ -18,11 +19,12 @@ export class ProjectManagerComponent implements OnInit {
 
     subtitles: string[] = [
         "Active project",
+        "Active projects",
         "Old projects"
     ];
 
-    activeProjectsNames: string[] = [];
-    oldProjectsNames: string[] = [];
+    activeProjectsNames: string[] = ["No projects found."];
+    oldProjectsNames: string[] = ["No projects found."];
 
     constructor(private authenticationService: AuthenticationService,
                 private developerProjectService: DevelopersProjectsService,
@@ -30,7 +32,6 @@ export class ProjectManagerComponent implements OnInit {
 
     ngOnInit(): void {
         this.authenticationService.currentUser.subscribe(user => {
-
             if(user != null) {
                 this.username = user.firstname;
                 if(user.id != undefined) {
@@ -57,9 +58,15 @@ export class ProjectManagerComponent implements OnInit {
 
     private getProjectName(idProject: number) {
         this.projectService.getById(idProject).then(project => {
-            if(project.status == this.STATUS_ACTIVE) {
+            if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
+                if(this.activeProjectsNames[0] == "No projects found.") {
+                    this.activeProjectsNames.pop();
+                }
                 this.activeProjectsNames.push(project.name);
             } else {
+                if(this.oldProjectsNames[0] == "No projects found.") {
+                    this.oldProjectsNames.pop();
+                }
                 this.oldProjectsNames.push(project.name);
             }
         });

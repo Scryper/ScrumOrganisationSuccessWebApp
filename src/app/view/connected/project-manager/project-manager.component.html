@@ -1,8 +1,8 @@
 <div class="inputContainer">
     <h1 class="robotoMedium title">{{username}}'s projects</h1>
 
-    <h2 class="robotoMedium">{{subtitles[0]}}</h2>
-
+    <h2 *ngIf="!isProductOwner" class="robotoMedium">{{subtitles[0]}}</h2>
+    <h2 *ngIf="isProductOwner" class="robotoMedium">{{subtitles[1]}}</h2>
         <div *ngFor="let project of activeProjects; let index = index;" class="myProject">
             <span [routerLink]="['/myProject', project.name]"
                  class="cursorPointer radius standardCard robotoLight">
@@ -12,7 +12,7 @@
         </div>
 
 
-    <h2 class="robotoMedium">{{subtitles[1]}}</h2>
+    <h2 class="robotoMedium">{{subtitles[2]}}</h2>
     <ul class="oldProjects">
         <li [routerLink]="['/myProject', project.name]"
             class="cursorPointer radius standardCard robotoLight"

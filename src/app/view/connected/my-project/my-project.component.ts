@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../../services";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {DatePipe} from "@angular/common";
@@ -7,6 +7,7 @@ import {SprintsService} from "../../../services/sprints/sprints.service";
 import {Sprint} from "../../../domain/sprint";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
+import {Role} from "../../../domain/role";
 
 @Component({
     selector: 'app-my-project',
@@ -14,6 +15,9 @@ import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/
     styleUrls: ['../../../app.component.css', './my-project.component.css']
 })
 export class MyProjectComponent implements OnInit {
+    private NO_PROJECT: string = "No projects found.";
+    private DATE_FORMAT: string = 'dd/MM/yyyy';
+
     isProductBacklogButtonPressed: boolean = false;
     isBackButtonPressed: boolean = false;
     isCreateSprintButtonPressed: boolean = false;
@@ -26,7 +30,6 @@ export class MyProjectComponent implements OnInit {
     description: string = "";
     repositoryUrl: string = "";
     datePipe = new DatePipe('en-GB');
-    DATE_FORMAT: string = 'dd/MM/yyyy';
 
     actualSprint: ZippedSprint = {
         id: 0,
@@ -41,23 +44,30 @@ export class MyProjectComponent implements OnInit {
                 private projectService: ProjectsService,
                 private sprintService: SprintsService,
                 private sprintUserStoryService: SprintsUserStoriesService,
-                private userStoryService: UserStoriesService) { }
+                private userStoryService: UserStoriesService,
+                private router: Router) { }
 
     ngOnInit(): void {
         this.projectName = this.route.snapshot.paramMap.get("projectName");
-        this.loadProjectInfo();
+        if(this.projectName == this.NO_PROJECT) {
+            this.router.navigate(["/**"]);
+        }
+        else {
+            this.isProductOwner = JSON.parse(<string>localStorage.getItem('currentUser')).role == Role.ProductOwner;
+            this.loadProjectInfo();
+        }
     }
 
-    toggleProductBacklogButtonPress() {
-        this.isProductBacklogButtonPressed = !this.isProductBacklogButtonPressed;
+    toggleProductBacklogButtonPress(isPressed: boolean) {
+        this.isProductBacklogButtonPressed = isPressed;
     }
 
-    toggleBackButtonPress() {
-        this.isBackButtonPressed = !this.isBackButtonPressed;
+    toggleBackButtonPress(isPressed: boolean) {
+        this.isBackButtonPressed = isPressed;
     }
 
-    toggleCreateSprintButtonPress() {
-        this.isCreateSprintButtonPressed = !this.isCreateSprintButtonPressed;
+    toggleCreateSprintButtonPress(isPressed: boolean) {
+        this.isCreateSprintButtonPressed = isPressed;
     }
 
     private loadProjectInfo() {

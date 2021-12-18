@@ -43,11 +43,9 @@ export class ProfileComponent implements OnInit {
                 private route:Router) { }
 
     ngOnInit(): void {
-
         this.fillProfile(JSON.parse(<string>localStorage.getItem('currentUser')));
         this.loadAvailableTechnologies();
         this.fillIdTechnologies();
-
     }
 
     fillIdTechnologies() {

@@ -23,6 +23,7 @@ import {CreateSprintComponent} from "./view/connected/create-sprint/create-sprin
 import {VisitorGuard} from "./helpers/guard/visitor.guard";
 import {JitsiComponent} from "./view/video-call/jitsi/jitsi.component";
 import {VideoComponent} from "./view/video-call/video/video.component";
+import { ProjectPreviewComponent } from "./view/connected/project-preview/project-preview.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -30,23 +31,23 @@ const routes: Routes = [
     {path: 'contact', component: ContactComponent},
     {path: 'tutorial', component: TutorialComponent},
     {path: 'faq', component: FaqComponent},
-    {path: 'login', component : LoginComponent,canActivate:[VisitorGuard]},
+    {path: 'login', component : LoginComponent, canActivate:[VisitorGuard]},
     {path: 'signUp', component : SignUpComponent, canActivate:[VisitorGuard]},
     {path: 'homeVisitor', component : HomeComponent},
     {path: 'profile', component : ProfileComponent, canActivate:[AuthGuard]},
-    {path: 'meetings', component : MeetingComponent,canActivate:[AuthGuard]},
-    {path: 'today', component : TodayComponent,canActivate:[AuthGuard]},
-    {path: 'projectManager', component : ProjectManagerComponent,canActivate:[AuthGuard]},
-    {path: 'createProject', component : CreateProjectComponent,canActivate:[AuthGuard]},
-    {path: 'myProject', component : MyProjectComponent,canActivate:[AuthGuard]},
-    {path: 'myProject/:projectName', component : MyProjectComponent,canActivate:[AuthGuard]},
-    {path: 'notification', component : NotificationComponent,canActivate:[AuthGuard]},
-    {path: 'productBacklog', component : ProductBacklogComponent,canActivate:[AuthGuard]},
-    {path: 'joinProject', component : JoinProjectComponent,canActivate:[AuthGuard]},
-    {path: 'usersRequest', component : UsersRequestComponent,canActivate:[AuthGuard]},
-    {path: 'createSprint', component : CreateSprintComponent,canActivate:[AuthGuard]},
+    {path: 'meetings', component : MeetingComponent, canActivate:[AuthGuard]},
+    {path: 'today', component : TodayComponent, canActivate:[AuthGuard]},
+    {path: 'projectManager', component : ProjectManagerComponent, canActivate:[AuthGuard]},
+    {path: 'createProject', component : CreateProjectComponent, canActivate:[AuthGuard]},
+    {path: 'myProject/:projectName', component : MyProjectComponent, canActivate:[AuthGuard]},
+    {path: 'notification', component : NotificationComponent, canActivate:[AuthGuard]},
+    {path: 'productBacklog/:projectName', component : ProductBacklogComponent, canActivate:[AuthGuard]},
+    {path: 'joinProject', component : JoinProjectComponent, canActivate:[AuthGuard]},
+    {path: 'usersRequest', component : UsersRequestComponent, canActivate:[AuthGuard]},
+    {path: 'createSprint', component : CreateSprintComponent, canActivate:[AuthGuard]},
+    {path: 'projectPreview/:projectName', component : ProjectPreviewComponent, canActivate:[AuthGuard]},
     {path: 'videocall', component : VideoComponent,canActivate:[AuthGuard]},
-    {path: '**', component : HomeComponent}
+    {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({

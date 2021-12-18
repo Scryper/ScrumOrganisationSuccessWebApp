@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../../services";
-
 import {Role} from "../../domain/role";
 
 @Component({
@@ -8,9 +7,7 @@ import {Role} from "../../domain/role";
     templateUrl: './navbar.component.html',
     styleUrls: ['../../app.component.css', './navbar.component.css']
 })
-
 export class NavbarComponent implements OnInit {
-
     RoleEnum = Role;
     role:Role = Role.Visitor;
 

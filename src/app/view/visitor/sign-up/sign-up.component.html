@@ -16,7 +16,6 @@
                            formControlName="confirmPassword"
                            class="inputSize radius noBorder noOutlineOnFocus paddingLeft"
                            placeholder="Confirm Password">
-
                 </div>
 
                 <!--Additional Information-->
@@ -49,14 +48,14 @@
                         </label>
                     </div>
                 </div>
-                <!--Additional Information FIN-->
+                <!--Additional Information end-->
             </div>
 
             <div class="partThree">
                 <input
-                    (mousedown)="toggleButtonPress(true);"
-                    (mouseup)="toggleButtonPress(false);"
-                    (mouseleave)="toggleButtonPress(false);"
+                    (mousedown)="toggleButtonPressed();"
+                    (mouseup)="toggleButtonPressed();"
+                    (mouseleave)="toggleButtonPressed();"
 
                     [ngClass]="{'isPressedClass': buttonIsPressed === true}"
                     id="btnSignUp"

@@ -37,6 +37,7 @@ import { JitsiComponent } from './view/video-call/jitsi/jitsi.component';
 import { UsersRequestComponent } from './view/connected/users-request/users-request.component';
 import { CreateSprintComponent } from './view/connected/create-sprint/create-sprint.component';
 import { VideoComponent } from './view/video-call/video/video.component';
+import { ProjectPreviewComponent } from './view/connected/project-preview/project-preview.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -73,6 +74,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         UsersRequestComponent,
         JoinProjectComponent,
         ProductBacklogComponent,
+        CreateSprintComponent,
+        ProjectPreviewComponent
         CreateSprintComponent,
         VideoComponent
     ],

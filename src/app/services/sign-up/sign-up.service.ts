@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SignUpService {
-
     private _password : string ='';
     private _email : string ='';
 
@@ -32,5 +31,4 @@ export class SignUpService {
         this._password=psw;
         this._email=email;
     }
-
 }

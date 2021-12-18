@@ -59,12 +59,21 @@ a:hover {
     width: 220px;
 }
 
+.inputSizeBack {
+    height: 40px;
+    width: 110px;
+}
+
 .bgLightBlue {
     background-color: #A9DFD8;
 }
 
 .bgWhiteBlue {
     background-color: #D7F4F0;
+}
+
+.bgLightRed {
+    background-color: #F94144;
 }
 
 .bgHardBlue {
@@ -143,6 +152,8 @@ a:hover {
     justify-content : center;
 
     border: solid black 2px;
+
+    margin: 5px;
 }
 
 .pageContainer {

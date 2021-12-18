@@ -9,6 +9,7 @@ import {DevelopersProjectsService} from "../../../services/developers-projects/d
     styleUrls: ['../../../app.component.css', './project-manager.component.css']
 })
 export class ProjectManagerComponent implements OnInit {
+    private STATUS_FINISHED: number = 3;
     isProjectAlreadyExist: boolean = false;
     buttonPressed: boolean = false;
     isProductOwner: boolean = false;
@@ -56,7 +57,7 @@ export class ProjectManagerComponent implements OnInit {
 
     private getProjectName(idProject: number) {
         this.projectService.getById(idProject).then(project => {
-            if(project.status == 2 || (this.isProductOwner && project.status != 3)) {
+            if(project.status != this.STATUS_FINISHED) {
                 this.activeProjectsNames.push(project.name);
             } else {
                 this.oldProjectsNames.push(project.name);

@@ -3,5 +3,5 @@ export interface Meeting {
     idSprint: number,
     schedule: Date,
     description: string,
-    url : string
+    meetingUrl: string
 }

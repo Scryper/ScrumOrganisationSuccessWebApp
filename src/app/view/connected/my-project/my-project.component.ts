@@ -14,8 +14,11 @@ import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/
     styleUrls: ['../../../app.component.css', './my-project.component.css']
 })
 export class MyProjectComponent implements OnInit {
-    buttonIsPressed: boolean = false;
-    isProductOwner: boolean = true;
+    isProductBacklogButtonPressed: boolean = false;
+    isBackButtonPressed: boolean = false;
+    isCreateSprintButtonPressed: boolean = false;
+
+    isProductOwner: boolean = false;
     clicked: any;
     idProject: number = 0;
     projectName: string | null = "";
@@ -45,8 +48,16 @@ export class MyProjectComponent implements OnInit {
         this.loadProjectInfo();
     }
 
-    toggleButtonPress(isPressed:boolean) {
-        this.buttonIsPressed = isPressed;
+    toggleProductBacklogButtonPress() {
+        this.isProductBacklogButtonPressed = !this.isProductBacklogButtonPressed;
+    }
+
+    toggleBackButtonPress() {
+        this.isBackButtonPressed = !this.isBackButtonPressed;
+    }
+
+    toggleCreateSprintButtonPress() {
+        this.isCreateSprintButtonPressed = !this.isCreateSprintButtonPressed;
     }
 
     private loadProjectInfo() {

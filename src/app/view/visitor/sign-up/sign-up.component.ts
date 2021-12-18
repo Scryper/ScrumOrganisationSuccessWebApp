@@ -94,12 +94,11 @@ export class SignUpComponent implements OnInit {
         })
     }
 
-    toggleButtonPress(isPressed:boolean) {
-        this.buttonIsPressed = isPressed;
+    toggleButtonPressed() {
+        this.buttonIsPressed = !this.buttonIsPressed;
     }
 
     sendData() {
-
         let rawValues = this.form.getRawValue().main;
         let birthdateUser: Date = new Date(rawValues.birthdate);
         let user: SosUser = {
@@ -125,11 +124,7 @@ export class SignUpComponent implements OnInit {
             offset = 0;
         }
 
-        if((currentYear - birthYear + offset) < 18) {
-            this.isMajor = false;
-        } else {
-            this.isMajor = true;
-        }
+        this.isMajor = (currentYear - birthYear + offset) >= 18;
 
         if(this.isMajor) {
             this.userService.addUser(user).then(() => {

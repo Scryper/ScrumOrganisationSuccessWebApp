@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Project } from "../../domain/project";
 import { environment } from "../../../environments/environment";
 import {DeveloperProject} from "../../domain/developer-project";
+import {SosUser} from "../../domain/sos-user";
 
 @Injectable({
     providedIn: 'root'
@@ -33,9 +34,12 @@ export class ProjectsService {
     }
 
     // Post requests
-    addProject(project: Project): Observable<Project> {
-        return this.http.post<Project>(`${environment.apiUrl}/projects`, project);
+    addProject(project: Project){
+        const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
+        return this.http.post<Project>(`${environment.apiUrl}/projects`, JSON.stringify(project),httpOptions).toPromise();
     }
+
+
 
     // Put  requests
     updateRepositoryUrl(id: number, repositoryUrl: string): Observable<boolean> {

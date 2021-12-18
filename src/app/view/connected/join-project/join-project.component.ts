@@ -53,7 +53,7 @@ export class JoinProjectComponent implements OnInit {
         //create developerProject
         let devProject:DeveloperProject = {
             idDeveloper : this.userId,
-            idProject : project.id,
+            idProject : project.id!,
             isAppliance : true
         }
         //envoyer la requete
@@ -90,7 +90,7 @@ export class JoinProjectComponent implements OnInit {
     //allows to know if the project has already had a appliance of this user
     isApply() {
         for(let i = 0 ; i< this.projects.length;i++){
-            this.developersProjectsService.getByIdDeveloperIdProject(this.userId,this.projects[i].id).then(tmp=>{
+            this.developersProjectsService.getByIdDeveloperIdProject(this.userId,this.projects[i].id!).then(tmp=>{
                 if(tmp!=null)this.projectsIsapply[i] = true;
                 else this.projectsIsapply[i] = false;
             });

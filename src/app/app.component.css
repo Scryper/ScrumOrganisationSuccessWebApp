@@ -152,6 +152,11 @@ a:hover {
     justify-content:space-evenly;
 }
 
+.paddingSubtitle {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
 .border {
     border: solid black 1px;
 }

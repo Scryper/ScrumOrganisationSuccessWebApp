@@ -17,14 +17,6 @@ export class ProjectsService {
         return this.http.get<Project[]>(`${environment.apiUrl}/projects`).toPromise();
     }
 
-    getByIdProductOwner(idProductOwner: number): Observable<Project[]> {
-        return this.http.get<Project[]>(`${environment.apiUrl}/projects/byProductOwner/${idProductOwner}`);
-    }
-
-    getByIdScrumMaster(idScrumMaster: number): Observable<Project[]> {
-        return this.http.get<Project[]>(`${environment.apiUrl}/projects/byScrumMaster/${idScrumMaster}`);
-    }
-
     getById(id: number): Promise<Project> {
         return this.http.get<Project>(`${environment.apiUrl}/projects/byId/${id}`).toPromise();
     }

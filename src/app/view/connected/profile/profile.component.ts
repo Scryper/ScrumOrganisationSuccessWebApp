@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../../services";
 import {SosUser} from "../../../domain/sos-user";
+import {Technology} from "../../../domain/technology";
+import {TechnologiesService} from "../../../services/technologies/technologies.service";
+import {DevelopersTechnologiesService} from "../../../services/developers-technologies/developers-technologies.service";
 
 @Component({
     selector: 'app-profile',
@@ -12,9 +15,11 @@ export class ProfileComponent implements OnInit {
     private _lastName = '';
     private _firstName = '';
     private _email = '';
+    private idUser: number = 0;
     profilePicture: string | undefined = "./assets/images/profilePictures/anonym.jpg";
     selectedTechnology: string | undefined;
-    ChosenTechnologies: string[] = [];
+    chosenTechnologies: string[] = [];
+    technologies: Technology[] = [];
     isEditButtonHidden: boolean = true;
     buttonIsPressed: boolean = false;
 
@@ -28,17 +33,15 @@ export class ProfileComponent implements OnInit {
          })
     });
 
-    technologies = [
-        "Angular",
-        "React",
-        "VueJS"
-    ];
-
     constructor(private fb: FormBuilder,
-                private authenticationService: AuthenticationService) { }
+                private authenticationService: AuthenticationService,
+                private technologyService: TechnologiesService,
+                private developerTechnology: DevelopersTechnologiesService) { }
 
     ngOnInit(): void {
         this.authenticationService.currentUser.subscribe(user => this.fillProfile(user));
+        this.loadAvailableTechnologies();
+        this.loadUserTechnologies();
     }
 
     sendData() {
@@ -52,6 +55,9 @@ export class ProfileComponent implements OnInit {
 
     fillProfile(user: SosUser) {
         if(user != null) {
+            if (user.id != null) {
+                this.idUser = user.id;
+            }
             this.profilePicture = user.profilePicture;
             this.form.controls['main'].setValue({
                 lastName: user.lastname,
@@ -69,20 +75,40 @@ export class ProfileComponent implements OnInit {
 
     addChosenTechnologiesToForm() {
         const main = this.form.get(`technology`) as FormGroup;
-        let i = 0;
-        for(let elt of this.ChosenTechnologies) {
-            i++;
-            main.addControl("T"+i, this.fb.control(elt, Validators.required))
+        for (let i = 0 ; i < this.chosenTechnologies.length ; i++) {
+            main.addControl("T" + i, this.fb.control(this.chosenTechnologies[i], Validators.required));
         }
     }
 
     addToChosenTechnologies() {
-        if (this.selectedTechnology != null && !this.ChosenTechnologies.includes(this.selectedTechnology)) {
-            this.ChosenTechnologies.push(this.selectedTechnology);
+        if (this.selectedTechnology != null && !this.chosenTechnologies.includes(this.selectedTechnology)) {
+            this.chosenTechnologies.push(this.selectedTechnology);
         }
     }
 
     assignToSelected(selected:string) {
         this.selectedTechnology = selected;
+    }
+
+    private loadAvailableTechnologies() {
+        this.technologyService.getAll().then(technologies => {
+            for (let i = 0 ; i < technologies.length ; i++) {
+                this.technologies.push(technologies[i]);
+            }
+        });
+    }
+
+    private loadUserTechnologies() {
+        this.developerTechnology.getByDeveloperId(this.idUser).then(developerTechnologies => {
+            for (let i = 0 ; i < developerTechnologies.length ; i++) {
+                this.getTechnologyName(developerTechnologies[i].idTechnology);
+            }
+        });
+    }
+
+    private getTechnologyName(idTechnology: number) {
+        this.technologyService.getById(idTechnology).then(technology => {
+            this.chosenTechnologies.push(technology.name);
+        });
     }
 }

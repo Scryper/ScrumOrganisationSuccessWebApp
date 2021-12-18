@@ -12,6 +12,8 @@ import { DeveloperProject } from "../../../domain/developer-project";
     styleUrls: ['../../../app.component.css', './join-project.component.css']
 })
 export class JoinProjectComponent implements OnInit {
+    private STATUS_FINISHED: number = 3;
+
     projects: Project[] = [];
     projectsName: string[] = [];
     projectsIsApply: boolean[] = [];
@@ -32,10 +34,15 @@ export class JoinProjectComponent implements OnInit {
     }
 
     private loadProjects() {
-        this.projectService.getAll().then(tmpProjects => {
-            this.projects = tmpProjects;
-            this.loadProjectNames();
-            this.isApply();
+        this.projectService.getAll().then(projects => {
+            for (let i = 0 ; i < projects.length ; i++) {
+                let project: Project = projects[i];
+                if(project.status != this.STATUS_FINISHED) {
+                    this.projects.push(project);
+                    this.projectsName.push(project.name);
+                    this.isAppliance(project);
+                }
+            }
         });
     }
 
@@ -59,13 +66,6 @@ export class JoinProjectComponent implements OnInit {
         });
     }
 
-    private loadProjectNames() {
-        this.projectsName = [];
-        for (let elt of this.projects) {
-            this.projectsName.push(elt.name);
-        }
-    }
-
     private isAssigned() {
         this.developersProjectsService.getByIdDeveloperIsAppliance(this.userId).then(tmp => {
             this.unassigned = tmp.length != 0;
@@ -73,11 +73,9 @@ export class JoinProjectComponent implements OnInit {
     }
 
     //allows to know if the project has already had a appliance of this user
-    isApply() {
-        for(let i = 0 ; i< this.projects.length ; i++){
-            this.developersProjectsService.getByIdDeveloperIdProject(this.userId, this.projects[i].id!).then(tmp => {
-                this.projectsIsApply[i] = tmp != null;
-            });
-        }
+    isAppliance(project: Project) {
+        this.developersProjectsService.getByIdDeveloperIdProject(this.userId, project.id!).then(developerProject => {
+            this.projectsIsApply.push(developerProject != null);
+        });
     }
 }

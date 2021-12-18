@@ -11,7 +11,12 @@ import { Meeting } from "../../../domain/meeting";
 export class TodayComponent implements OnInit {
     title: string = "Today";
     subtitle: string = "Meetings";
-    meetingsName:string[] = ["No meetings today."];
+    meetings: ZippedMeeting[] = [
+        {
+            name: "No meetings today.",
+            meetingUrl: null
+        }
+    ];
     NUMBER_OF_PARTS: number = 3;
 
     constructor(private meetingService: MeetingsService,
@@ -45,15 +50,15 @@ export class TodayComponent implements OnInit {
                 // if the date of the meeting is today
                 // add it to the list of meetings
                 if(this.isSameDate(slicedTodaysDate, slicedMeetingDate)) {
-                    if(this.meetingsName[0] == "No meetings today.") {
-                        this.meetingsName.pop();
+                    if(this.meetings[0].name == "No meetings today.") {
+                        this.meetings.pop();
                     }
 
                     // displays the schedule to xxhxx
                     let meetingHourSchedule: string = " ";
                     meetingHourSchedule += meetingAsDate.getHours() + "h";
                     meetingHourSchedule += (meetingAsDate.getMinutes() == 0) ? "00" : meetingAsDate.getMinutes();
-                    this.meetingsName.push(meeting.description + meetingHourSchedule);
+                    this.meetings.push({name: meeting.description + meetingHourSchedule, meetingUrl: meeting.meetingUrl});
                 }
             }
         });
@@ -77,4 +82,12 @@ export class TodayComponent implements OnInit {
         }
         return true;
     }
+
+    goToMeeting(meetingUrl: string | null) {
+        console.log(meetingUrl);
+    }
+}
+export interface ZippedMeeting {
+    name: string,
+    meetingUrl: string | null
 }

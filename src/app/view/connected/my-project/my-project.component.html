@@ -14,18 +14,6 @@
             <p class="standardCard radius robotoLight">{{repositoryUrl}}</p>
 
             <input
-                *ngIf="isProductOwner"
-                [routerLink]="['/createSprint', projectName]"
-                type="button"
-                value="Create a new sprint"
-                (mousedown)="toggleCreateSprintButtonPress(true);"
-                (mouseup)="toggleCreateSprintButtonPress(false);"
-                (mouseleave)="toggleCreateSprintButtonPress(false);"
-                [ngClass]="{'isPressedClass': isProductBacklogButtonPressed === true}"
-                class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
-
-            <br/>
-            <input
                 [routerLink]="['/productBacklog', projectName]"
                 type="button"
                 value="Product Backlog"

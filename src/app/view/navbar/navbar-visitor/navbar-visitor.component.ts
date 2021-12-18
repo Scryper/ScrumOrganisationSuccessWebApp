@@ -5,9 +5,8 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './navbar-visitor.component.html',
     styleUrls: ['../../../app.component.css', '../navbar.component.css', './navbar-visitor.component.css']
 })
-
 export class NavbarVisitorComponent implements OnInit {
-    isOpen:boolean = false;
+    isOpen: boolean = false;
 
     constructor() { }
 
@@ -19,16 +18,8 @@ export class NavbarVisitorComponent implements OnInit {
         {
             name: "Team",
             router:"team"
-        },
-        {
-            name: "Tutorial",
-            router:"tutorial"
-        },
-        {
-            name: "FAQ",
-            router:"faq"
-        },
-    ]
+        }
+    ];
 
     rightMenu = [
         {
@@ -39,7 +30,7 @@ export class NavbarVisitorComponent implements OnInit {
             name: "Sign Up",
             router:"signUp"
         }
-    ]
+    ];
 
     ngOnInit(): void { }
 

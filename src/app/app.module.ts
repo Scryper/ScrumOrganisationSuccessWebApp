@@ -37,6 +37,7 @@ import { CreateSprintComponent } from './view/connected/create-sprint/create-spr
 import { VideoComponent } from './view/video-call/video/video.component';
 import { ProjectPreviewComponent } from './view/connected/project-preview/project-preview.component';
 import {NotFoundComponent} from "./view/not-found/not-found.component";
+import { ModifySprintComponent } from './view/connected/modify-sprint/modify-sprint.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -74,7 +75,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         ProjectPreviewComponent,
         CreateSprintComponent,
         VideoComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        ModifySprintComponent
     ],
     imports: [
         BrowserModule,

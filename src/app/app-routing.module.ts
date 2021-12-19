@@ -21,6 +21,8 @@ import {CreateSprintComponent} from "./view/connected/create-sprint/create-sprin
 import {VisitorGuard} from "./helpers/guard/visitor.guard";
 import {VideoComponent} from "./view/video-call/video/video.component";
 import { ProjectPreviewComponent } from "./view/connected/project-preview/project-preview.component";
+import {CreateUserStoryComponent} from "./view/connected/create-user-story/create-user-story.component";
+import {ModifyUserStoryComponent} from "./view/connected/modify-user-story/modify-user-story.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -36,12 +38,14 @@ const routes: Routes = [
     {path: 'createProject', component : CreateProjectComponent, canActivate:[AuthGuard]},
     {path: 'myProject/:projectName', component : MyProjectComponent, canActivate:[AuthGuard]},
     {path: 'notification', component : NotificationComponent, canActivate:[AuthGuard]},
-    {path: 'productBacklog/:projectName', component : ProductBacklogComponent, canActivate:[AuthGuard]},
+    {path: 'productBacklog/:projectName/:idProject', component : ProductBacklogComponent, canActivate:[AuthGuard]},
     {path: 'joinProject', component : JoinProjectComponent, canActivate:[AuthGuard]},
     {path: 'usersRequest', component : UsersRequestComponent, canActivate:[AuthGuard]},
     {path: 'createSprint/:projectName', component : CreateSprintComponent, canActivate:[AuthGuard]},
     {path: 'projectPreview/:projectName', component : ProjectPreviewComponent, canActivate:[AuthGuard]},
     {path: 'videocall', component : VideoComponent,canActivate:[AuthGuard]},
+    {path: 'createUserStory/:projectName/:idProject', component : CreateUserStoryComponent,canActivate:[AuthGuard]},
+    {path: 'modifyUserStory/:projectName/:idProject/:idUserStory', component : ModifyUserStoryComponent,canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];
 

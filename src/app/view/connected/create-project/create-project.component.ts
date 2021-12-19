@@ -69,7 +69,6 @@ export class CreateProjectComponent implements OnInit {
     }
 
     autoComplete() {
-        console.log("test");
         let datePipe = new DatePipe('en-GB');
         let date = datePipe.transform(new Date(), 'yyyy-MM-dd');
         this.form.setValue({

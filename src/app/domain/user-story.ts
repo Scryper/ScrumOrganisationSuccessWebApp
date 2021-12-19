@@ -1,5 +1,5 @@
 export interface UserStory {
-    id: number,
+    id?: number,
     idProject: number,
     name: string,
     description: string,

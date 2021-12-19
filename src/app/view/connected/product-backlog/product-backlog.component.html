@@ -1,12 +1,16 @@
 <div class="pageContainer">
     <div class="productBacklogContainer">
         <h1 class="title robotoMedium">Product Backlog</h1>
-        <ul *ngFor="let eltSprint of productBacklog; let i = index;"
+        <div *ngFor="let userStory of productBacklog; let i = index;"
              class="alignCenter">
+            <span class="standardCard radius robotoLight">US{{userStory.priority}} : {{userStory.name}}</span>
+            <input type="button" value="Delete" (click)="deleteUserStory(userStory);">
+            <input type="button" value="Modify"
+                   [routerLink]="['/modifyUserStory',projectName,idProject,userStory.id]">
+        </div>
 
-            <li class="standardCard radius robotoLight">{{eltSprint}}</li>
-        </ul>
-
+        <input type="button" value="Add User story"
+               [routerLink]="['/createUserStory',projectName,idProject]">
         <br/>
         <input
             [routerLink]="['/myProject', projectName]"

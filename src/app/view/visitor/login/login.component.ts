@@ -11,7 +11,6 @@ import { first } from "rxjs/operators";
 })
 export class LoginComponent implements OnInit {
     isButtonPressed: boolean = false;
-    loading: boolean = false;
     submitted: boolean = false;
     returnUrl: string = '/today';
     error: string = '';
@@ -55,7 +54,6 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
-        this.loading = true;
         let rawValue = this.form.getRawValue();
 
         let userObservable = this.authenticationService.login(rawValue.main.email, rawValue.main.password)
@@ -69,9 +67,6 @@ export class LoginComponent implements OnInit {
                 error => {
                     this.isError = true;
                     this.error = error;
-                    this.loading = false;
-                });
-        //passer cet observable a l'autre component et unsubscribe puisqu'on a pu passer à la page suivante.
-        //userObservable.unsubscribe();
+            });
     }
 }

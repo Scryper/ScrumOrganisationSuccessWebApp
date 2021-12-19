@@ -24,13 +24,11 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
             if (err.status === 400) {
                 // show that the data has not been found in the database
-
             }
 
             const error = err.error.message || err.statusText;
             if(error != "OK") return throwError(error);
             return throwError(null);
-
         }))
     }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../../../services";
 import {ProjectsService} from "../../../services/projects/projects.service";
-import {DevelopersProjectsService} from "../../../services/developers-projects/developers-projects.service";
+import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
 import {Project} from "../../../domain/project";
 
 @Component({
@@ -28,7 +28,7 @@ export class ProjectManagerComponent implements OnInit {
     oldProjects:Project[] = [];
 
     constructor(private authenticationService: AuthenticationService,
-                private developerProjectService: DevelopersProjectsService,
+                private developerProjectService: UsersProjectsService,
                 private projectService: ProjectsService) { }
 
     ngOnInit(): void {

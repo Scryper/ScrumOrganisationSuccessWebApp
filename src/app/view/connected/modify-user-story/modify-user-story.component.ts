@@ -3,7 +3,7 @@ import {SosUser} from "../../../domain/sos-user";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProjectsService} from "../../../services/projects/projects.service";
-import {DevelopersProjectsService} from "../../../services/developers-projects/developers-projects.service";
+import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 import {UserStory} from "../../../domain/user-story";
 
@@ -38,7 +38,7 @@ export class ModifyUserStoryComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private fb: FormBuilder,
                 private projectService : ProjectsService,
-                private developersProjectsService : DevelopersProjectsService,
+                private developersProjectsService : UsersProjectsService,
                 private userStoriesService:UserStoriesService,
                 private router : Router) { }
 

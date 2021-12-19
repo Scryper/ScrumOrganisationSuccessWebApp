@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { DatePipe } from "@angular/common";
-import { DevelopersProjectsService } from "../../../services/developers-projects/developers-projects.service";
+import { UsersProjectsService } from "../../../services/developers-projects/users-projects.service";
 import { SosUser } from "../../../domain/sos-user";
-import {DeveloperProject} from "../../../domain/developer-project";
+import {UserProject} from "../../../domain/user-project";
 
 @Component({
     selector: 'app-project-preview',
@@ -28,7 +28,7 @@ export class ProjectPreviewComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private projectService: ProjectsService,
-                private developersProjectsService: DevelopersProjectsService) { }
+                private developersProjectsService: UsersProjectsService) { }
 
     ngOnInit(): void {
         this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
@@ -63,7 +63,7 @@ export class ProjectPreviewComponent implements OnInit {
     }
 
     requestToJoin() {
-        let appliance: DeveloperProject = {
+        let appliance: UserProject = {
             idDeveloper: this.userId,
             idProject: this.projectId,
             isAppliance: true

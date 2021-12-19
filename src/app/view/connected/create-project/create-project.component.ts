@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {DatePipe} from "@angular/common";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {Project} from "../../../domain/project";
-import {DeveloperProject} from "../../../domain/developer-project";
+import {UserProject} from "../../../domain/user-project";
 import {SosUser} from "../../../domain/sos-user";
-import {DevelopersProjectsService} from "../../../services/developers-projects/developers-projects.service";
+import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -31,7 +31,7 @@ export class CreateProjectComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
                 private projectService : ProjectsService,
-                private developersProjectsService : DevelopersProjectsService,
+                private developersProjectsService : UsersProjectsService,
                 private router : Router) { }
 
     ngOnInit(): void {
@@ -52,7 +52,7 @@ export class CreateProjectComponent implements OnInit {
         //add project in the database
         this.projectService.addProject(projet).then(tmp=>{
             //assigner le product owner to the project
-            let devProject:DeveloperProject = {
+            let devProject:UserProject = {
                 idDeveloper : this.userId,
                 idProject : tmp.id!,
                 isAppliance : false

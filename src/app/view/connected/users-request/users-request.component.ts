@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {SosUser} from "../../../domain/sos-user";
-import {DevelopersProjectsService} from "../../../services/developers-projects/developers-projects.service";
+import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
 import {Project} from "../../../domain/project";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UserService} from "../../../services";
@@ -24,7 +24,7 @@ export class UsersRequestComponent implements OnInit {
     allProjects:Project[] = [];
 
     constructor(private route: ActivatedRoute,
-                private developersProjectsService: DevelopersProjectsService,
+                private developersProjectsService: UsersProjectsService,
                 private projectService: ProjectsService,
                 private userService:UserService) { }
 

@@ -25,6 +25,8 @@ export class ModifyUserStoryComponent implements OnInit {
     currentUser: SosUser = null!;
     userId: number = 0;
 
+
+
     form:FormGroup = this.fb.group({
         main: this.fb.group({
             name:this.fb.control('', Validators.required),
@@ -45,6 +47,14 @@ export class ModifyUserStoryComponent implements OnInit {
         this.idProject = Number(this.route.snapshot.paramMap.get("idProject"));
         this.idUserStory = Number(this.route.snapshot.paramMap.get("idUserStory"));
 
+        this.userStoriesService.getById(this.idUserStory).then(tmp=>{
+            this.form.controls['main'].setValue({
+                name: tmp.name,
+                description: tmp.description,
+                priority: tmp.priority
+            });
+        })
+
         this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
         this.userId = (this.currentUser.id==undefined)?0:this.currentUser.id;
     }
@@ -52,20 +62,21 @@ export class ModifyUserStoryComponent implements OnInit {
     sendData() {
 
         // Modifier une userStory
-        /*//create project
+        //create project
         let tmpUserStory: UserStory = {
             idProject: <number>this.idProject,
             name: this.form.getRawValue().main.name,
             description: this.form.getRawValue().main.description,
-            priority: <number>this.form.getRawValue().main.priority
+            priority: <number>this.form.getRawValue().main.priority,
+            id:<number>this.idUserStory
         }
 
         //add UserStory in the database
-        this.userStoriesService.addUserStory(tmpUserStory).then(tmp=>{
+        this.userStoriesService.updateUserStory(tmpUserStory).then(tmp=>{
             //redirect to projects
             let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
             this.router.navigate([returnUrl]);
-        })*/
+        })
 
     }
 

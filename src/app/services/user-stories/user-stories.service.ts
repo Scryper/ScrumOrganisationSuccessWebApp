@@ -28,12 +28,12 @@ export class UserStoriesService {
 
     // Put requests
     // Modifier une userStory
-    /*updateUserStory(userStoru: UserStory) {
+    updateUserStory(userStoru: UserStory) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
-        return this.http.put<UserStory>(`${environment.apiUrl}/users/firstNameLastNameUpdate/${userStoru.id}`, JSON.stringify(userStoru), httpOptions).toPromise();
-    }*/
+        return this.http.put<UserStory>(`${environment.apiUrl}/userStories/update/${userStoru.id}`, JSON.stringify(userStoru), httpOptions).toPromise();
+    }
 
     // Delete requests
     deleteUserStory(userStoru: UserStory): Promise<boolean> {

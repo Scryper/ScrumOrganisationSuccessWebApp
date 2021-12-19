@@ -35,9 +35,17 @@
                 <input
                     type="button"
                     value="{{actualSprint.name}}"
-                    class="cursorPointer standardCard radius">
+                    class="cursorPointer standardCard radius robotoLight">
                 <p *ngFor="let eltUS of actualSprint.US"
                    class="robotoLight">{{eltUS}}</p>
+                <input [routerLink]="['/modifySprint', actualSprint.id]"
+                       type="button"
+                       value="Modify sprint"
+                       (mousedown)="toggleModifySprintButtonPress(true);"
+                       (mouseup)="toggleModifySprintButtonPress(false);"
+                       (mouseleave)="toggleModifySprintButtonPress(false);"
+                       [ngClass]="{'isPressedClass': isModifySprintButtonPressed === true}"
+                       class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
             </div>
 
             <div *ngIf="oldSprints.length != 0">
@@ -58,7 +66,7 @@
                     [routerLink]="['/createSprint']"
                     type="button"
                     value="New Sprint"
-                    *ngIf="isProductOwner"
+                    *ngIf="isScrumMaster"
                     (mousedown)="toggleCreateSprintButtonPress(true);"
                     (mouseup)="toggleCreateSprintButtonPress(false);"
                     (mouseleave)="toggleCreateSprintButtonPress(false);"

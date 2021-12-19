@@ -53,9 +53,9 @@
 
             <div class="partThree">
                 <input
-                    (mousedown)="toggleButtonPressed();"
-                    (mouseup)="toggleButtonPressed();"
-                    (mouseleave)="toggleButtonPressed();"
+                    (mousedown)="toggleButtonPressed(true);"
+                    (mouseup)="toggleButtonPressed(false);"
+                    (mouseleave)="toggleButtonPressed(false);"
 
                     [ngClass]="{'isPressedClass': buttonIsPressed === true}"
                     id="btnSignUp"

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {AuthenticationService, UserService} from "../../../services";
+import {AuthenticationService} from "../../../services";
 import { Router } from "@angular/router";
 import { first } from "rxjs/operators";
 
@@ -10,7 +10,7 @@ import { first } from "rxjs/operators";
     styleUrls: ['../../../app.component.css', './login.component.css']
 })
 export class LoginComponent implements OnInit {
-    buttonIsPressed: boolean = false;
+    isButtonPressed: boolean = false;
     loading: boolean = false;
     submitted: boolean = false;
     returnUrl: string = '/today';
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
             ]),
             password: this.fb.control('', Validators.required)
         })
-    })
+    });
 
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     }
 
     toggleButtonPress(isPressed:boolean) {
-        this.buttonIsPressed = isPressed;
+        this.isButtonPressed = isPressed;
     }
 
     get controls() { return this.form.controls; }

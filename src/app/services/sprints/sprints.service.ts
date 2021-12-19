@@ -19,8 +19,8 @@ export class SprintsService {
         return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints/byProject/${idProject}`).toPromise();
     }
 
-    getById(id: number): Observable<Sprint> {
-        return this.http.get<Sprint>(`${environment.apiUrl}/sprints/byId/${id}`);
+    getById(id: number): Promise<Sprint> {
+        return this.http.get<Sprint>(`${environment.apiUrl}/sprints/byId/${id}`).toPromise();
     }
 
     // Post requests

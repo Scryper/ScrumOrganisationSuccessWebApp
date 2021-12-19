@@ -21,6 +21,7 @@ import {CreateSprintComponent} from "./view/connected/create-sprint/create-sprin
 import {VisitorGuard} from "./helpers/guard/visitor.guard";
 import {VideoComponent} from "./view/video-call/video/video.component";
 import { ProjectPreviewComponent } from "./view/connected/project-preview/project-preview.component";
+import {ModifySprintComponent} from "./view/connected/modify-sprint/modify-sprint.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
     {path: 'createSprint/:projectName', component : CreateSprintComponent, canActivate:[AuthGuard]},
     {path: 'projectPreview/:projectName', component : ProjectPreviewComponent, canActivate:[AuthGuard]},
     {path: 'videocall', component : VideoComponent,canActivate:[AuthGuard]},
+    {path: 'modifySprint/:sprintId', component : ModifySprintComponent,canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];
 

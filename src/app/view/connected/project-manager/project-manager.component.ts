@@ -24,8 +24,8 @@ export class ProjectManagerComponent implements OnInit {
         "Old projects"
     ];
 
-    activeProjects:Project[] = [];
-    oldProjects:Project[] = [];
+    activeProjects: Project[] = [];
+    oldProjects: Project[] = [];
 
     constructor(private authenticationService: AuthenticationService,
                 private developerProjectService: DevelopersProjectsService,
@@ -95,7 +95,7 @@ export class ProjectManagerComponent implements OnInit {
 
     terminate(project:Project) {
         project.status = 3;
-        this.projectService.updateStatus(project).then((elt)=>{
+        this.projectService.updateStatus(project).then(()=>{
             this.loadProjects();
         });
     }

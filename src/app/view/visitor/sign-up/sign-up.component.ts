@@ -94,8 +94,8 @@ export class SignUpComponent implements OnInit {
         })
     }
 
-    toggleButtonPressed() {
-        this.buttonIsPressed = !this.buttonIsPressed;
+    toggleButtonPressed(isPressed: boolean) {
+        this.buttonIsPressed = isPressed;
     }
 
     sendData() {

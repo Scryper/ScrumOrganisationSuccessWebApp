@@ -1,1 +1,35 @@
-<p>modify-sprint works!</p>
+<div class="columnContainer">
+    <h1 class="title robotoMedium">Modify sprint "{{sprint.description}}"</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h2 class="robotoMedium paddingSubtitle">Deadline</h2>
+        <input type="date"
+               class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
+               min="1960-01-01">
+
+        <h2 class="robotoMedium paddingSubtitle">Add a meeting</h2>
+        <input type="">
+
+        <br/>
+        <textarea
+            formControlName="description"
+            rows="4" cols="50"
+            class="robotoLight"></textarea>
+
+        <h2 class="robotoMedium paddingSubtitle">Add/remove user stories</h2>
+        <div *ngFor="let elt of userStories; let index=index">
+            <span>{{elt.name}} </span>
+            <input type="checkbox" (change)="doDeleteOrAddUserStory($event, elt);" [checked]="isInSprint[index]">
+        </div>
+
+        <input (mousedown)="toggleButtonPressed(true);"
+               (mouseleave)="toggleButtonPressed(false);"
+               (mouseup)="toggleButtonPressed(false);"
+               [disabled]="form.invalid"
+
+               [ngClass]="{'isPressedClass': isButtonPressed === true}"
+               class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
+               id="btnSignUp"
+               type="submit"
+               value="Save">
+    </form>
+</div>

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {DeveloperProject} from "../../domain/developer-project";
 import {environment} from "../../../environments/environment";
-import {SosUser} from "../../domain/sos-user";
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +28,16 @@ export class DevelopersProjectsService {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
         return this.http.post<DeveloperProject>(`${environment.apiUrl}/developerProject`, JSON.stringify(developerProject), httpOptions).toPromise();
+    }
+
+    getDevelopersByIdProject(idProject: number | undefined){
+        return this.http.get<DeveloperProject>(`${environment.apiUrl}/developerProject/developersByIdProject/${idProject}`).toPromise();
+
+    }
+
+    getScrumMasterByIdProject(idProject: number | undefined){
+        return this.http.get<DeveloperProject>(`${environment.apiUrl}/developerProject/scrumMasterByIdProject/${idProject}`).toPromise();
+
     }
 
     // Put requests

@@ -18,7 +18,7 @@ export class UserService {
     }
 
     getById(id:number){
-        return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`);
+        return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`).toPromise();
     }
 
     addUser(user: SosUser) {

@@ -1,22 +1,42 @@
 <div class="sprintContainer">
 
-    <h2>Users Request</h2>
-    <div *ngFor="let eltUsers of requestUsers; let i = index;"
+    <h2>ScrumMaster Request</h2>
+    <div *ngFor="let eltUsers of appliedScrumMasters; let i = index;"
          [class.active]="clicked !== eltUsers"
          class="alignCenter requestUsersContainer">
 
         <input
             type="button"
-            value="{{eltUsers.name}}"
+            value="{{eltUsers.firstname}}"
             (click)="clicked = (clicked === eltUsers ? null :eltUsers)"
             class="cursorPointer radius standardCard">
 
         <div class="options radius alignCenter">
-            <span class="colorGreen cursorPointer" (click)="accept(eltUsers.name)">Accept</span> | <span class="colorRed cursorPointer" (click)="refuse(eltUsers.name)">Refuse</span>
+            <span class="colorGreen cursorPointer" (click)="accept(eltUsers.firstname)">Accept</span> | <span class="colorRed cursorPointer" (click)="refuse(eltUsers.firstname)">Refuse</span>
         </div>
         <div class="technosContainer margeTop">
             <h3>Technology</h3>
-            <p *ngFor="let eltTec of eltUsers.technology">{{eltTec}}</p>
+            <!--<p *ngFor="let eltTec of eltUsers.technology">{{eltTec}}</p>-->
+        </div>
+    </div>
+
+    <h2>Developers Request</h2>
+    <div *ngFor="let eltUsers of appliedDevelopers; let i = index;"
+         [class.active]="clicked !== eltUsers"
+         class="alignCenter requestUsersContainer">
+
+        <input
+            type="button"
+            value="{{eltUsers.firstname}}"
+            (click)="clicked = (clicked === eltUsers ? null :eltUsers)"
+            class="cursorPointer radius standardCard">
+
+        <div class="options radius alignCenter">
+            <span class="colorGreen cursorPointer" (click)="accept(eltUsers.firstname)">Accept</span> | <span class="colorRed cursorPointer" (click)="refuse(eltUsers.firstname)">Refuse</span>
+        </div>
+        <div class="technosContainer margeTop">
+            <h3>Technology</h3>
+            <!--<p *ngFor="let eltTec of eltUsers.technology">{{eltTec}}</p>-->
         </div>
     </div>
 </div>

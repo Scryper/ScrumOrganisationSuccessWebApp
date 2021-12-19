@@ -8,6 +8,7 @@ import {Sprint} from "../../../domain/sprint";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
 import {Role} from "../../../domain/role";
+import {SosUser} from "../../../domain/sos-user";
 
 @Component({
     selector: 'app-my-project',
@@ -24,6 +25,7 @@ export class MyProjectComponent implements OnInit {
     isModifySprintButtonPressed: boolean = false;
 
     isScrumMaster: boolean = false;
+    isProductOwner: boolean = false;
 
     clicked: any;
 
@@ -56,7 +58,9 @@ export class MyProjectComponent implements OnInit {
             this.router.navigate(["/**"]);
         }
         else {
-            this.isScrumMaster = JSON.parse(<string>localStorage.getItem('currentUser')).role == Role.ScrumMaster;
+            let user: SosUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+            this.isScrumMaster = user.role == Role.ScrumMaster;
+            this.isProductOwner = user.role == Role.ProductOwner;
             this.loadProjectInfo();
         }
     }
@@ -120,7 +124,6 @@ export class MyProjectComponent implements OnInit {
     private getLinksSprintsUserStories(idSprint: number): void {
         this.sprintUserStoryService.getByIdSprint(idSprint).then(sprintsUserStories => {
             for (let i = 0 ; i < sprintsUserStories.length ; i++) {
-                console.log(i);
                 let idUserStory: number = sprintsUserStories[i].idUserStory;
                 this.getUserStory(idUserStory, idSprint);
             }

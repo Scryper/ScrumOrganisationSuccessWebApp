@@ -4,10 +4,15 @@
         <h2 class="robotoMedium paddingSubtitle">Deadline</h2>
         <input type="date"
                class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
+               formGroupName="newDeadline"
+               formControlName="deadline"
                min="1960-01-01">
 
         <h2 class="robotoMedium paddingSubtitle">Add a meeting</h2>
-        <input type="">
+        <input type="datetime"
+               class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
+               formGroupName="newMeeting"
+               formControlName="schedule">
 
         <br/>
         <textarea
@@ -25,7 +30,6 @@
                (mouseleave)="toggleButtonPressed(false);"
                (mouseup)="toggleButtonPressed(false);"
                [disabled]="form.invalid"
-
                [ngClass]="{'isPressedClass': isButtonPressed === true}"
                class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
                id="btnSignUp"

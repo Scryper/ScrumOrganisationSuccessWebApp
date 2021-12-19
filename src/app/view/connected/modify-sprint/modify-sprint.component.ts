@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {Sprint} from "../../../domain/sprint";
-import {SprintsService} from "../../../services/sprints/sprints.service";
-import {ActivatedRoute} from "@angular/router";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserStory} from "../../../domain/user-story";
-import {Technology} from "../../../domain/technology";
-import {DeveloperTechnology} from "../../../domain/developer-technology";
+import { Sprint} from "../../../domain/sprint";
+import { SprintsService } from "../../../services/sprints/sprints.service";
+import { ActivatedRoute } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UserStory } from "../../../domain/user-story";
+import { SprintsUserStoriesService } from "../../../services/sprints-user-stories/sprints-user-stories.service";
+import { SprintUserStory } from "../../../domain/sprint-user-story";
+import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 
 @Component({
     selector: 'app-modify-sprint',
@@ -14,6 +15,10 @@ import {DeveloperTechnology} from "../../../domain/developer-technology";
 })
 export class ModifySprintComponent implements OnInit {
     isButtonPressed: boolean = false;
+    isInSprint: boolean[] = [];
+
+    idSprint: number = 0;
+    idsUserStories: number[] = [];
 
     sprint: Sprint = {
         id: 0,
@@ -38,7 +43,9 @@ export class ModifySprintComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
                 private sprintService: SprintsService,
-                private route: ActivatedRoute) { }
+                private route: ActivatedRoute,
+                private sprintUserStoryService: SprintsUserStoriesService,
+                private userStoryService: UserStoriesService) { }
 
     ngOnInit(): void {
         this.loadSprint();
@@ -46,13 +53,13 @@ export class ModifySprintComponent implements OnInit {
 
     private loadSprint() {
         let idSprintAsString: string | null = this.route.snapshot.paramMap.get("sprintId");
-        let idSprint: number = 0;
         if (typeof idSprintAsString === "string") {
-            idSprint = parseInt(idSprintAsString, 10); // cast to int because params are string by default
+            this.idSprint = parseInt(idSprintAsString, 10); // cast to int because params are string by default
         }
-        this.sprintService.getById(idSprint).then(sprint => {
+        this.sprintService.getById(this.idSprint).then(sprint => {
             if(sprint != undefined) { // security
                 this.sprint = sprint;
+                this.fillIdsUserStories(this.sprint.idProject);
             }
         });
     }
@@ -65,27 +72,36 @@ export class ModifySprintComponent implements OnInit {
         this.isButtonPressed = isPressed;
     }
 
-    doDeleteOrAddUserStory(event:any, elt:Technology) {
+    doDeleteOrAddUserStory(event:any, elt: UserStory) {
         if(event.target.checked) {
-            this.addTechnology(elt.id);
+            this.addUserStory(elt.id);
         } else {
-            this.deleteTechnology(elt.id);
+            this.deleteUserStory(elt.id);
         }
     }
 
-    addTechnology(idTechnology: number) {
-        let tmpDeveloperTechnology:DeveloperTechnology = {
-            idUser:this.idUser,
-            idTechnology:idTechnology
+    addUserStory(idUserStory: number) {
+        let sprintUserStory: SprintUserStory = {
+            idSprint: this.sprint.id,
+            idUserStory: idUserStory
         };
-        this.developerTechnology.addDeveloperTechnology(tmpDeveloperTechnology).then((elt) => {
-
-        });
+        this.sprintUserStoryService.addSprintUserStory(sprintUserStory);
     }
 
-    deleteTechnology(idTechnology: number) {
-        this.developerTechnology.deleteDeveloperTechnology(this.idUser, idTechnology).then((elt) => {
+    deleteUserStory(idUserStory: number) {
+        this.sprintUserStoryService.deleteSprintUserStory(this.sprint.id, idUserStory);
+    }
 
+    private fillIdsUserStories(idProject: number) {
+        // get all user stories from the project
+        this.getNameOfUserStories(idProject);
+    }
+
+    private getNameOfUserStories(idProject: number) {
+        this.userStoryService.getByIdProject(idProject).then(userStories => {
+            for (let userStory of userStories) {
+                this.idsUserStories.push(userStory.id);
+            }
         });
     }
 }

@@ -38,7 +38,7 @@
                     class="cursorPointer standardCard radius robotoLight">
                 <p *ngFor="let eltUS of actualSprint.US"
                    class="robotoLight">{{eltUS}}</p>
-                <input *ngIf="isProductOwner"
+                <input *ngIf="isScrumMaster"
                        [routerLink]="['/modifySprint', actualSprint.id]"
                        type="button"
                        value="Modify sprint"

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Project} from "../../../domain/project";
 import { AuthenticationService } from "../../../services";
-import { DevelopersProjectsService } from "../../../services/developers-projects/developers-projects.service";
+import { UsersProjectsService } from "../../../services/developers-projects/users-projects.service";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { SosUser } from "../../../domain/sos-user";
-import { DeveloperProject } from "../../../domain/developer-project";
+import { UserProject } from "../../../domain/user-project";
 
 @Component({
     selector: 'app-join-project',
@@ -24,7 +24,7 @@ export class JoinProjectComponent implements OnInit {
 
     constructor(private authenticationService: AuthenticationService,
                 private projectService: ProjectsService,
-                private developersProjectsService : DevelopersProjectsService) { }
+                private developersProjectsService : UsersProjectsService) { }
 
     ngOnInit(): void {
         this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
@@ -48,7 +48,7 @@ export class JoinProjectComponent implements OnInit {
 
     joinProject(project: Project) {
         //create developerProject
-        let devProject:DeveloperProject = {
+        let devProject:UserProject = {
             idDeveloper : this.userId,
             idProject : project.id!,
             isAppliance : true

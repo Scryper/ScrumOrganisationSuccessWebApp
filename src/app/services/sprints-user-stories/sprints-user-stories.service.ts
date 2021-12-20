@@ -28,7 +28,7 @@ export class SprintsUserStoriesService {
     }
 
     // Delete requests
-    deleteSprintUserStory(id: number): Promise<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrl}/sprintsUserStories/${id}`).toPromise();
+    deleteSprintUserStory(idSPrint: number, idUserStory: number): Promise<boolean> {
+        return this.http.delete<boolean>(`${environment.apiUrl}/sprintsUserStories/${idSPrint}, ${idUserStory}`).toPromise();
     }
 }

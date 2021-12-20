@@ -21,7 +21,7 @@
             <input (mousedown)="toggleButtonPress(true);"
                    (mouseup)="toggleButtonPress(false);"
                    (mouseleave)="toggleButtonPress(false);"
-                   [ngClass]="{'isPressedClass': buttonIsPressed === true}"
+                   [ngClass]="{'isPressedClass': isButtonPressed === true}"
                    type="submit"
                    value="Log in"
                    [disabled]="form.invalid"

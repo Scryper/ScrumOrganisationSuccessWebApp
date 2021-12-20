@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {AuthenticationService, UserService} from "../../../services";
+import {AuthenticationService} from "../../../services";
 import { Router } from "@angular/router";
 import { first } from "rxjs/operators";
 
@@ -10,8 +10,7 @@ import { first } from "rxjs/operators";
     styleUrls: ['../../../app.component.css', './login.component.css']
 })
 export class LoginComponent implements OnInit {
-    buttonIsPressed: boolean = false;
-    loading: boolean = false;
+    isButtonPressed: boolean = false;
     submitted: boolean = false;
     returnUrl: string = '/today';
     error: string = '';
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit {
             ]),
             password: this.fb.control('', Validators.required)
         })
-    })
+    });
 
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
@@ -48,14 +47,13 @@ export class LoginComponent implements OnInit {
     }
 
     toggleButtonPress(isPressed:boolean) {
-        this.buttonIsPressed = isPressed;
+        this.isButtonPressed = isPressed;
     }
 
     get controls() { return this.form.controls; }
 
     onSubmit() {
         this.submitted = true;
-        this.loading = true;
         let rawValue = this.form.getRawValue();
 
         let userObservable = this.authenticationService.login(rawValue.main.email, rawValue.main.password)
@@ -69,9 +67,6 @@ export class LoginComponent implements OnInit {
                 error => {
                     this.isError = true;
                     this.error = error;
-                    this.loading = false;
-                });
-        //passer cet observable a l'autre component et unsubscribe puisqu'on a pu passer à la page suivante.
-        //userObservable.unsubscribe();
+            });
     }
 }

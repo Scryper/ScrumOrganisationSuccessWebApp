@@ -20,7 +20,6 @@ import { NavbarConnectedComponent } from './view/navbar/navbar-connected/navbar-
 import { NavbarDeveloperComponent } from './view/navbar/navbar-connected/navbar-developer/navbar-developer.component';
 import { NavbarScrumMasterComponent } from './view/navbar/navbar-connected/navbar-scrum-master/navbar-scrum-master.component';
 import { NavbarProductOwnerComponent } from './view/navbar/navbar-connected/navbar-product-owner/navbar-product-owner.component';
-import { ConnectedComponent } from './view/connected/connected.component';
 import { VisitorComponent } from './view/visitor/visitor.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ProfileComponent } from './view/connected/profile/profile.component';
@@ -39,6 +38,7 @@ import { ProjectPreviewComponent } from './view/connected/project-preview/projec
 import {NotFoundComponent} from "./view/not-found/not-found.component";
 import { CreateUserStoryComponent } from './view/connected/create-user-story/create-user-story.component';
 import { ModifyUserStoryComponent } from './view/connected/modify-user-story/modify-user-story.component';
+import { ModifySprintComponent } from './view/connected/modify-sprint/modify-sprint.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -62,7 +62,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         NavbarDeveloperComponent,
         NavbarScrumMasterComponent,
         NavbarProductOwnerComponent,
-        ConnectedComponent,
         VisitorComponent,
         ProfileComponent,
         CreateProjectComponent,
@@ -79,6 +78,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         NotFoundComponent,
         CreateUserStoryComponent,
         ModifyUserStoryComponent
+        NotFoundComponent,
+        ModifySprintComponent
     ],
     imports: [
         BrowserModule,

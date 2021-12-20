@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConnectedComponent } from './connected.component';
+import { ModifySprintComponent } from './modify-sprint.component';
 
-describe('ConnectedComponent', () => {
-  let component: ConnectedComponent;
-  let fixture: ComponentFixture<ConnectedComponent>;
+describe('ModifySprintComponent', () => {
+  let component: ModifySprintComponent;
+  let fixture: ComponentFixture<ModifySprintComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConnectedComponent ]
+      declarations: [ ModifySprintComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConnectedComponent);
+    fixture = TestBed.createComponent(ModifySprintComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

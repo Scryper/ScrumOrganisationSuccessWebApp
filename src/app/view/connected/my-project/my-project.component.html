@@ -14,18 +14,6 @@
             <p class="standardCard radius robotoLight">{{repositoryUrl}}</p>
 
             <input
-                *ngIf="isProductOwner"
-                [routerLink]="['/createSprint', projectName]"
-                type="button"
-                value="Create a new sprint"
-                (mousedown)="toggleCreateSprintButtonPress(true);"
-                (mouseup)="toggleCreateSprintButtonPress(false);"
-                (mouseleave)="toggleCreateSprintButtonPress(false);"
-                [ngClass]="{'isPressedClass': isProductBacklogButtonPressed === true}"
-                class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
-
-            <br/>
-            <input
                 [routerLink]="['/productBacklog', projectName, idProject]"
                 type="button"
                 value="Product Backlog"
@@ -37,7 +25,7 @@
         </div>
 
         <div class="sprintContainer elementMyProject"
-             *ngIf="actualSprint.name != '' && oldSprints.length != 0">
+             *ngIf="actualSprint.name != '' || oldSprints.length != 0">
             <h1 *ngIf="actualSprint.name != ''" class="robotoMedium">Active sprint</h1>
             <div [class.active]="clicked !== projectName"
                  (click)="clicked = (clicked === projectName ? null : projectName)"
@@ -47,9 +35,18 @@
                 <input
                     type="button"
                     value="{{actualSprint.name}}"
-                    class="cursorPointer standardCard radius">
+                    class="cursorPointer standardCard radius robotoLight">
                 <p *ngFor="let eltUS of actualSprint.US"
                    class="robotoLight">{{eltUS}}</p>
+                <input *ngIf="isScrumMaster"
+                       [routerLink]="['/modifySprint', actualSprint.id]"
+                       type="button"
+                       value="Modify sprint"
+                       (mousedown)="toggleModifySprintButtonPress(true);"
+                       (mouseup)="toggleModifySprintButtonPress(false);"
+                       (mouseleave)="toggleModifySprintButtonPress(false);"
+                       [ngClass]="{'isPressedClass': isModifySprintButtonPressed === true}"
+                       class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
             </div>
 
             <div *ngIf="oldSprints.length != 0">
@@ -70,7 +67,7 @@
                     [routerLink]="['/createSprint']"
                     type="button"
                     value="New Sprint"
-                    *ngIf="isProductOwner"
+                    *ngIf="isScrumMaster"
                     (mousedown)="toggleCreateSprintButtonPress(true);"
                     (mouseup)="toggleCreateSprintButtonPress(false);"
                     (mouseleave)="toggleCreateSprintButtonPress(false);"

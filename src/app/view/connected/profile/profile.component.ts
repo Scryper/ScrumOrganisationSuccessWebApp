@@ -29,9 +29,9 @@ export class ProfileComponent implements OnInit {
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
-            lastName:this.fb.control(this._lastName, Validators.required),
-            firstName:this.fb.control(this._firstName, Validators.required),
-            email:this.fb.control({value:this._email, disabled: true}, Validators.required)
+            lastName: this.fb.control(this._lastName, Validators.required),
+            firstName: this.fb.control(this._firstName, Validators.required),
+            email: this.fb.control({value: this._email, disabled: true}, Validators.required)
         })
     });
 
@@ -39,8 +39,8 @@ export class ProfileComponent implements OnInit {
                 private authenticationService: AuthenticationService,
                 private technologyService: TechnologiesService,
                 private developerTechnology: DevelopersTechnologiesService,
-                private userService:UserService,
-                private route:Router) { }
+                private userService: UserService,
+                private route: Router) { }
 
     ngOnInit(): void {
         this.fillProfile(JSON.parse(<string>localStorage.getItem('currentUser')));
@@ -61,11 +61,7 @@ export class ProfileComponent implements OnInit {
 
     fillIsHisTechnologies() {
         for(let elt of this.technologies) {
-            if(this.idTechnologies.includes(elt.id)) {
-                this.isHisTechnologies.push(true);
-            }else {
-                this.isHisTechnologies.push(false);
-            }
+            this.isHisTechnologies.push(this.idTechnologies.includes(elt.id));
         }
     }
 

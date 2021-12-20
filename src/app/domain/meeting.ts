@@ -1,5 +1,5 @@
 export interface Meeting {
-    id: number,
+    id?: number,
     idSprint: number,
     schedule: Date,
     description: string,

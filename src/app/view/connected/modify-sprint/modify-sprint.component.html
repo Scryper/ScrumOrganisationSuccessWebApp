@@ -1,0 +1,40 @@
+<div class="columnContainer">
+    <h1 class="title robotoMedium">Modify sprint "{{sprint.description}}"</h1>
+    <form [formGroup]="form">
+        <h2 class="robotoMedium paddingSubtitle">Add a meeting</h2>
+        <form formGroupName="newMeeting" (ngSubmit)="onSubmitNewMeeting()">
+            <input type="datetime-local"
+                   class="inputSize radius marginTop noOutlineOnFocus paddingLeft robotoLight"
+                   formControlName="schedule">
+
+            <br/>
+            <input type="text"
+                   class="inputSize radius marginTop noOutlineOnFocus paddingLeft robotoLight"
+                   formControlName="name"
+                    placeholder="Room name">
+
+            <br/>
+            <textarea
+                formControlName="description"
+                rows="4" cols="50"
+                class="robotoLight marginTop"
+                placeholder="Your meeting's description"></textarea>
+
+            <h2 class="robotoMedium paddingSubtitle">Add/remove user stories</h2>
+            <div *ngFor="let elt of userStories; let index=index">
+                <span class="robotoLight">{{elt.name}} </span>
+                <input type="checkbox" (change)="doDeleteOrAddUserStory($event, elt);" [checked]="isInSprint[index]">
+            </div>
+
+            <input (mousedown)="toggleButtonSaveNewMeetingPressed(true);"
+                   (mouseleave)="toggleButtonSaveNewMeetingPressed(false);"
+                   (mouseup)="toggleButtonSaveNewMeetingPressed(false);"
+                   [disabled]="form.invalid"
+                   [ngClass]="{'isPressedClass': isButtonSaveNewMeetingPressed === true}"
+                   class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom marginTop"
+                   id="btnNewMeeting"
+                   type="submit"
+                   value="Save">
+        </form>
+    </form>
+</div>

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { MeetingsService } from "../../../services/meetings/meetings.service";
 import { AuthenticationService } from "../../../services";
 import { Meeting } from "../../../domain/meeting";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-today',
@@ -20,7 +21,8 @@ export class TodayComponent implements OnInit {
     NUMBER_OF_PARTS: number = 3;
 
     constructor(private meetingService: MeetingsService,
-                private authenticationService: AuthenticationService) { }
+                private authenticationService: AuthenticationService,
+                private router: Router) { }
 
     ngOnInit(): void {
         this.getUserId();
@@ -77,14 +79,16 @@ export class TodayComponent implements OnInit {
 
     private isSameDate(slicedTodaysDate: number[], slicedMeetingDate: number[]): boolean {
         // compare the different parts, if one is different : it is not today
-        for (let i = 0; i < this.NUMBER_OF_PARTS; i++) {
+        for (let i = 0 ; i < this.NUMBER_OF_PARTS ; i++) {
             if(slicedTodaysDate[i] != slicedMeetingDate[i]) return false;
         }
         return true;
     }
 
     goToMeeting(meetingUrl: string | null) {
-        console.log(meetingUrl);
+        if(meetingUrl != null) { // The "default" meeting has null as meetingurl
+            this.router.navigate(['/meetings']);
+        }
     }
 }
 export interface ZippedMeeting {

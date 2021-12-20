@@ -8,6 +8,7 @@ import {Sprint} from "../../../domain/sprint";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
 import {Role} from "../../../domain/role";
+import {SosUser} from "../../../domain/sos-user";
 
 @Component({
     selector: 'app-my-project',
@@ -21,10 +22,15 @@ export class MyProjectComponent implements OnInit {
     isProductBacklogButtonPressed: boolean = false;
     isBackButtonPressed: boolean = false;
     isCreateSprintButtonPressed: boolean = false;
+    isModifySprintButtonPressed: boolean = false;
 
+    isScrumMaster: boolean = false;
     isProductOwner: boolean = false;
+
     clicked: any;
+
     idProject: number = 0;
+
     projectName: string | null = "";
     deadline: string | null = "";
     description: string = "";
@@ -36,7 +42,6 @@ export class MyProjectComponent implements OnInit {
         name: "",
         US: []
     };
-
     oldSprints: ZippedSprint[] = [];
 
     constructor(private route: ActivatedRoute,
@@ -53,7 +58,9 @@ export class MyProjectComponent implements OnInit {
             this.router.navigate(["/**"]);
         }
         else {
-            this.isProductOwner = JSON.parse(<string>localStorage.getItem('currentUser')).role == Role.ProductOwner;
+            let user: SosUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+            this.isScrumMaster = user.role == Role.ScrumMaster;
+            this.isProductOwner = user.role == Role.ProductOwner;
             this.loadProjectInfo();
         }
     }
@@ -68,6 +75,10 @@ export class MyProjectComponent implements OnInit {
 
     toggleCreateSprintButtonPress(isPressed: boolean) {
         this.isCreateSprintButtonPressed = isPressed;
+    }
+
+    toggleModifySprintButtonPress(isPressed: boolean) {
+        this.isModifySprintButtonPressed = isPressed;
     }
 
     private loadProjectInfo() {
@@ -114,14 +125,23 @@ export class MyProjectComponent implements OnInit {
         this.sprintUserStoryService.getByIdSprint(idSprint).then(sprintsUserStories => {
             for (let i = 0 ; i < sprintsUserStories.length ; i++) {
                 let idUserStory: number = sprintsUserStories[i].idUserStory;
-                this.getUserStory(idUserStory, i);
+                this.getUserStory(idUserStory, idSprint);
             }
         });
     }
 
-    private getUserStory(idUserStory: number, index: number) {
+    private getUserStory(idUserStory: number, idSprint: number) {
         this.userStoryService.getById(idUserStory).then(userStory => {
-            this.oldSprints[index].US.push("US" + userStory.priority + " : " + userStory.description);
+            // Only one sprint so no need to do a for
+            if(this.actualSprint.id == idSprint) {
+                this.actualSprint.US.push("US" + userStory.priority + " : " + userStory.description);
+                return; // no need to look in the old sprints if i t is the actual one
+            }
+            for (let i = 0 ; i < this.oldSprints.length ; i++) {
+                if(this.oldSprints[i].id == idSprint) {
+                    this.oldSprints[i].US.push("US" + userStory.priority + " : " + userStory.description);
+                }
+            }
         });
     }
 }

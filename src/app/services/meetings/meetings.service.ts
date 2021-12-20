@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Meeting} from "../../domain/meeting";
 import {environment} from "../../../environments/environment";
@@ -28,8 +28,11 @@ export class MeetingsService {
     }
 
     // Post requests
-    addMeeting(meeting: Meeting): Observable<Meeting> {
-        return this.http.post<Meeting>(`${environment.apiUrl}/meetings`, meeting);
+    addMeeting(meeting: Meeting): Promise<Meeting> {
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type': 'application/json'})
+        }
+        return this.http.post<Meeting>(`${environment.apiUrl}/meetings`, JSON.stringify(meeting), httpOptions).toPromise();
     }
 
     // Put requests

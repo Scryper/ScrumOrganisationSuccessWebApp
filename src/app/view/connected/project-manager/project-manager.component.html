@@ -4,11 +4,11 @@
     <h2 *ngIf="!isProductOwner" class="robotoMedium">{{subtitles[0]}}</h2>
     <h2 *ngIf="isProductOwner" class="robotoMedium">{{subtitles[1]}}</h2>
         <div *ngFor="let project of activeProjects; let index = index;" class="myProject">
-            <span [routerLink]="['/myProject', project.name]"
+            <span (click)="navigateIfActiveProjectNotEmpty(project.name)"
                  class="cursorPointer radius standardCard robotoLight">
                 <span>{{project.name}}</span>
             </span>
-            <button class="marginLeft" (click)="terminate(project);">Terminate</button>
+            <button *ngIf="!isActiveProjctsEmpty" class="marginLeft" (click)="terminate(project);">Terminate</button>
         </div>
 
 

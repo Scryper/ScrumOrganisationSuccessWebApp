@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserProject} from "../../domain/user-project";
 import {environment} from "../../../environments/environment";
+import {DeveloperTechnology} from "../../domain/developer-technology";
 
 @Injectable({
     providedIn: 'root'
@@ -43,4 +44,8 @@ export class UsersProjectsService {
     // Put requests
 
     // Delete requests
+    /*deleteDeveloperProjectByidDeveloperByidProject(idDeveloper: number | undefined, idProject: number | undefined): Promise<UserProject> {
+        console.log(idDeveloper,idProject);
+        return this.http.delete<UserProject>(`${environment.apiUrl}/developerProject/${idDeveloper},${idProject}`).toPromise();
+    }*/
 }

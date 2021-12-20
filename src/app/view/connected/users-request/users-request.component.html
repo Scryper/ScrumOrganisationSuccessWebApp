@@ -7,16 +7,16 @@
 
         <input
             type="button"
-            value="{{eltUsers.firstname}}"
+            value="{{eltUsers.lastname}} {{eltUsers.firstname}}"
             (click)="clicked = (clicked === eltUsers ? null :eltUsers)"
             class="cursorPointer radius standardCard">
 
         <div class="options radius alignCenter">
-            <span class="colorGreen cursorPointer" (click)="accept(eltUsers.firstname)">Accept</span> | <span class="colorRed cursorPointer" (click)="refuse(eltUsers.firstname)">Refuse</span>
+            <span class="colorGreen cursorPointer" (click)="accept(eltUsers)">Accept</span> | <span class="colorRed cursorPointer" (click)="refuse(eltUsers)">Refuse</span>
         </div>
         <div class="technosContainer margeTop">
             <h3>Technology</h3>
-            <!--<p *ngFor="let eltTec of eltUsers.technology">{{eltTec}}</p>-->
+            <p *ngFor="let eltTec of TechnologyScrumMasters">{{eltTec.Technology}}</p>
         </div>
     </div>
 
@@ -27,16 +27,18 @@
 
         <input
             type="button"
-            value="{{eltUsers.firstname}}"
+            value="{{eltUsers.lastname}} {{eltUsers.firstname}}"
             (click)="clicked = (clicked === eltUsers ? null :eltUsers)"
             class="cursorPointer radius standardCard">
 
         <div class="options radius alignCenter">
-            <span class="colorGreen cursorPointer" (click)="accept(eltUsers.firstname)">Accept</span> | <span class="colorRed cursorPointer" (click)="refuse(eltUsers.firstname)">Refuse</span>
+            <span class="colorGreen cursorPointer" (click)="accept(eltUsers)">Accept</span> | <span class="colorRed cursorPointer" (click)="refuse(eltUsers)">Refuse</span>
         </div>
         <div class="technosContainer margeTop">
             <h3>Technology</h3>
-            <!--<p *ngFor="let eltTec of eltUsers.technology">{{eltTec}}</p>-->
+            <p *ngFor="let eltTec of TechnologyDevelopers">
+                <span *ngIf="eltTec.idUser == eltUsers.id">{{eltTec.Technology}}</span>
+            </p>
         </div>
     </div>
 </div>

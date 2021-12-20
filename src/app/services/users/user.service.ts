@@ -9,6 +9,7 @@ import { environment } from "../../../environments/environment";
 export class UserService {
     constructor(private http: HttpClient) { }
 
+    // Get requests
     getAll() {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users`);
     }
@@ -17,10 +18,11 @@ export class UserService {
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`).toPromise();
     }
 
-    getById(id:number){
-        return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`);
+    getByIdProject(idProject: number): Promise<SosUser[]> {
+        return this.http.get<SosUser[]>(`${environment.apiUrl}/users/byProject/${idProject}`).toPromise();
     }
 
+    // Post requests
     addUser(user: SosUser) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -28,6 +30,7 @@ export class UserService {
         return this.http.post<SosUser>(`${environment.apiUrl}/users`, JSON.stringify(user), httpOptions).toPromise();
     }
 
+    // Put request
     updateFirstNameLastName(user: SosUser) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})

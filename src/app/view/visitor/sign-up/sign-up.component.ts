@@ -52,7 +52,6 @@ export class SignUpComponent implements OnInit {
     onSubmit() {
         //reset the error messages
         this.userExists = false;
-        this.userExists = false;
 
         //get the value of the email
         let email: string =this.form.getRawValue().main.email;
@@ -75,7 +74,6 @@ export class SignUpComponent implements OnInit {
         } else {
             this.differentPasswords = true;
         }
-
     }
 
     autoComplete() {

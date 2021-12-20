@@ -7,6 +7,12 @@ import { UserStory } from "../../../domain/user-story";
 import { SprintsUserStoriesService } from "../../../services/sprints-user-stories/sprints-user-stories.service";
 import { SprintUserStory } from "../../../domain/sprint-user-story";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
+import {SosUser} from "../../../domain/sos-user";
+import {UserService} from "../../../services";
+import {MeetingsService} from "../../../services/meetings/meetings.service";
+import {Meeting} from "../../../domain/meeting";
+import {ParticipationService} from "../../../services/participation/participation.service";
+import {Participation} from "../../../domain/participation";
 
 @Component({
     selector: 'app-modify-sprint',
@@ -14,11 +20,15 @@ import {UserStoriesService} from "../../../services/user-stories/user-stories.se
     styleUrls: ['../../../app.component.css', './modify-sprint.component.css']
 })
 export class ModifySprintComponent implements OnInit {
-    isButtonPressed: boolean = false;
+    isButtonSaveNewMeetingPressed: boolean = false;
+
     isInSprint: boolean[] = [];
 
     idSprint: number = 0;
+    idMeeting: number = 0;
     idsUserStories: number[] = [];
+    idsUsersOnProject: number[] = [];
+
 
     sprint: Sprint = {
         id: 0,
@@ -32,11 +42,9 @@ export class ModifySprintComponent implements OnInit {
     userStories: UserStory[] = [];
 
     form: FormGroup = this.fb.group({
-        newDeadline: this.fb.group({
-            deadline: this.fb.control('', Validators.required)
-        }),
         newMeeting: this.fb.group({
             schedule: this.fb.control('', Validators.required),
+            name: this.fb.control('', Validators.required),
             description: this.fb.control('', Validators.required)
         })
     });
@@ -45,7 +53,10 @@ export class ModifySprintComponent implements OnInit {
                 private sprintService: SprintsService,
                 private route: ActivatedRoute,
                 private sprintUserStoryService: SprintsUserStoriesService,
-                private userStoryService: UserStoriesService) { }
+                private userStoryService: UserStoriesService,
+                private userService: UserService,
+                private meetingService: MeetingsService,
+                private participationService: ParticipationService) { }
 
     ngOnInit(): void {
         this.loadSprint();
@@ -59,20 +70,17 @@ export class ModifySprintComponent implements OnInit {
         this.sprintService.getById(this.idSprint).then(sprint => {
             if(sprint != undefined) { // security
                 this.sprint = sprint;
+                this.loadUsers();
                 this.fillIdsUserStories(this.sprint.idProject);
             }
         });
     }
 
-    onSubmit() {
-
+    toggleButtonSaveNewMeetingPressed(isPressed: boolean) {
+        this.isButtonSaveNewMeetingPressed = isPressed;
     }
 
-    toggleButtonPressed(isPressed: boolean) {
-        this.isButtonPressed = isPressed;
-    }
-
-    doDeleteOrAddUserStory(event:any, elt: UserStory) {
+    doDeleteOrAddUserStory(event: any, elt: UserStory) {
         if(event.target.checked) {
             this.addUserStory(elt.id);
         } else {
@@ -115,19 +123,39 @@ export class ModifySprintComponent implements OnInit {
         });
     }
 
-    autoComplete() {
-        this.form.setValue({
-            newDeadline: this.fb.group({
-                deadline: new Date()
-            }),
-            newMeeting: this.fb.group({
-                schedule: new Date(),
-                description: "Your meeting's description."
-            })
+    onSubmitNewMeeting() {
+        let rawValues = this.form.getRawValue().newMeeting;
+        let meeting: Meeting = {
+            idSprint: this.sprint.id,
+            schedule: rawValues.schedule,
+            description: rawValues.description,
+            meetingUrl: rawValues.name
+        };
+        this.meetingService.addMeeting(meeting).then(meeting => {
+            console.log(meeting);
+            if (meeting.id != null) {
+                this.idMeeting = meeting.id;
+            }
+            for(let idUser of this.idsUsersOnProject) {
+                let participation: Participation = {
+                    idMeeting: this.idMeeting,
+                    idUser: idUser
+                }
+                this.participationService.addParticipation(participation).then(result => {
+                    console.log(result);
+                });
+            }
         });
     }
 
-    onSubmitDeadline() {
-
+    // load the users working on the project
+    private loadUsers() {
+        this.userService.getByIdProject(this.sprint.idProject).then(users => {
+            for(let user of users) {
+                if (user.id != null) {
+                    this.idsUsersOnProject.push(user.id);
+                }
+            }
+        });
     }
 }

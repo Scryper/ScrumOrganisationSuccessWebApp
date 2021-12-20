@@ -61,11 +61,7 @@ export class ProfileComponent implements OnInit {
 
     fillIsHisTechnologies() {
         for(let elt of this.technologies) {
-            if(this.idTechnologies.includes(elt.id)) {
-                this.isHisTechnologies.push(true);
-            }else {
-                this.isHisTechnologies.push(false);
-            }
+            this.isHisTechnologies.push(this.idTechnologies.includes(elt.id));
         }
     }
 

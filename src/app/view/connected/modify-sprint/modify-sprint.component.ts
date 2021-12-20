@@ -101,7 +101,33 @@ export class ModifySprintComponent implements OnInit {
         this.userStoryService.getByIdProject(idProject).then(userStories => {
             for (let userStory of userStories) {
                 this.idsUserStories.push(userStory.id);
+                this.userStories.push(userStory);
+                this.verifyIfIsInSPrint(userStory.id);
             }
         });
+    }
+
+    private verifyIfIsInSPrint(id: number) {
+        this.sprintUserStoryService.getByIdUserStory(id).then(sprintUserStories => {
+            for(let sprintUserStory of sprintUserStories) {
+                this.isInSprint.push(sprintUserStory.idSprint == this.sprint.id);
+            }
+        });
+    }
+
+    autoComplete() {
+        this.form.setValue({
+            newDeadline: this.fb.group({
+                deadline: new Date()
+            }),
+            newMeeting: this.fb.group({
+                schedule: new Date(),
+                description: "Your meeting's description."
+            })
+        });
+    }
+
+    onSubmitDeadline() {
+
     }
 }

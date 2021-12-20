@@ -1,40 +1,45 @@
 <div class="columnContainer">
     <h1 class="title robotoMedium">Modify sprint "{{sprint.description}}"</h1>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form">
         <h2 class="robotoMedium paddingSubtitle">Deadline</h2>
-        <input type="date"
-               class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
-               formGroupName="newDeadline"
-               formControlName="deadline"
-               min="1960-01-01">
+        <form formGroupName="newDeadline" (ngSubmit)="onSubmitDeadline()">
+            <input type="date"
+                   class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
+                   formControlName="deadline"
+                   min="1960-01-01">
+
+            <input type="button">
+        </form>
 
         <h2 class="robotoMedium paddingSubtitle">Add a meeting</h2>
-        <input type="datetime"
-               class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
-               formGroupName="newMeeting"
-               formControlName="schedule">
+        <form formGroupName="newMeeting" (ngSubmit)="onSubmit()">
+            <input type="datetime"
+                   class="inputSize radius noBorder noOutlineOnFocus paddingLeft robotoLight"
+                   formGroupName="newMeeting"
+                   formControlName="schedule">
 
-        <br/>
-        <textarea
-            formGroupName="newMeeting"
-            formControlName="description"
-            rows="4" cols="50"
-            class="robotoLight"></textarea>
+            <br/>
+            <textarea
+                formGroupName="newMeeting"
+                formControlName="description"
+                rows="4" cols="50"
+                class="robotoLight"></textarea>
 
-        <h2 class="robotoMedium paddingSubtitle">Add/remove user stories</h2>
-        <div *ngFor="let elt of userStories; let index=index">
-            <span>{{elt.name}} </span>
-            <input type="checkbox" (change)="doDeleteOrAddUserStory($event, elt);" [checked]="isInSprint[index]">
-        </div>
+            <h2 class="robotoMedium paddingSubtitle">Add/remove user stories</h2>
+            <div *ngFor="let elt of userStories; let index=index">
+                <span class="robotoLight">{{elt.name}} </span>
+                <input type="checkbox" (change)="doDeleteOrAddUserStory($event, elt);" [checked]="isInSprint[index]">
+            </div>
 
-        <input (mousedown)="toggleButtonPressed(true);"
-               (mouseleave)="toggleButtonPressed(false);"
-               (mouseup)="toggleButtonPressed(false);"
-               [disabled]="form.invalid"
-               [ngClass]="{'isPressedClass': isButtonPressed === true}"
-               class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
-               id="btnSignUp"
-               type="submit"
-               value="Save">
+            <input (mousedown)="toggleButtonPressed(true);"
+                   (mouseleave)="toggleButtonPressed(false);"
+                   (mouseup)="toggleButtonPressed(false);"
+                   [disabled]="form.invalid"
+                   [ngClass]="{'isPressedClass': isButtonPressed === true}"
+                   class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
+                   id="btnSignUp"
+                   type="submit"
+                   value="Save">
+        </form>
     </form>
 </div>

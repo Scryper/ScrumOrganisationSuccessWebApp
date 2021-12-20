@@ -12,7 +12,7 @@
     width: 100px;
 }
 
-.linkTxt, linkTxt {
+.linkTxt {
     padding: 15px;
 }
 
@@ -66,6 +66,10 @@
     }
 
     .devImg, .labelDevImg, .textDev {
+        /*display: none!important;*/
+    }
+
+    .displayNoneResp {
         display: none!important;
     }
 

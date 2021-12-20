@@ -50,10 +50,8 @@ export class ProjectManagerComponent implements OnInit {
 
         });
         this.loadProjects();
-        /*console.log(this.activeProjects[1].name)*/
-        if(this.activeProjects.length == 0 || (this.activeProjects.length == 1 && this.activeProjects[0].name == this.noProjectsFound ) ) {
-            this.isActiveProjctsEmpty = true;
-        }
+
+
     }
 
     toggleButtonPress(isPressed:boolean) {
@@ -101,6 +99,10 @@ export class ProjectManagerComponent implements OnInit {
                     this.oldProjects.pop();
                 }
                 this.oldProjects.push(project);
+            }
+            // INSERT
+            if(this.activeProjects.length == 0 || (this.activeProjects.length == 1 && this.activeProjects[0].name == this.noProjectsFound ) ) {
+                this.isActiveProjctsEmpty = true;
             }
         });
     }

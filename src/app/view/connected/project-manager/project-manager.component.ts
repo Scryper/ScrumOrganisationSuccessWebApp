@@ -3,6 +3,9 @@ import {AuthenticationService} from "../../../services";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
 import {Project} from "../../../domain/project";
+import {Router} from "@angular/router";
+
+
 
 @Component({
     selector: 'app-project-manager',
@@ -18,18 +21,22 @@ export class ProjectManagerComponent implements OnInit {
     username: string = "";
     idUser: number = 0;
 
+    activeProjects: Project[] = [];
+    oldProjects: Project[] = [];
+
+    noProjectsFound:string = "No projects found.";
+    isActiveProjctsEmpty:boolean = false;
+
     subtitles: string[] = [
         "Active project",
         "Active projects",
         "Old projects"
     ];
 
-    activeProjects: Project[] = [];
-    oldProjects: Project[] = [];
-
     constructor(private authenticationService: AuthenticationService,
                 private developerProjectService: UsersProjectsService,
-                private projectService: ProjectsService) { }
+                private projectService: ProjectsService,
+                private route: Router) { }
 
     ngOnInit(): void {
         this.authenticationService.currentUser.subscribe(user => {
@@ -42,6 +49,8 @@ export class ProjectManagerComponent implements OnInit {
             }
         });
         this.loadProjects();
+
+
     }
 
     toggleButtonPress(isPressed:boolean) {
@@ -52,17 +61,18 @@ export class ProjectManagerComponent implements OnInit {
         this.activeProjects = [
             {
                 id: 0,
-                name: "No projects found.",
+                name: this.noProjectsFound,
                 status: 0,
                 description: "",
                 deadline: new Date(),
                 repositoryUrl: ""
             }
         ];
+
         this.oldProjects = [
             {
                 id: 0,
-                name: "No projects found.",
+                name: this.noProjectsFound,
                 status: 0,
                 description: "",
                 deadline: new Date(),
@@ -79,15 +89,19 @@ export class ProjectManagerComponent implements OnInit {
     private getProjectName(idProject: number) {
         this.projectService.getById(idProject).then(project => {
             if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
-                if(this.activeProjects[0].name == "No projects found.") {
+                if(this.activeProjects[0].name == this.noProjectsFound) {
                     this.activeProjects.pop();
                 }
                 this.activeProjects.push(project);
             } else {
-                if(this.oldProjects[0].name == "No projects found.") {
+                if(this.oldProjects[0].name == this.noProjectsFound) {
                     this.oldProjects.pop();
                 }
                 this.oldProjects.push(project);
+            }
+            // INSERT
+            if(this.activeProjects.length == 0 || (this.activeProjects.length == 1 && this.activeProjects[0].name == this.noProjectsFound ) ) {
+                this.isActiveProjctsEmpty = true;
             }
         });
     }
@@ -97,5 +111,12 @@ export class ProjectManagerComponent implements OnInit {
         this.projectService.updateStatus(project).then(()=>{
             this.loadProjects();
         });
+    }
+
+    navigateIfActiveProjectNotEmpty(projectName:string) {
+        console.log(this.isActiveProjctsEmpty);
+        if(!this.isActiveProjctsEmpty) {
+            this.route.navigate(['/myProject', projectName]);
+        }
     }
 }

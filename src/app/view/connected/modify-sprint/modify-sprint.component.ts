@@ -7,7 +7,6 @@ import { UserStory } from "../../../domain/user-story";
 import { SprintsUserStoriesService } from "../../../services/sprints-user-stories/sprints-user-stories.service";
 import { SprintUserStory } from "../../../domain/sprint-user-story";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
-import {SosUser} from "../../../domain/sos-user";
 import {UserService} from "../../../services";
 import {MeetingsService} from "../../../services/meetings/meetings.service";
 import {Meeting} from "../../../domain/meeting";
@@ -81,10 +80,12 @@ export class ModifySprintComponent implements OnInit {
     }
 
     doDeleteOrAddUserStory(event: any, elt: UserStory) {
-        if(event.target.checked) {
-            this.addUserStory(elt.id);
-        } else {
-            this.deleteUserStory(elt.id);
+        if (elt.id != null) {
+            if(event.target.checked) {
+                this.addUserStory(elt.id);
+            } else {
+                this.deleteUserStory(elt.id);
+            }
         }
     }
 
@@ -108,9 +109,11 @@ export class ModifySprintComponent implements OnInit {
     private getNameOfUserStories(idProject: number) {
         this.userStoryService.getByIdProject(idProject).then(userStories => {
             for (let userStory of userStories) {
-                this.idsUserStories.push(userStory.id);
-                this.userStories.push(userStory);
-                this.verifyIfIsInSPrint(userStory.id);
+                if (userStory.id != null) {
+                    this.idsUserStories.push(userStory.id);
+                    this.userStories.push(userStory);
+                    this.verifyIfIsInSPrint(userStory.id);
+                }
             }
         });
     }

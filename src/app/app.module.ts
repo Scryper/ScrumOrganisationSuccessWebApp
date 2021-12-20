@@ -77,7 +77,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         VideoComponent,
         NotFoundComponent,
         CreateUserStoryComponent,
-        ModifyUserStoryComponent
+        ModifyUserStoryComponent,
         NotFoundComponent,
         ModifySprintComponent
     ],

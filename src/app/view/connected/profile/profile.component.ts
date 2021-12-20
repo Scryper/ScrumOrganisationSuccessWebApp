@@ -16,7 +16,7 @@ import {Router} from "@angular/router";
 export class ProfileComponent implements OnInit {
     private _lastName = '';
     private _firstName = '';
-    private _email = '';
+    email = '';
     idUser: number = 0;
     profilePicture: string | undefined = "./assets/images/profilePictures/anonym.jpg";
 
@@ -30,8 +30,7 @@ export class ProfileComponent implements OnInit {
     form:FormGroup = this.fb.group({
         main: this.fb.group({
             lastName: this.fb.control(this._lastName, Validators.required),
-            firstName: this.fb.control(this._firstName, Validators.required),
-            email: this.fb.control({value: this._email, disabled: true}, Validators.required)
+            firstName: this.fb.control(this._firstName, Validators.required)
         })
     });
 
@@ -72,7 +71,7 @@ export class ProfileComponent implements OnInit {
     fillProfile(user: SosUser) {
         this._lastName = user.lastname;
         this._firstName = user.firstname;
-        this._email = user.email;
+        this.email = user.email;
 
         if(user != null) {
             if (user.id != null) {
@@ -81,14 +80,12 @@ export class ProfileComponent implements OnInit {
             this.profilePicture = user.profilePicture;
             this.form.controls['main'].setValue({
                 lastName: user.lastname,
-                firstName: user.firstname,
-                email: user.email
+                firstName: user.firstname
             });
         } else {
             this.form.controls['main'].setValue({
                 lastName: "",
-                firstName: "",
-                email: ""
+                firstName: ""
             });
         }
     }
@@ -102,9 +99,7 @@ export class ProfileComponent implements OnInit {
     }
 
     deleteTechnology(idTechnology: number) {
-        this.developerTechnology.deleteDeveloperTechnology(this.idUser, idTechnology).then((elt) => {
-
-        });
+        this.developerTechnology.deleteDeveloperTechnology(this.idUser, idTechnology);
     }
 
     addTechnology(idTechnology: number) {
@@ -112,9 +107,7 @@ export class ProfileComponent implements OnInit {
             idUser:this.idUser,
             idTechnology:idTechnology
         };
-        this.developerTechnology.addDeveloperTechnology(tmpDeveloperTechnology).then((elt) => {
-
-        });
+        this.developerTechnology.addDeveloperTechnology(tmpDeveloperTechnology);
     }
 
     doDeleteOrAddTechnology(event:any, elt:Technology) {
@@ -127,17 +120,17 @@ export class ProfileComponent implements OnInit {
 
     sendData() {
         let tmpUser:SosUser = {
-            id:this.idUser,
-            firstname:this.form.getRawValue().main.firstName,
-            lastname:this.form.getRawValue().main.lastName,
-            email:"",
-            profilePicture:"",
-            birthdate:new Date(),
-            password:"",
-            description:"",
-            role:0,
-            token:"",
-            portfolio:""
+            id: this.idUser,
+            firstname: this.form.getRawValue().main.firstName,
+            lastname: this.form.getRawValue().main.lastName,
+            email: "",
+            profilePicture: "",
+            birthdate: new Date(),
+            password: "",
+            description: "",
+            role: 0,
+            token: "",
+            portfolio: ""
         };
         if(confirm("You need to logout to save your changes.\nDo you want to logout ?")) {
             this.userService.updateFirstNameLastName(tmpUser).then((tmp) => {

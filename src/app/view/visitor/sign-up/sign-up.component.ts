@@ -13,9 +13,11 @@ import {SosUser} from "../../../domain/sos-user";
 })
 export class SignUpComponent implements OnInit {
     title: string = "Create an account";
+
     buttonIsPressed: boolean = false;
     userExists: boolean = false;
     differentPasswords: boolean = false;
+    accountCreationSuccessful: boolean = false;
 
     isMajor: boolean = true;
 
@@ -80,14 +82,14 @@ export class SignUpComponent implements OnInit {
         let datePipe = new DatePipe('en-GB');
         let date = datePipe.transform(new Date(), 'yyyy-MM-dd');
         this.form.setValue({
-            main:{
-                email:"Florian@test.com",
-                password:"test",
-                confirmPassword:"test",
-                lastname:"Florian",
-                firstname:"test",
+            main: {
+                email: "Florian@test.com",
+                password: "test",
+                confirmPassword: "test",
+                lastname: "Florian",
+                firstname: "test",
                 birthdate: date,
-                userType:"Developer"
+                userType: "Developer"
             }
         })
     }
@@ -126,8 +128,23 @@ export class SignUpComponent implements OnInit {
 
         if(this.isMajor) {
             this.userService.addUser(user).then(() => {
-                this.router.navigate(['/login']);
+                this.accountCreationSuccessful = true;
+                this.resetFormValues();
             });
         }
+    }
+
+    private resetFormValues() {
+        this.form.setValue({
+            main: {
+                email: "",
+                password: "",
+                confirmPassword: "",
+                lastname: "",
+                firstname: "",
+                birthdate: "",
+                userType: ""
+            }
+        });
     }
 }

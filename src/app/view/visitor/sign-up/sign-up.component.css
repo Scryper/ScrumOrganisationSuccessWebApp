@@ -2,6 +2,15 @@
     width: 420px;
 }
 
+.sizeNormal {
+    width: 420px;
+}
+
+.alignCenter {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #radioButtonContainer {
     padding-top: 10px;
 }

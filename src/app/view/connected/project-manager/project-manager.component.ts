@@ -40,7 +40,6 @@ export class ProjectManagerComponent implements OnInit {
                 }
                 this.isProductOwner = user.role == 3;
             }
-
         });
         this.loadProjects();
     }

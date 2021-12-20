@@ -8,7 +8,7 @@
                 [routerLink]="['/projectPreview', project.name]">{{project.name}}</li>
             <p class="alreadyApplied robotoLight" *ngIf="projectsIsApply[i]">You already applied to this project</p>
         </ul>
-        <button [hidden]="projectsIsApply[i]"
+        <button [hidden]="projectsIsApply[i] || isWorking"
                 [disabled]="unassigned"
                 (click)="joinProject(project)"
                 class="cursorPointer colorGreen">

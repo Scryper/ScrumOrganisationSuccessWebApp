@@ -12,6 +12,7 @@ import { UserProject } from "../../../domain/user-project";
     styleUrls: ['../../../app.component.css', './join-project.component.css']
 })
 export class JoinProjectComponent implements OnInit {
+    private STATUS_ACTIVE: number = 2;
     private STATUS_FINISHED: number = 3;
 
     projects: Project[] = [];
@@ -19,6 +20,7 @@ export class JoinProjectComponent implements OnInit {
     projectsIsApply: boolean[] = [];
 
     unassigned: boolean = false;
+    isWorking: boolean = false;
     currentUser: SosUser = null!;
     userId: number = 0;
 
@@ -31,6 +33,7 @@ export class JoinProjectComponent implements OnInit {
         this.userId = (this.currentUser.id == undefined) ? 0 : this.currentUser.id;
         this.loadProjects();
         this.isAssigned();
+        this.isUserWorking();
     }
 
     private loadProjects() {
@@ -77,5 +80,29 @@ export class JoinProjectComponent implements OnInit {
         this.developersProjectsService.getByIdDeveloperIdProject(this.userId, project.id!).then(developerProject => {
             this.projectsIsApply.push(developerProject != null);
         });
+    }
+
+    private isUserWorking() {
+        this.developersProjectsService.getByIdDeveloper(this.userId).then(developerProjects => {
+            console.log(this.userId);
+            console.log(developerProjects);
+            console.log(this.projects);
+            let i: number = 0;
+            let result: boolean = false;
+            while(i < developerProjects.length && !result) {
+                result = this.verifyIfUserWorks(developerProjects[i].idProject);
+                this.isWorking = result;
+                i++;
+            }
+        });
+    }
+
+    private verifyIfUserWorks(idProject: number): boolean {
+        for(let project of this.projects) {
+            if(project.id == idProject && project.status == this.STATUS_ACTIVE) {
+                return true;
+            }
+        }
+        return false;
     }
 }

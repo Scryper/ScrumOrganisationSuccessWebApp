@@ -13,13 +13,12 @@ export class MeetingComponent implements OnInit {
 
     calendarOptions: CalendarOptions = {
         initialView: 'dayGridMonth',
-        eventClick : function (event){
+        eventClick : function (event) {
             localStorage.setItem('roomName', event.event.extendedProps.roomName);
         },
         weekends: false,
         locale: 'fr'
     };
-
 
     constructor(private meetingService: MeetingsService,
                 private authenticationService: AuthenticationService) { }
@@ -28,18 +27,15 @@ export class MeetingComponent implements OnInit {
         this.getUserInfo();
     }
 
-    handleDateClick(arg: any) {
-        console.log('clic sur la date : ' + arg.link);
-    }
-
     loadEvents(id: number) {
         this.meetingService.getByIdUser(id).then(meetings => {
             let events = [];
             for (let i = 0; i < meetings.length; i++) {
-                 events.push({title: meetings[i].description,
-                        date: meetings[i].schedule,
-                        url : 'videocall',
-                        roomName : meetings[i].meetingUrl
+                 events.push({
+                     title: meetings[i].description,
+                     date: meetings[i].schedule,
+                     url : 'videocall',
+                     roomName : meetings[i].meetingUrl
                  });
             }
             this.calendarOptions.events = events;

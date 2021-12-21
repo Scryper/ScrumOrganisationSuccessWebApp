@@ -26,7 +26,7 @@
 
         <h2 class="robotoMedium">Chosen User stories</h2>
         <div class="chosenContainer">
-            <p class="robotoLight" *ngFor="let elt of ChosenUserStories">{{elt}}</p>
+            <p class="robotoLight" *ngFor="let elt of chosenUserStories">{{elt}}</p>
         </div>
         <input
             (mousedown)="toggleButtonPress(true);"
@@ -36,7 +36,7 @@
             id="btnSignUp"
             type="submit"
             value="Create"
-            [disabled]="form.invalid || ChosenUserStories.length <= 0"
+            [disabled]="form.invalid || chosenUserStories.length <= 0"
             class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
     </div>
 </form>

@@ -53,12 +53,10 @@ export class ProductBacklogComponent implements OnInit, OnDestroy {
 
     private getUserStories(id: number) {
         this.userStoryService.getByIdProject(id).subscribe(userStories => {
-                for(let i = 0 ; i < userStories.length ; i++) {
-                    let userStory: UserStory = userStories[i];
-                    this.productBacklog.push(userStory);
-                }
+            for(let i = 0 ; i < userStories.length ; i++) {
+                this.productBacklog.push(userStories[i]);
             }
-        );
+        });
     }
 
     toggleButtonPress(isPressed: boolean) {

@@ -98,7 +98,9 @@ export class ModifySprintComponent implements OnInit {
     }
 
     deleteUserStory(idUserStory: number) {
-        this.sprintUserStoryService.deleteSprintUserStory(this.sprint.id, idUserStory);
+        if (this.sprint.id != null) {
+            this.sprintUserStoryService.deleteSprintUserStory(this.sprint.id, idUserStory);
+        }
     }
 
     private fillIdsUserStories(idProject: number) {

@@ -1,15 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {AuthenticationService} from "../../../services";
-import {ProjectsService} from "../../../services/projects/projects.service";
-import {DatePipe} from "@angular/common";
-import {SprintsService} from "../../../services/sprints/sprints.service";
-import {Sprint} from "../../../domain/sprint";
-import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
-import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
-import {Role} from "../../../domain/role";
-import {SosUser} from "../../../domain/sos-user";
-import {Subscription} from "rxjs";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { AuthenticationService } from "../../../services";
+import { ProjectsService } from "../../../services/projects/projects.service";
+import { DatePipe } from "@angular/common";
+import { SprintsService } from "../../../services/sprints/sprints.service";
+import { Sprint } from "../../../domain/sprint";
+import { UserStoriesService } from "../../../services/user-stories/user-stories.service";
+import { SprintsUserStoriesService } from "../../../services/sprints-user-stories/sprints-user-stories.service";
+import { Role } from "../../../domain/role";
+import { SosUser } from "../../../domain/sos-user";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'app-my-project',
@@ -109,7 +109,10 @@ export class MyProjectComponent implements OnInit, OnDestroy {
         this.sprintSubscription = this.sprintService.getByIdProject(idProject).subscribe(sprints => {
             for(let i = 0 ; i < sprints.length ; i++) {
                 let sprint: Sprint = sprints[i];
-                let idSprint: number = sprint.id;
+                let idSprint: number = 0;
+                if (sprint.id != null) {
+                    let idSprint: number = sprint.id;
+                }
                 // save the dates as dates elements:
                 // Angular date object and sql server date object are not the same
                 // so this "cast" is necessary
@@ -157,7 +160,7 @@ export class MyProjectComponent implements OnInit, OnDestroy {
 }
 
 export interface ZippedSprint {
-    id: number;
+    id: number | undefined;
     name: string;
     US: string[];
 }

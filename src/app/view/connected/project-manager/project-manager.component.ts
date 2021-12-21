@@ -5,7 +5,7 @@ import {UsersProjectsService} from "../../../services/developers-projects/users-
 import {Project} from "../../../domain/project";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {mergeMap} from "rxjs/operators";
+import {Role} from "../../../domain/role";
 
 @Component({
     selector: 'app-project-manager',
@@ -54,7 +54,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
                 if(user.id != undefined) {
                     this.idUser = user.id;
                 }
-                this.isProductOwner = user.role == 3;
+                this.isProductOwner = user.role == Role.ProductOwner;
             }
         });
         this.loadProjects();
@@ -91,14 +91,6 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
                 this.getProjectName(developerProjects[i].idProject);
             }
         });
-        // this.subscriptionDeveloperProjectService =
-        //     this.developerProjectService.getByIdDeveloper(this.idUser)
-        //         .pipe();
-        //     this.developerProjectService.getByIdDeveloper(this.idUser).subscribe(developerProjects => {
-        //     for (let i = 0 ; i < developerProjects.length ; i++) {
-        //         this.getProjectName(developerProjects[i].idProject);
-        //     }
-        // });
     }
 
     private getProjectName(idProject: number) {

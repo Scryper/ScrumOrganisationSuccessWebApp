@@ -8,6 +8,8 @@ import { Subscription } from "rxjs";
 import { map } from "rxjs/operators";
 import { Sprint } from "../../../domain/sprint";
 import { SprintsService } from "../../../services/sprints/sprints.service";
+import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
+import {SprintUserStory} from "../../../domain/sprint-user-story";
 
 @Component({
     selector: 'app-create-sprint',
@@ -16,13 +18,13 @@ import { SprintsService } from "../../../services/sprints/sprints.service";
 })
 export class CreateSprintComponent implements OnInit, OnDestroy {
     private subscription: Subscription | undefined;
+    private idProject: number = 0;
 
     title: string = "Create sprint";
-    selectedUserStory: string | undefined;
-    chosenUserStories: string[] = [];
+    selectedUserStory: UserStory | undefined;
+    chosenUserStories: UserStory[] = [];
     buttonIsPressed: boolean = false;
     projectName: string | null = "";
-    private idProject: number = 0;
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -31,13 +33,14 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
         })
     });
 
-    productBacklog: string[] = [];
+    productBacklog: UserStory[] = [];
 
     constructor(private fb: FormBuilder,
                 private route: ActivatedRoute,
                 private projectService: ProjectsService,
                 private userStoryService: UserStoriesService,
-                private sprintService: SprintsService) { }
+                private sprintService: SprintsService,
+                private sprintUserStoryService: SprintsUserStoriesService) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -54,33 +57,29 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
         }
     }
 
-    assignToSelected(selected:string) {
-        this.selectedUserStory = selected;
-    }
-
-    getChosenUserStories() {
-        const main = this.form.get(`UserStory`) as FormGroup;
-        for (let i = 0 ; i < this.chosenUserStories.length ; i++) {
-            main.addControl("US" + i, this.fb.control(this.chosenUserStories[i], Validators.required))
+    assignToSelected(selected: string) {
+        for (let userStory of this.productBacklog) {
+            if(userStory.name == selected) {
+                this.selectedUserStory = userStory
+            }
         }
     }
 
     sendData() {
-        let maxSprintNumber: number = 0;
         this.subscription = this.sprintService.getMaxNumberOfSprints(this.idProject)
-            .subscribe(result => maxSprintNumber = result);
-
-        let rawValues = this.form.getRawValue().main;
-        let sprint: Sprint = {
-            idProject: this.idProject,
-            sprintNumber: maxSprintNumber,
-            startDate: new Date(),
-            description: rawValues.description,
-            deadline: rawValues.deadline
-        };
-        this.getChosenUserStories();
-        console.log(this.form.value);
-        console.log(sprint);
+            .pipe(
+                map(result => {
+                    let rawValues = this.form.getRawValue().main;
+                    let sprint: Sprint = {
+                        idProject: this.idProject,
+                        sprintNumber: result + 1, // result is the max number of sprints already present in the database
+                        startDate: new Date(),
+                        description: rawValues.description,
+                        deadline: new Date(rawValues.deadline)
+                    };
+                    this.addSprint(sprint);
+                })
+            ).subscribe();
     }
 
     toggleButtonPress(isPressed:boolean) {
@@ -106,8 +105,22 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
         this.userStoryService.getByIdProject(id).subscribe(userStories => {
             for (let i = 0 ; i < userStories.length ; i++) {
                 let userStory: UserStory = userStories[i];
-                this.productBacklog.push("US" + userStory.priority + " : " + userStory.description);
+                this.productBacklog.push(userStory);
             }
         });
+    }
+
+    private addSprint(sprint: Sprint) {
+        this.subscription = this.sprintService.addSprint(sprint).pipe(
+            map(sprintResult => {
+                for (let userStory of this.chosenUserStories) {
+                    let sprintUserStory: SprintUserStory = {
+                        idSprint: sprintResult.id,
+                        idUserStory: userStory.id
+                    };
+                    this.sprintUserStoryService.addSprintUserStory(sprintUserStory).subscribe();
+                }
+            })
+        ).subscribe();
     }
 }

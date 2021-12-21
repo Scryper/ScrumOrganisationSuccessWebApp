@@ -17,7 +17,10 @@
         <h2 class="robotoMedium">Choose User stories</h2>
         <select  #Select (change)="assignToSelected(Select.value)" >
             <option value="" >--Select an user story--</option>
-            <option *ngFor="let elt of productBacklog" value="{{elt}}">{{elt}}</option>
+            <option *ngFor="let elt of productBacklog"
+                    value="{{elt.name}}">
+                US{{elt.priority}} :  {{elt.description}}
+            </option>
         </select>
         <input (click)="addToChosenUserStories()"
                class="radius cursorPointer bgWhiteBlue addBtn robotoLight"
@@ -26,7 +29,10 @@
 
         <h2 class="robotoMedium">Chosen User stories</h2>
         <div class="chosenContainer">
-            <p class="robotoLight" *ngFor="let elt of chosenUserStories">{{elt}}</p>
+            <p class="robotoLight"
+               *ngFor="let elt of chosenUserStories">
+                US{{elt.priority}} :  {{elt.description}}
+            </p>
         </div>
         <input
             (mousedown)="toggleButtonPress(true);"

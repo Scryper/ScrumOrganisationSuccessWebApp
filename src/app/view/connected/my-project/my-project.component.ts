@@ -109,10 +109,6 @@ export class MyProjectComponent implements OnInit, OnDestroy {
         this.sprintSubscription = this.sprintService.getByIdProject(idProject).subscribe(sprints => {
             for(let i = 0 ; i < sprints.length ; i++) {
                 let sprint: Sprint = sprints[i];
-                let idSprint: number = 0;
-                if (sprint.id != null) {
-                    let idSprint: number = sprint.id;
-                }
                 // save the dates as dates elements:
                 // Angular date object and sql server date object are not the same
                 // so this "cast" is necessary
@@ -137,7 +133,7 @@ export class MyProjectComponent implements OnInit, OnDestroy {
     private getLinksSprintsUserStories(idSprint: number): void {
         this.sprintUserStorySubscription = this.sprintUserStoryService.getByIdSprint(idSprint).subscribe(sprintsUserStories => {
             for (let i = 0 ; i < sprintsUserStories.length ; i++) {
-                let idUserStory: number = sprintsUserStories[i].idUserStory;
+                let idUserStory: number = <number>sprintsUserStories[i].idUserStory;
                 this.getUserStory(idUserStory, idSprint);
             }
         });

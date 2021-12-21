@@ -3,7 +3,6 @@ import {AuthenticationService} from "../../../services";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
 import {Project} from "../../../domain/project";
-import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-project-manager',
@@ -36,6 +35,7 @@ export class ProjectManagerComponent implements OnInit {
                 private projectService: ProjectsService) { }
 
     ngOnInit(): void {
+        console.log()
         this.authenticationService.currentUser.subscribe(user => {
             if(user != null) {
                 this.username = user.firstname;

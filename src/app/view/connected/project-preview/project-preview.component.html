@@ -12,13 +12,13 @@
         <p class="standardCard radius robotoLight">{{description}}</p>
 
         <input
+            *ngIf="assigned"
             type="button"
             value="Request to join"
             (mousedown)="toggleButtonPress(true);"
             (mouseup)="toggleButtonPress(false);"
             (mouseleave)="toggleButtonPress(false);"
             [ngClass]="{'isPressedClass': isButtonPressed === true}"
-            [hidden]="unassigned"
             (click)="requestToJoin()"
             class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
 

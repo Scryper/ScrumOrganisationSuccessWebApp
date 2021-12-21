@@ -1,6 +1,6 @@
 <div class="inputContainer">
     <h1 class="title robotoMedium">List of upcoming and ongoing projects</h1>
-    <h2 class="robotoLight paddingSubtitle" *ngIf="unassigned">You are already assigned to a project</h2>
+    <h2 class="robotoLight paddingSubtitle" *ngIf="assigned">You are already assigned to a project</h2>
     <div class="projectContainer"
          *ngFor="let project of projects; let i = index;">
         <ul>
@@ -8,8 +8,7 @@
                 [routerLink]="['/projectPreview', project.name]">{{project.name}}</li>
             <p class="alreadyApplied robotoLight" *ngIf="projectsIsApply[i]">You already applied to this project</p>
         </ul>
-        <button [hidden]="projectsIsApply[i] || isWorking"
-                [disabled]="unassigned"
+        <button [hidden]="assigned || projectsIsApply[i]"
                 (click)="joinProject(project)"
                 class="cursorPointer colorGreen">
             Request to join

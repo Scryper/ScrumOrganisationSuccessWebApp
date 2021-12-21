@@ -1,52 +1,61 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Project} from "../../../domain/project";
 import { AuthenticationService } from "../../../services";
 import { UsersProjectsService } from "../../../services/developers-projects/users-projects.service";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { SosUser } from "../../../domain/sos-user";
 import { UserProject } from "../../../domain/user-project";
+import {Subscription} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-join-project',
     templateUrl: './join-project.component.html',
     styleUrls: ['../../../app.component.css', './join-project.component.css']
 })
-export class JoinProjectComponent implements OnInit {
-    private STATUS_ACTIVE: number = 2;
+export class JoinProjectComponent implements OnInit, OnDestroy {
     private STATUS_FINISHED: number = 3;
 
     projects: Project[] = [];
     projectsName: string[] = [];
     projectsIsApply: boolean[] = [];
 
-    unassigned: boolean = false;
-    isWorking: boolean = false;
+    assigned: boolean = false;
     currentUser: SosUser = null!;
     userId: number = 0;
+
+    private subscription: Subscription | undefined;
 
     constructor(private authenticationService: AuthenticationService,
                 private projectService: ProjectsService,
                 private developersProjectsService : UsersProjectsService) { }
 
+    ngOnDestroy(): void {
+        this.subscription?.unsubscribe();
+    }
+
     ngOnInit(): void {
         this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
         this.userId = (this.currentUser.id == undefined) ? 0 : this.currentUser.id;
-        this.loadProjects();
-        this.isAssigned();
-        this.isUserWorking();
+        this.subscription = this.loadProjects()
+            .pipe(map(() => {
+                this.isAssigned()
+            })
+        ).subscribe();
     }
 
     private loadProjects() {
-        // this.projectService.getAll().then(projects => {
-        //     for (let i = 0 ; i < projects.length ; i++) {
-        //         let project: Project = projects[i];
-        //         if(project.status != this.STATUS_FINISHED) {
-        //             this.projects.push(project);
-        //             this.projectsName.push(project.name);
-        //             this.isAppliance(project);
-        //         }
-        //     }
-        // });
+        return this.projectService.getAll().pipe(
+            map(projects => {
+                for(let project of projects) {
+                    if(project.status != this.STATUS_FINISHED) {
+                        this.projects.push(project);
+                        this.projectsName.push(project.name);
+                        this.isAppliance(project);
+                    }
+                }
+            }
+        ));
     }
 
     joinProject(project: Project) {
@@ -70,39 +79,15 @@ export class JoinProjectComponent implements OnInit {
     }
 
     private isAssigned() {
-        // this.developersProjectsService.getByIdDeveloperIsAppliance(this.userId).then(tmp => {
-        //     this.unassigned = tmp.length != 0;
-        // });
+        this.developersProjectsService.getByIdDeveloperIsAppliance(this.userId).subscribe(tmp => {
+            this.assigned = tmp.length != 0;
+        });
     }
 
     //allows to know if the project has already had a appliance of this user
     isAppliance(project: Project) {
-        // this.developersProjectsService.getByIdDeveloperIdProject(this.userId, project.id!).then(developerProject => {
-        //     this.projectsIsApply.push(developerProject != null);
-        // });
-    }
-
-    private isUserWorking() {
-        // this.developersProjectsService.getByIdDeveloper(this.userId).then(developerProjects => {
-        //     console.log(this.userId);
-        //     console.log(developerProjects);
-        //     console.log(this.projects);
-        //     let i: number = 0;
-        //     let result: boolean = false;
-        //     while(i < developerProjects.length && !result) {
-        //         result = this.verifyIfUserWorks(developerProjects[i].idProject);
-        //         this.isWorking = result;
-        //         i++;
-        //     }
-        // });
-    }
-
-    private verifyIfUserWorks(idProject: number): boolean {
-        for(let project of this.projects) {
-            if(project.id == idProject && project.status == this.STATUS_ACTIVE) {
-                return true;
-            }
-        }
-        return false;
+        this.developersProjectsService.getByIdDeveloperIdProject(this.userId, project.id!).subscribe(developerProject => {
+            this.projectsIsApply.push(developerProject != null);
+        });
     }
 }

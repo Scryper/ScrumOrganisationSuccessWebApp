@@ -1,25 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Sprint} from "../../../domain/sprint";
-import { SprintsService } from "../../../services/sprints/sprints.service";
-import { ActivatedRoute } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserStory } from "../../../domain/user-story";
-import { SprintsUserStoriesService } from "../../../services/sprints-user-stories/sprints-user-stories.service";
-import { SprintUserStory } from "../../../domain/sprint-user-story";
+import {Sprint} from "../../../domain/sprint";
+import {UserStory} from "../../../domain/user-story";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {SprintsService} from "../../../services/sprints/sprints.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 import {UserService} from "../../../services";
 import {MeetingsService} from "../../../services/meetings/meetings.service";
-import {Meeting} from "../../../domain/meeting";
 import {ParticipationService} from "../../../services/participation/participation.service";
+import {SprintUserStory} from "../../../domain/sprint-user-story";
+import {Meeting} from "../../../domain/meeting";
 import {Participation} from "../../../domain/participation";
 import {DatePipe} from "@angular/common";
 
 @Component({
-    selector: 'app-modify-sprint',
-    templateUrl: './modify-sprint.component.html',
-    styleUrls: ['../../../app.component.css', './modify-sprint.component.css']
+  selector: 'app-create-meeting',
+  templateUrl: './create-meeting.component.html',
+  styleUrls: ['../../../app.component.css', './create-meeting.component.css']
 })
-export class ModifySprintComponent implements OnInit {
+export class CreateMeetingComponent implements OnInit {
+
     isButtonSaveNewMeetingPressed: boolean = false;
 
     isInSprint: boolean[] = [];
@@ -29,6 +30,7 @@ export class ModifySprintComponent implements OnInit {
     idsUserStories: number[] = [];
     idsUsersOnProject: number[] = [];
 
+    projectName: string | null = "";
 
     sprint: Sprint = {
         id: 0,
@@ -51,19 +53,21 @@ export class ModifySprintComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
                 private sprintService: SprintsService,
-                private route: ActivatedRoute,
+                private activatedRoute: ActivatedRoute,
                 private sprintUserStoryService: SprintsUserStoriesService,
                 private userStoryService: UserStoriesService,
                 private userService: UserService,
                 private meetingService: MeetingsService,
-                private participationService: ParticipationService) { }
+                private participationService: ParticipationService,
+                private router: Router) { }
 
     ngOnInit(): void {
+        this.projectName = this.activatedRoute.snapshot.paramMap.get("projectName");
         this.loadSprint();
     }
 
     private loadSprint() {
-        let idSprintAsString: string | null = this.route.snapshot.paramMap.get("sprintId");
+        let idSprintAsString: string | null = this.activatedRoute.snapshot.paramMap.get("sprintId");
         if (typeof idSprintAsString === "string") {
             this.idSprint = parseInt(idSprintAsString, 10); // cast to int because params are string by default
         }
@@ -128,6 +132,7 @@ export class ModifySprintComponent implements OnInit {
     }
 
     onSubmitNewMeeting() {
+        console.log("test")
         let rawValues = this.form.getRawValue().newMeeting;
         let meeting: Meeting = {
             idSprint: this.sprint.id,
@@ -149,6 +154,8 @@ export class ModifySprintComponent implements OnInit {
                     console.log(result);
                 });
             }
+
+            this.router.navigate(['/myProject',this.projectName]);
         });
     }
 
@@ -174,13 +181,5 @@ export class ModifySprintComponent implements OnInit {
             }
         });
     }
-
-    /*form: FormGroup = this.fb.group({
-        newMeeting: this.fb.group({
-            schedule: this.fb.control('', Validators.required),
-            name: this.fb.control('', Validators.required),
-            description: this.fb.control('', Validators.required)
-        })
-    });*/
 
 }

@@ -23,7 +23,7 @@ import {VideoComponent} from "./view/video-call/video/video.component";
 import { ProjectPreviewComponent } from "./view/connected/project-preview/project-preview.component";
 import {CreateUserStoryComponent} from "./view/connected/create-user-story/create-user-story.component";
 import {ModifyUserStoryComponent} from "./view/connected/modify-user-story/modify-user-story.component";
-import {ModifySprintComponent} from "./view/connected/modify-sprint/modify-sprint.component";
+import {CreateMeetingComponent} from "./view/connected/create-meeting/create-meeting.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -47,7 +47,7 @@ const routes: Routes = [
     {path: 'videocall', component : VideoComponent,canActivate:[AuthGuard]},
     {path: 'createUserStory/:projectName/:idProject', component : CreateUserStoryComponent,canActivate:[AuthGuard]},
     {path: 'modifyUserStory/:projectName/:idProject/:idUserStory', component : ModifyUserStoryComponent,canActivate:[AuthGuard]},
-    {path: 'modifySprint/:sprintId', component : ModifySprintComponent,canActivate:[AuthGuard]},
+    {path: 'createMeeting/:projectName/:sprintId', component : CreateMeetingComponent,canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];
 

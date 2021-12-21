@@ -1,6 +1,5 @@
 <div class="columnContainer">
-    <h1 class="title robotoMedium">Modify sprint "{{sprint.description}}"</h1>
-    <form [formGroup]="form" (dblclick)="autoComplete()">
+    <form [formGroup]="form" (dblclick)="autoComplete()" >
         <h2 class="robotoMedium paddingSubtitle">Add a meeting</h2>
         <form formGroupName="newMeeting" (ngSubmit)="onSubmitNewMeeting()">
             <input type="datetime-local"
@@ -11,7 +10,7 @@
             <input type="text"
                    class="inputSize radius marginTop noOutlineOnFocus paddingLeft robotoLight"
                    formControlName="name"
-                    placeholder="Room name">
+                   placeholder="Meeting name">
 
             <br/>
             <textarea
@@ -20,12 +19,7 @@
                 class="robotoLight marginTop"
                 placeholder="Your meeting's description"></textarea>
 
-            <h2 class="robotoMedium paddingSubtitle">Add/remove user stories</h2>
-            <div *ngFor="let elt of userStories; let index=index">
-                <span class="robotoLight">{{elt.name}} </span>
-                <input type="checkbox" (change)="doDeleteOrAddUserStory($event, elt);" [checked]="isInSprint[index]">
-            </div>
-
+            <br/>
             <input (mousedown)="toggleButtonSaveNewMeetingPressed(true);"
                    (mouseleave)="toggleButtonSaveNewMeetingPressed(false);"
                    (mouseup)="toggleButtonSaveNewMeetingPressed(false);"

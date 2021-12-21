@@ -38,13 +38,12 @@ import { ProjectPreviewComponent } from './view/connected/project-preview/projec
 import {NotFoundComponent} from "./view/not-found/not-found.component";
 import { CreateUserStoryComponent } from './view/connected/create-user-story/create-user-story.component';
 import { ModifyUserStoryComponent } from './view/connected/modify-user-story/modify-user-story.component';
-import { ModifySprintComponent } from './view/connected/modify-sprint/modify-sprint.component';
+import { CreateMeetingComponent } from './view/connected/create-meeting/create-meeting.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
     interactionPlugin
 ]);
-
 
 @NgModule({
     declarations: [
@@ -79,7 +78,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         CreateUserStoryComponent,
         ModifyUserStoryComponent,
         NotFoundComponent,
-        ModifySprintComponent
+        CreateMeetingComponent
     ],
     imports: [
         BrowserModule,

@@ -37,16 +37,16 @@ export class JoinProjectComponent implements OnInit {
     }
 
     private loadProjects() {
-        this.projectService.getAll().then(projects => {
-            for (let i = 0 ; i < projects.length ; i++) {
-                let project: Project = projects[i];
-                if(project.status != this.STATUS_FINISHED) {
-                    this.projects.push(project);
-                    this.projectsName.push(project.name);
-                    this.isAppliance(project);
-                }
-            }
-        });
+        // this.projectService.getAll().then(projects => {
+        //     for (let i = 0 ; i < projects.length ; i++) {
+        //         let project: Project = projects[i];
+        //         if(project.status != this.STATUS_FINISHED) {
+        //             this.projects.push(project);
+        //             this.projectsName.push(project.name);
+        //             this.isAppliance(project);
+        //         }
+        //     }
+        // });
     }
 
     joinProject(project: Project) {
@@ -57,44 +57,44 @@ export class JoinProjectComponent implements OnInit {
             isAppliance : true
         }
         // send request
-        this.developersProjectsService.addDeveloperProject(devProject).then(result => {
-            if(result != null) {
-                // change the appliance's value to avoid making multiple requests for the same project
-                for(let i = 0 ; i < this.projects.length ; i++){
-                    if(this.projects[i].id == project.id){
-                        this.projectsIsApply[i] = true;
-                    }
-                }
-            }
-        });
+        // this.developersProjectsService.addDeveloperProject(devProject).then(result => {
+        //     if(result != null) {
+        //         // change the appliance's value to avoid making multiple requests for the same project
+        //         for(let i = 0 ; i < this.projects.length ; i++){
+        //             if(this.projects[i].id == project.id){
+        //                 this.projectsIsApply[i] = true;
+        //             }
+        //         }
+        //     }
+        // });
     }
 
     private isAssigned() {
-        this.developersProjectsService.getByIdDeveloperIsAppliance(this.userId).then(tmp => {
-            this.unassigned = tmp.length != 0;
-        });
+        // this.developersProjectsService.getByIdDeveloperIsAppliance(this.userId).then(tmp => {
+        //     this.unassigned = tmp.length != 0;
+        // });
     }
 
     //allows to know if the project has already had a appliance of this user
     isAppliance(project: Project) {
-        this.developersProjectsService.getByIdDeveloperIdProject(this.userId, project.id!).then(developerProject => {
-            this.projectsIsApply.push(developerProject != null);
-        });
+        // this.developersProjectsService.getByIdDeveloperIdProject(this.userId, project.id!).then(developerProject => {
+        //     this.projectsIsApply.push(developerProject != null);
+        // });
     }
 
     private isUserWorking() {
-        this.developersProjectsService.getByIdDeveloper(this.userId).then(developerProjects => {
-            console.log(this.userId);
-            console.log(developerProjects);
-            console.log(this.projects);
-            let i: number = 0;
-            let result: boolean = false;
-            while(i < developerProjects.length && !result) {
-                result = this.verifyIfUserWorks(developerProjects[i].idProject);
-                this.isWorking = result;
-                i++;
-            }
-        });
+        // this.developersProjectsService.getByIdDeveloper(this.userId).then(developerProjects => {
+        //     console.log(this.userId);
+        //     console.log(developerProjects);
+        //     console.log(this.projects);
+        //     let i: number = 0;
+        //     let result: boolean = false;
+        //     while(i < developerProjects.length && !result) {
+        //         result = this.verifyIfUserWorks(developerProjects[i].idProject);
+        //         this.isWorking = result;
+        //         i++;
+        //     }
+        // });
     }
 
     private verifyIfUserWorks(idProject: number): boolean {

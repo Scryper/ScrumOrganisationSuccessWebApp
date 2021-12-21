@@ -59,12 +59,12 @@ export class MeetTheTeamComponent implements OnInit {
             "florian.mazzeo@gmail.com"];
 
         for(let i = 0 ; i < mails.length ; i++) {
-            this.userService.getByEmail(mails[i]).then(user => {
-                this.team[i].firstname = user.firstname;
-                this.team[i].lastname = user.lastname;
-                this.team[i].email = user.email;
-                this.team[i].profilePicture = user.profilePicture;
-            });
+            // this.userService.getByEmail(mails[i]).then(user => {
+            //     this.team[i].firstname = user.firstname;
+            //     this.team[i].lastname = user.lastname;
+            //     this.team[i].email = user.email;
+            //     this.team[i].profilePicture = user.profilePicture;
+            // });
         }
     }
 }

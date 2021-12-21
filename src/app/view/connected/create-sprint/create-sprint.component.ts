@@ -75,19 +75,19 @@ export class CreateSprintComponent implements OnInit {
     }
 
     private getProject() {
-        this.projectService.getByProjectName(this.projectName).then(project => {
-            if (project.id != null) {
-                this.getUserStories(project.id);
-            }
-        });
+        // this.projectService.getByProjectName(this.projectName).then(project => {
+        //     if (project.id != null) {
+        //         this.getUserStories(project.id);
+        //     }
+        // });
     }
 
     private getUserStories(id: number) {
-        this.userStoryService.getByIdProject(id).then(userStories => {
-            for (let i = 0 ; i < userStories.length ; i++) {
-                let userStory: UserStory = userStories[i];
-                this.productBacklog.push("US" + userStory.priority + " : " + userStory.description);
-            }
-        });
+        // this.userStoryService.getByIdProject(id).then(userStories => {
+        //     for (let i = 0 ; i < userStories.length ; i++) {
+        //         let userStory: UserStory = userStories[i];
+        //         this.productBacklog.push("US" + userStory.priority + " : " + userStory.description);
+        //     }
+        // });
     }
 }

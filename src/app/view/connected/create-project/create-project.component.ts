@@ -50,18 +50,18 @@ export class CreateProjectComponent implements OnInit {
         }
 
         //add project in the database
-        this.projectService.addProject(projet).then(tmp=>{
-            //assigner le product owner to the project
-            let devProject:UserProject = {
-                idDeveloper : this.userId,
-                idProject : tmp.id!,
-                isAppliance : false
-            }
-            this.developersProjectsService.addDeveloperProject(devProject).then(tmp=>{
-                this.router.navigate([this.returnUrl]);
-            });
-            //redirect to projects
-        })
+        // this.projectService.addProject(projet).then(tmp=>{
+        //     //assigner le product owner to the project
+        //     let devProject:UserProject = {
+        //         idDeveloper : this.userId,
+        //         idProject : tmp.id!,
+        //         isAppliance : false
+        //     }
+        //     this.developersProjectsService.addDeveloperProject(devProject).then(tmp=>{
+        //         this.router.navigate([this.returnUrl]);
+        //     });
+        //     //redirect to projects
+        // });
     }
 
     toggleButtonPress(isPressed:boolean) {

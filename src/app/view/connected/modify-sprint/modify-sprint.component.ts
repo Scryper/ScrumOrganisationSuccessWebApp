@@ -66,13 +66,13 @@ export class ModifySprintComponent implements OnInit {
         if (typeof idSprintAsString === "string") {
             this.idSprint = parseInt(idSprintAsString, 10); // cast to int because params are string by default
         }
-        this.sprintService.getById(this.idSprint).then(sprint => {
-            if(sprint != undefined) { // security
-                this.sprint = sprint;
-                this.loadUsers();
-                this.fillIdsUserStories(this.sprint.idProject);
-            }
-        });
+        // this.sprintService.getById(this.idSprint).then(sprint => {
+        //     if(sprint != undefined) { // security
+        //         this.sprint = sprint;
+        //         this.loadUsers();
+        //         this.fillIdsUserStories(this.sprint.idProject);
+        //     }
+        // });
     }
 
     toggleButtonSaveNewMeetingPressed(isPressed: boolean) {
@@ -107,23 +107,23 @@ export class ModifySprintComponent implements OnInit {
     }
 
     private getNameOfUserStories(idProject: number) {
-        this.userStoryService.getByIdProject(idProject).then(userStories => {
-            for (let userStory of userStories) {
-                if (userStory.id != null) {
-                    this.idsUserStories.push(userStory.id);
-                    this.userStories.push(userStory);
-                    this.verifyIfIsInSPrint(userStory.id);
-                }
-            }
-        });
+        // this.userStoryService.getByIdProject(idProject).then(userStories => {
+        //     for (let userStory of userStories) {
+        //         if (userStory.id != null) {
+        //             this.idsUserStories.push(userStory.id);
+        //             this.userStories.push(userStory);
+        //             this.verifyIfIsInSPrint(userStory.id);
+        //         }
+        //     }
+        // });
     }
 
     private verifyIfIsInSPrint(id: number) {
-        this.sprintUserStoryService.getByIdUserStory(id).then(sprintUserStories => {
-            for(let sprintUserStory of sprintUserStories) {
-                this.isInSprint.push(sprintUserStory.idSprint == this.sprint.id);
-            }
-        });
+        // this.sprintUserStoryService.getByIdUserStory(id).then(sprintUserStories => {
+        //     for(let sprintUserStory of sprintUserStories) {
+        //         this.isInSprint.push(sprintUserStory.idSprint == this.sprint.id);
+        //     }
+        // });
     }
 
     onSubmitNewMeeting() {
@@ -134,31 +134,31 @@ export class ModifySprintComponent implements OnInit {
             description: rawValues.description,
             meetingUrl: rawValues.name
         };
-        this.meetingService.addMeeting(meeting).then(meeting => {
-            console.log(meeting);
-            if (meeting.id != null) {
-                this.idMeeting = meeting.id;
-            }
-            for(let idUser of this.idsUsersOnProject) {
-                let participation: Participation = {
-                    idMeeting: this.idMeeting,
-                    idUser: idUser
-                }
-                this.participationService.addParticipation(participation).then(result => {
-                    console.log(result);
-                });
-            }
-        });
+        // this.meetingService.addMeeting(meeting).then(meeting => {
+        //     console.log(meeting);
+        //     if (meeting.id != null) {
+        //         this.idMeeting = meeting.id;
+        //     }
+        //     for(let idUser of this.idsUsersOnProject) {
+        //         let participation: Participation = {
+        //             idMeeting: this.idMeeting,
+        //             idUser: idUser
+        //         }
+        //         this.participationService.addParticipation(participation).then(result => {
+        //             console.log(result);
+        //         });
+        //     }
+        // });
     }
 
     // load the users working on the project
     private loadUsers() {
-        this.userService.getByIdProject(this.sprint.idProject).then(users => {
-            for(let user of users) {
-                if (user.id != null) {
-                    this.idsUsersOnProject.push(user.id);
-                }
-            }
-        });
+        // this.userService.getByIdProject(this.sprint.idProject).then(users => {
+        //     for(let user of users) {
+        //         if (user.id != null) {
+        //             this.idsUsersOnProject.push(user.id);
+        //         }
+        //     }
+        // });
     }
 }

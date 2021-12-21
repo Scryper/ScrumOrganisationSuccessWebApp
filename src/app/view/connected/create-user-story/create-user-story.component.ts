@@ -57,11 +57,11 @@ export class CreateUserStoryComponent implements OnInit {
         }
 
         //add UserStory in the database
-        this.userStoriesService.addUserStory(tmpUserStory).then(tmp=>{
-            //redirect to projects
-            let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
-            this.router.navigate([returnUrl]);
-        })
+        // this.userStoriesService.addUserStory(tmpUserStory).then(tmp=>{
+        //     //redirect to projects
+        //     let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
+        //     this.router.navigate([returnUrl]);
+        // });
     }
 
     toggleButtonPress(isPressed:boolean) {

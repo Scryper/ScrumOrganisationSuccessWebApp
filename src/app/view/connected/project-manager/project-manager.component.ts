@@ -75,38 +75,38 @@ export class ProjectManagerComponent implements OnInit {
                 repositoryUrl: ""
             }
         ];
-        await this.developerProjectService.getByIdDeveloper(this.idUser).then(developerProjects => {
-            for (let i = 0 ; i < developerProjects.length ; i++) {
-                this.getProjectName(developerProjects[i].idProject);
-            }
-        });
+        // await this.developerProjectService.getByIdDeveloper(this.idUser).then(developerProjects => {
+        //     for (let i = 0 ; i < developerProjects.length ; i++) {
+        //         this.getProjectName(developerProjects[i].idProject);
+        //     }
+        // });
     }
 
     private getProjectName(idProject: number) {
-        this.projectService.getById(idProject).then(project => {
-            if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
-                if(this.activeProjects[0].name == this.noProjectsFound) {
-                    this.activeProjects.pop();
-                }
-                this.activeProjects.push(project);
-            } else {
-                if(this.oldProjects[0].name == this.noProjectsFound) {
-                    this.oldProjects.pop();
-                }
-                this.oldProjects.push(project);
-            }
-            // INSERT
-            if(this.activeProjects.length == 0 || (this.activeProjects.length == 1 && this.activeProjects[0].name == this.noProjectsFound ) ) {
-                this.isActiveProjectEmpty = true;
-            }
-        });
+        // this.projectService.getById(idProject).then(project => {
+        //     if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
+        //         if(this.activeProjects[0].name == this.noProjectsFound) {
+        //             this.activeProjects.pop();
+        //         }
+        //         this.activeProjects.push(project);
+        //     } else {
+        //         if(this.oldProjects[0].name == this.noProjectsFound) {
+        //             this.oldProjects.pop();
+        //         }
+        //         this.oldProjects.push(project);
+        //     }
+        //     // INSERT
+        //     if(this.activeProjects.length == 0 || (this.activeProjects.length == 1 && this.activeProjects[0].name == this.noProjectsFound ) ) {
+        //         this.isActiveProjectEmpty = true;
+        //     }
+        // });
     }
 
     terminate(project:Project) {
         project.status = 3;
-        this.projectService.updateStatus(project).then(() => {
-            this.loadProjects();
-        });
+        // this.projectService.updateStatus(project).then(() => {
+        //     this.loadProjects();
+        // });
     }
 
     navigateIfActiveProjectNotEmpty(projectName: string) {

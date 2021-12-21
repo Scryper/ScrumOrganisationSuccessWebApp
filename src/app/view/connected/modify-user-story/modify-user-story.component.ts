@@ -47,13 +47,13 @@ export class ModifyUserStoryComponent implements OnInit {
         this.idProject = Number(this.route.snapshot.paramMap.get("idProject"));
         this.idUserStory = Number(this.route.snapshot.paramMap.get("idUserStory"));
 
-        this.userStoriesService.getById(this.idUserStory).then(tmp=>{
-            this.form.controls['main'].setValue({
-                name: tmp.name,
-                description: tmp.description,
-                priority: tmp.priority
-            });
-        })
+        // this.userStoriesService.getById(this.idUserStory).then(tmp=>{
+        //     this.form.controls['main'].setValue({
+        //         name: tmp.name,
+        //         description: tmp.description,
+        //         priority: tmp.priority
+        //     });
+        // })
 
         this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
         this.userId = (this.currentUser.id==undefined)?0:this.currentUser.id;
@@ -72,11 +72,11 @@ export class ModifyUserStoryComponent implements OnInit {
         }
 
         //add UserStory in the database
-        this.userStoriesService.updateUserStory(tmpUserStory).then(tmp=>{
-            //redirect to projects
-            let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
-            this.router.navigate([returnUrl]);
-        })
+        // this.userStoriesService.updateUserStory(tmpUserStory).then(tmp=>{
+        //     //redirect to projects
+        //     let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
+        //     this.router.navigate([returnUrl]);
+        // })
 
     }
 

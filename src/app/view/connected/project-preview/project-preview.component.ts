@@ -42,20 +42,20 @@ export class ProjectPreviewComponent implements OnInit {
     }
 
     private getProject() {
-        this.projectService.getByProjectName(this.projectName).then(project => {
-            this.deadline = this.datePipe.transform(project.deadline, this.DATE_FORMAT);
-            this.description = project.description;
-            if (project.id != null) {
-                this.projectId = project.id;
-            }
-            this.isApply();
-        });
+        // this.projectService.getByProjectName(this.projectName).then(project => {
+        //     this.deadline = this.datePipe.transform(project.deadline, this.DATE_FORMAT);
+        //     this.description = project.description;
+        //     if (project.id != null) {
+        //         this.projectId = project.id;
+        //     }
+        //     this.isApply();
+        // });
     }
 
     isApply() {
-        this.developersProjectsService.getByIdDeveloperIdProject(this.userId, this.projectId).then(developerProject => {
-            this.unassigned = developerProject != null;
-        });
+        // this.developersProjectsService.getByIdDeveloperIdProject(this.userId, this.projectId).then(developerProject => {
+        //     this.unassigned = developerProject != null;
+        // });
     }
 
     toggleButtonPress(isPressed: boolean) {
@@ -68,10 +68,10 @@ export class ProjectPreviewComponent implements OnInit {
             idProject: this.projectId,
             isAppliance: true
         };
-        this.developersProjectsService.addDeveloperProject(appliance).then(result => {
-            if(result != null) {
-                this.unassigned = !this.unassigned;
-            }
-        });
+        // this.developersProjectsService.addDeveloperProject(appliance).then(result => {
+        //     if(result != null) {
+        //         this.unassigned = !this.unassigned;
+        //     }
+        // });
     }
 }

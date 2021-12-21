@@ -86,63 +86,63 @@ export class MyProjectComponent implements OnInit {
     }
 
     private getProject() {
-        this.projectService.getByProjectName(this.projectName).then(project => {
-            this.deadline = this.datePipe.transform(project.deadline, this.DATE_FORMAT);
-            this.description = project.description;
-            this.repositoryUrl = project.repositoryUrl;
-            this.idProject = project.id!;
-            this.getSprints(this.idProject);
-        });
+        // this.projectService.getByProjectName(this.projectName).then(project => {
+        //     this.deadline = this.datePipe.transform(project.deadline, this.DATE_FORMAT);
+        //     this.description = project.description;
+        //     this.repositoryUrl = project.repositoryUrl;
+        //     this.idProject = project.id!;
+        //     this.getSprints(this.idProject);
+        // });
     }
 
     private getSprints(idProject: number) {
-        this.sprintService.getByIdProject(idProject).then(sprints => {
-            for(let i = 0 ; i < sprints.length ; i++) {
-                let sprint: Sprint = sprints[i];
-                let idSprint: number = sprint.id;
-                // save the dates as dates elements:
-                // Angular date object and sql server date object are not the same
-                // so this "cast" is necessary
-                // then getting the value of the date to compare dates
-                let todayAsTime: number = new Date().getTime();
-                let startAsTime: number = new Date(sprint.startDate).getTime();
-                let deadlineAsTime: number = new Date(sprint.deadline).getTime();
-
-                // a sprint is active if today's date is between the start and end of the sprint
-                if(startAsTime <= todayAsTime && todayAsTime <= deadlineAsTime) {
-                    this.actualSprint = {id: sprint.id, name: sprint.description, US: []};
-                } else {
-                    this.oldSprints.push({id: sprint.id, name: sprint.description, US: []});
-                }
-
-                // get the links to user stories about this
-                this.getLinksSprintsUserStories(idSprint);
-            }
-        });
+        // this.sprintService.getByIdProject(idProject).then(sprints => {
+        //     for(let i = 0 ; i < sprints.length ; i++) {
+        //         let sprint: Sprint = sprints[i];
+        //         let idSprint: number = sprint.id;
+        //         // save the dates as dates elements:
+        //         // Angular date object and sql server date object are not the same
+        //         // so this "cast" is necessary
+        //         // then getting the value of the date to compare dates
+        //         let todayAsTime: number = new Date().getTime();
+        //         let startAsTime: number = new Date(sprint.startDate).getTime();
+        //         let deadlineAsTime: number = new Date(sprint.deadline).getTime();
+        //
+        //         // a sprint is active if today's date is between the start and end of the sprint
+        //         if(startAsTime <= todayAsTime && todayAsTime <= deadlineAsTime) {
+        //             this.actualSprint = {id: sprint.id, name: sprint.description, US: []};
+        //         } else {
+        //             this.oldSprints.push({id: sprint.id, name: sprint.description, US: []});
+        //         }
+        //
+        //         // get the links to user stories about this
+        //         this.getLinksSprintsUserStories(idSprint);
+        //     }
+        // });
     }
 
     private getLinksSprintsUserStories(idSprint: number): void {
-        this.sprintUserStoryService.getByIdSprint(idSprint).then(sprintsUserStories => {
-            for (let i = 0 ; i < sprintsUserStories.length ; i++) {
-                let idUserStory: number = sprintsUserStories[i].idUserStory;
-                this.getUserStory(idUserStory, idSprint);
-            }
-        });
+        // this.sprintUserStoryService.getByIdSprint(idSprint).then(sprintsUserStories => {
+        //     for (let i = 0 ; i < sprintsUserStories.length ; i++) {
+        //         let idUserStory: number = sprintsUserStories[i].idUserStory;
+        //         this.getUserStory(idUserStory, idSprint);
+        //     }
+        // });
     }
 
     private getUserStory(idUserStory: number, idSprint: number) {
-        this.userStoryService.getById(idUserStory).then(userStory => {
-            // Only one sprint so no need to do a for
-            if(this.actualSprint.id == idSprint) {
-                this.actualSprint.US.push("US" + userStory.priority + " : " + userStory.description);
-                return; // no need to look in the old sprints if i t is the actual one
-            }
-            for (let i = 0 ; i < this.oldSprints.length ; i++) {
-                if(this.oldSprints[i].id == idSprint) {
-                    this.oldSprints[i].US.push("US" + userStory.priority + " : " + userStory.description);
-                }
-            }
-        });
+        // this.userStoryService.getById(idUserStory).then(userStory => {
+        //     // Only one sprint so no need to do a for
+        //     if(this.actualSprint.id == idSprint) {
+        //         this.actualSprint.US.push("US" + userStory.priority + " : " + userStory.description);
+        //         return; // no need to look in the old sprints if i t is the actual one
+        //     }
+        //     for (let i = 0 ; i < this.oldSprints.length ; i++) {
+        //         if(this.oldSprints[i].id == idSprint) {
+        //             this.oldSprints[i].US.push("US" + userStory.priority + " : " + userStory.description);
+        //         }
+        //     }
+        // });
     }
 }
 

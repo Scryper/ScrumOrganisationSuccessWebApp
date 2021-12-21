@@ -32,20 +32,20 @@ export class ProductBacklogComponent implements OnInit {
     }
 
     private getProject() {
-        this.projectService.getByProjectName(this.projectName).then(project => {
-            if (project.id != null) {
-                this.getUserStories(project.id);
-            }
-        });
+        // this.projectService.getByProjectName(this.projectName).then(project => {
+        //     if (project.id != null) {
+        //         this.getUserStories(project.id);
+        //     }
+        // });
     }
 
     private getUserStories(id: number) {
-        this.userStoryService.getByIdProject(id).then(userStories => {
-            for (let i = 0 ; i < userStories.length ; i++) {
-                let userStory: UserStory = userStories[i];
-                this.productBacklog.push(userStory);
-            }
-        });
+        // this.userStoryService.getByIdProject(id).then(userStories => {
+        //     for (let i = 0 ; i < userStories.length ; i++) {
+        //         let userStory: UserStory = userStories[i];
+        //         this.productBacklog.push(userStory);
+        //     }
+        // });
     }
 
     toggleButtonPress(isPressed: boolean) {
@@ -53,11 +53,11 @@ export class ProductBacklogComponent implements OnInit {
     }
 
     deleteUserStory(userStory:UserStory) {
-        this.userStoriesService.deleteUserStory(userStory).then(tmp=>{
-            this.productBacklog=this.productBacklog.filter((tmp)=> {
-                return userStory.id!=tmp.id;
-            });
-        })
+        // this.userStoriesService.deleteUserStory(userStory).then(tmp=>{
+        //     this.productBacklog=this.productBacklog.filter((tmp)=> {
+        //         return userStory.id!=tmp.id;
+        //     });
+        // })
     }
 
     modifyUserStory(userStory:UserStory) {

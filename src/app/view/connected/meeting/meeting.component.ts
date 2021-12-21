@@ -28,18 +28,18 @@ export class MeetingComponent implements OnInit {
     }
 
     loadEvents(id: number) {
-        this.meetingService.getByIdUser(id).then(meetings => {
-            let events = [];
-            for (let i = 0; i < meetings.length; i++) {
-                 events.push({
-                     title: meetings[i].description,
-                     date: meetings[i].schedule,
-                     url : 'videocall',
-                     roomName : meetings[i].meetingUrl
-                 });
-            }
-            this.calendarOptions.events = events;
-        });
+        // this.meetingService.getByIdUser(id).then(meetings => {
+        //     let events = [];
+        //     for (let i = 0; i < meetings.length; i++) {
+        //          events.push({
+        //              title: meetings[i].description,
+        //              date: meetings[i].schedule,
+        //              url : 'videocall',
+        //              roomName : meetings[i].meetingUrl
+        //          });
+        //     }
+        //     this.calendarOptions.events = events;
+        // });
     }
 
     private getUserInfo() {

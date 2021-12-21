@@ -49,13 +49,13 @@ export class ProfileComponent implements OnInit {
 
     fillIdTechnologies() {
         let tmpDeveloperTechnology:DeveloperTechnology[];
-        this.developerTechnology.getByDeveloperId(this.idUser).then(developerTechnologies => {
-            tmpDeveloperTechnology = developerTechnologies;
-            for(let elt of tmpDeveloperTechnology) {
-                this.idTechnologies.push(elt.idTechnology);
-            }
-            this.fillIsHisTechnologies();
-        });
+        // this.developerTechnology.getByDeveloperId(this.idUser).then(developerTechnologies => {
+        //     tmpDeveloperTechnology = developerTechnologies;
+        //     for(let elt of tmpDeveloperTechnology) {
+        //         this.idTechnologies.push(elt.idTechnology);
+        //     }
+        //     this.fillIsHisTechnologies();
+        // });
     }
 
     fillIsHisTechnologies() {
@@ -91,11 +91,11 @@ export class ProfileComponent implements OnInit {
     }
 
     private loadAvailableTechnologies() {
-        this.technologyService.getAll().then(technologies => {
-            for (let i = 0 ; i < technologies.length ; i++) {
-                this.technologies.push(technologies[i]);
-            }
-        });
+        // this.technologyService.getAll().then(technologies => {
+        //     for (let i = 0 ; i < technologies.length ; i++) {
+        //         this.technologies.push(technologies[i]);
+        //     }
+        // });
     }
 
     deleteTechnology(idTechnology: number) {
@@ -133,10 +133,10 @@ export class ProfileComponent implements OnInit {
             portfolio: ""
         };
         if(confirm("You need to logout to save your changes.\nDo you want to logout ?")) {
-            this.userService.updateFirstNameLastName(tmpUser).then((tmp) => {
-                    this.authenticationService.logout();
-                    this.route.navigate(['/login']);
-            });
+            // this.userService.updateFirstNameLastName(tmpUser).then((tmp) => {
+            //         this.authenticationService.logout();
+            //         this.route.navigate(['/login']);
+            // });
         }
     }
 }

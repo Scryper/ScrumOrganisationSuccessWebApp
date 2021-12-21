@@ -47,7 +47,7 @@ const routes: Routes = [
     {path: 'videocall', component : VideoComponent,canActivate:[AuthGuard]},
     {path: 'createUserStory/:projectName/:idProject', component : CreateUserStoryComponent,canActivate:[AuthGuard]},
     {path: 'modifyUserStory/:projectName/:idProject/:idUserStory', component : ModifyUserStoryComponent,canActivate:[AuthGuard]},
-    {path: 'modifySprint/:sprintId', component : ModifySprintComponent,canActivate:[AuthGuard]},
+    {path: 'modifySprint/:projectName/:sprintId', component : ModifySprintComponent,canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];
 

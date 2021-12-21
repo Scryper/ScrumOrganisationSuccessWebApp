@@ -40,7 +40,7 @@
                 <p *ngFor="let eltUS of actualSprint.US"
                    class="robotoLight">{{eltUS}}</p>
                 <input *ngIf="isScrumMaster"
-                       [routerLink]="['/modifySprint', actualSprint.id]"
+                       [routerLink]="['/modifySprint', projectName, actualSprint.id]"
                        type="button"
                        value="Modify sprint"
                        (mousedown)="toggleModifySprintButtonPress(true);"

@@ -1,42 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { Sprint} from "../../../domain/sprint";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { SprintsService } from "../../../services/sprints/sprints.service";
 import { ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserStory } from "../../../domain/user-story";
 import { SprintsUserStoriesService } from "../../../services/sprints-user-stories/sprints-user-stories.service";
-import { SprintUserStory } from "../../../domain/sprint-user-story";
-import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
-import {UserService} from "../../../services";
-import {MeetingsService} from "../../../services/meetings/meetings.service";
-import {Meeting} from "../../../domain/meeting";
-import {ParticipationService} from "../../../services/participation/participation.service";
-import {Participation} from "../../../domain/participation";
+import { UserStoriesService } from "../../../services/user-stories/user-stories.service";
+import { UserService } from "../../../services";
+import { MeetingsService } from "../../../services/meetings/meetings.service";
+import { Meeting } from "../../../domain/meeting";
+import { ParticipationService } from "../../../services/participation/participation.service";
+import { Participation } from "../../../domain/participation";
+import { map } from "rxjs/operators";
+import { Subscription } from "rxjs";
+import {ProjectsService} from "../../../services/projects/projects.service";
 
 @Component({
     selector: 'app-modify-sprint',
     templateUrl: './modify-sprint.component.html',
     styleUrls: ['../../../app.component.css', './modify-sprint.component.css']
 })
-export class ModifySprintComponent implements OnInit {
+export class ModifySprintComponent implements OnInit, OnDestroy {
     isButtonSaveNewMeetingPressed: boolean = false;
 
     isInSprint: boolean[] = [];
 
     idSprint: number = 0;
+    idProject: number = 0;
+    sprintName: string | null = "";
     idMeeting: number = 0;
-    idsUserStories: number[] = [];
     idsUsersOnProject: number[] = [];
-
-
-    sprint: Sprint = {
-        id: 0,
-        description: "",
-        deadline: new Date(),
-        startDate: new Date(),
-        sprintNumber: 0,
-        idProject: 0
-    };
 
     userStories: UserStory[] = [];
 
@@ -48,6 +40,9 @@ export class ModifySprintComponent implements OnInit {
         })
     });
 
+    private subscription: Subscription | undefined;
+    private projectName: string | null = "";
+
     constructor(private fb: FormBuilder,
                 private sprintService: SprintsService,
                 private route: ActivatedRoute,
@@ -55,112 +50,68 @@ export class ModifySprintComponent implements OnInit {
                 private userStoryService: UserStoriesService,
                 private userService: UserService,
                 private meetingService: MeetingsService,
-                private participationService: ParticipationService) { }
+                private participationService: ParticipationService,
+                private projectService: ProjectsService) { }
 
-    ngOnInit(): void {
-        this.loadSprint();
+    ngOnDestroy(): void {
+        this.subscription?.unsubscribe();
     }
 
-    private loadSprint() {
+    ngOnInit(): void {
         let idSprintAsString: string | null = this.route.snapshot.paramMap.get("sprintId");
+        this.projectName = this.route.snapshot.paramMap.get("projectName");
         if (typeof idSprintAsString === "string") {
             this.idSprint = parseInt(idSprintAsString, 10); // cast to int because params are string by default
         }
-        // this.sprintService.getById(this.idSprint).then(sprint => {
-        //     if(sprint != undefined) { // security
-        //         this.sprint = sprint;
-        //         this.loadUsers();
-        //         this.fillIdsUserStories(this.sprint.idProject);
-        //     }
-        // });
+        this.subscription = this.projectService.getByProjectName(this.projectName)
+            .pipe(
+                map(project => {
+                    if (project.id != null) {
+                        this.idProject = project.id
+                    }
+                    this.userService.getByIdProject(this.idProject).subscribe(users => {
+                        for(let user of users) {
+                            if (user.id != null) {
+                                this.idsUsersOnProject.push(user.id);
+                            }
+                        }
+                    });
+                })
+            ).subscribe()
     }
 
     toggleButtonSaveNewMeetingPressed(isPressed: boolean) {
         this.isButtonSaveNewMeetingPressed = isPressed;
     }
 
-    doDeleteOrAddUserStory(event: any, elt: UserStory) {
-        if (elt.id != null) {
-            if(event.target.checked) {
-                this.addUserStory(elt.id);
-            } else {
-                this.deleteUserStory(elt.id);
-            }
-        }
-    }
-
-    addUserStory(idUserStory: number) {
-        let sprintUserStory: SprintUserStory = {
-            idSprint: this.sprint.id,
-            idUserStory: idUserStory
-        };
-        this.sprintUserStoryService.addSprintUserStory(sprintUserStory);
-    }
-
-    deleteUserStory(idUserStory: number) {
-        if (this.sprint.id != null) {
-            this.sprintUserStoryService.deleteSprintUserStory(this.sprint.id, idUserStory);
-        }
-    }
-
-    private fillIdsUserStories(idProject: number) {
-        // get all user stories from the project
-        this.getNameOfUserStories(idProject);
-    }
-
-    private getNameOfUserStories(idProject: number) {
-        // this.userStoryService.getByIdProject(idProject).then(userStories => {
-        //     for (let userStory of userStories) {
-        //         if (userStory.id != null) {
-        //             this.idsUserStories.push(userStory.id);
-        //             this.userStories.push(userStory);
-        //             this.verifyIfIsInSPrint(userStory.id);
-        //         }
-        //     }
-        // });
-    }
-
-    private verifyIfIsInSPrint(id: number) {
-        // this.sprintUserStoryService.getByIdUserStory(id).then(sprintUserStories => {
-        //     for(let sprintUserStory of sprintUserStories) {
-        //         this.isInSprint.push(sprintUserStory.idSprint == this.sprint.id);
-        //     }
-        // });
-    }
-
     onSubmitNewMeeting() {
         let rawValues = this.form.getRawValue().newMeeting;
         let meeting: Meeting = {
-            idSprint: this.sprint.id,
+            idSprint: this.idSprint,
             schedule: rawValues.schedule,
             description: rawValues.description,
             meetingUrl: rawValues.name
         };
-        // this.meetingService.addMeeting(meeting).then(meeting => {
-        //     console.log(meeting);
-        //     if (meeting.id != null) {
-        //         this.idMeeting = meeting.id;
-        //     }
-        //     for(let idUser of this.idsUsersOnProject) {
-        //         let participation: Participation = {
-        //             idMeeting: this.idMeeting,
-        //             idUser: idUser
-        //         }
-        //         this.participationService.addParticipation(participation).then(result => {
-        //             console.log(result);
-        //         });
-        //     }
-        // });
-    }
-
-    // load the users working on the project
-    private loadUsers() {
-        // this.userService.getByIdProject(this.sprint.idProject).then(users => {
-        //     for(let user of users) {
-        //         if (user.id != null) {
-        //             this.idsUsersOnProject.push(user.id);
-        //         }
-        //     }
-        // });
+        console.log(meeting);
+        this.subscription = this.meetingService.addMeeting(meeting)
+            .pipe(
+                map(meeting => {
+                    console.log(meeting);
+                    if (meeting.id != null) {
+                        this.idMeeting = meeting.id;
+                    }
+                    console.log(this.idsUsersOnProject);
+                    for(let idUser of this.idsUsersOnProject) {
+                        let participation: Participation = {
+                            idMeeting: this.idMeeting,
+                            idUser: idUser
+                        }
+                        this.participationService.addParticipation(participation).subscribe(result => {
+                            console.log(result);
+                        });
+                    }
+                }
+            )
+        ).subscribe();
     }
 }

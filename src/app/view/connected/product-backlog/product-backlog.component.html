@@ -6,11 +6,11 @@
             <span class="standardCard radius robotoLight">US{{userStory.priority}} : {{userStory.name}}</span>
             <input type="button" value="Delete" (click)="deleteUserStory(userStory);">
             <input type="button" value="Modify"
-                   [routerLink]="['/modifyUserStory',projectName,idProject,userStory.id]">
+                   [routerLink]="['/modifyUserStory', projectName, idProject, userStory.id]">
         </div>
 
         <input type="button" value="Add User story"
-               [routerLink]="['/createUserStory',projectName,idProject]">
+               [routerLink]="['/createUserStory', projectName, idProject]">
         <br/>
         <input
             [routerLink]="['/myProject', projectName]"

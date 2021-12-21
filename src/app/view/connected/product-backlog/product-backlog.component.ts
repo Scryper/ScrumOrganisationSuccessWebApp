@@ -5,6 +5,7 @@ import {ProjectsService} from "../../../services/projects/projects.service";
 import {UserStory} from "../../../domain/user-story";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
+import {Role} from "../../../domain/role";
 
 @Component({
     selector: 'app-product-backlog',
@@ -18,6 +19,7 @@ export class ProductBacklogComponent implements OnInit, OnDestroy {
 
     productBacklog:UserStory[] =[];
     private subscription: Subscription | undefined;
+    isProductOwner: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private userStoriesService:UserStoriesService,
@@ -29,7 +31,7 @@ export class ProductBacklogComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.is
+        this.isProductOwner = JSON.parse(<string>localStorage.getItem('currentUser')).role == Role.ProductOwner;
         this.idProject = <number><unknown>this.route.snapshot.paramMap.get("idProject");
         this.projectName = this.route.snapshot.paramMap.get("projectName");
         this.loadProductBacklog();

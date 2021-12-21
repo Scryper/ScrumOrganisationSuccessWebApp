@@ -3,6 +3,8 @@ import {UserStoriesService} from "../../../services/user-stories/user-stories.se
 import {ActivatedRoute} from "@angular/router";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UserStory} from "../../../domain/user-story";
+import {SosUser} from "../../../domain/sos-user";
+import {Role} from "../../../domain/role";
 
 @Component({
     selector: 'app-product-backlog',
@@ -16,12 +18,21 @@ export class ProductBacklogComponent implements OnInit {
 
     productBacklog:UserStory[] =[];
 
+    currentUser:SosUser=null!;
+
+    isProductOwner:boolean = false;
+
+
     constructor(private route: ActivatedRoute,
                 private userStoriesService:UserStoriesService,
                 private userStoryService: UserStoriesService,
                 private projectService: ProjectsService) { }
 
     ngOnInit(): void {
+
+        this.currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+        if(this.currentUser.role == Role.ProductOwner) this.isProductOwner = true;
+
         this.idProject = <number><unknown>this.route.snapshot.paramMap.get("idProject");
         this.projectName = this.route.snapshot.paramMap.get("projectName");
         this.loadProductBacklog();
@@ -53,7 +64,7 @@ export class ProductBacklogComponent implements OnInit {
     }
 
     deleteUserStory(userStory:UserStory) {
-        this.userStoriesService.deleteUserStory(userStory).then(tmp=>{
+        this.userStoriesService.deleteUserStory(userStory).then(()=>{
             this.productBacklog=this.productBacklog.filter((tmp)=> {
                 return userStory.id!=tmp.id;
             });

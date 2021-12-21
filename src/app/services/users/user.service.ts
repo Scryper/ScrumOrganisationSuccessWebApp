@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { SosUser } from "../../domain/sos-user";
 import { environment } from "../../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -10,35 +11,35 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    async getAll() {
+    getAll(): Observable<SosUser[]> {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users`);
     }
 
-    async getByEmail(email:string): Promise<SosUser> {
-        return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`).toPromise();
+    getByEmail(email:string): Observable<SosUser> {
+        return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`);
     }
 
-    async getById(id:number): Promise<SosUser> {
-        return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`).toPromise();
+    getById(id:number): Observable<SosUser> {
+        return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`);
     }
 
-    async getByIdProject(idProject: number): Promise<SosUser[]> {
-        return this.http.get<SosUser[]>(`${environment.apiUrl}/users/byProject/${idProject}`).toPromise();
+    getByIdProject(idProject: number): Observable<SosUser[]> {
+        return this.http.get<SosUser[]>(`${environment.apiUrl}/users/byProject/${idProject}`);
     }
 
     // Post requests
-    async addUser(user: SosUser) {
+    addUser(user: SosUser): Observable<SosUser> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
-        return this.http.post<SosUser>(`${environment.apiUrl}/users`, JSON.stringify(user), httpOptions).toPromise();
+        return this.http.post<SosUser>(`${environment.apiUrl}/users`, JSON.stringify(user), httpOptions);
     }
 
     // Put request
-    async updateFirstNameLastName(user: SosUser) {
+    updateFirstNameLastName(user: SosUser) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
-        return this.http.put<SosUser>(`${environment.apiUrl}/users/firstNameLastNameUpdate/${user.id}`, JSON.stringify(user), httpOptions).toPromise();
+        return this.http.put<SosUser>(`${environment.apiUrl}/users/firstNameLastNameUpdate/${user.id}`, JSON.stringify(user), httpOptions);
     }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {DeveloperTechnology} from "../../domain/developer-technology";
 import {environment} from "../../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -10,25 +11,25 @@ export class DevelopersTechnologiesService {
     constructor(private http: HttpClient) { }
 
     // Get all requests
-    async getAll() {
-        return this.http.get<DeveloperTechnology[]>(`${environment.apiUrl}/userTechnologies`).toPromise();
+    getAll(): Observable<DeveloperTechnology[]> {
+        return this.http.get<DeveloperTechnology[]>(`${environment.apiUrl}/userTechnologies`);
     }
 
     // Get requests
-    async getByDeveloperId(id: number): Promise<DeveloperTechnology[]> {
-        return this.http.get<DeveloperTechnology[]>(`${environment.apiUrl}/userTechnologies/byUser/${id}`).toPromise();
+    getByDeveloperId(id: number): Observable<DeveloperTechnology[]> {
+        return this.http.get<DeveloperTechnology[]>(`${environment.apiUrl}/userTechnologies/byUser/${id}`);
     }
 
     // Post requests
-    async addDeveloperTechnology(developerTechnology: DeveloperTechnology): Promise<DeveloperTechnology> {
+    addDeveloperTechnology(developerTechnology: DeveloperTechnology): Observable<DeveloperTechnology> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
-        return this.http.post<DeveloperTechnology>(`${environment.apiUrl}/userTechnologies`, JSON.stringify(developerTechnology), httpOptions).toPromise();
+        return this.http.post<DeveloperTechnology>(`${environment.apiUrl}/userTechnologies`, JSON.stringify(developerTechnology), httpOptions);
     }
 
     // Delete requests
-    async deleteDeveloperTechnology(idDeveloper: number, idTechnology: number): Promise<DeveloperTechnology> {
-        return this.http.delete<DeveloperTechnology>(`${environment.apiUrl}/userTechnologies/${idDeveloper},${idTechnology}`).toPromise();
+    deleteDeveloperTechnology(idDeveloper: number, idTechnology: number): Observable<DeveloperTechnology> {
+        return this.http.delete<DeveloperTechnology>(`${environment.apiUrl}/userTechnologies/${idDeveloper},${idTechnology}`);
     }
 }

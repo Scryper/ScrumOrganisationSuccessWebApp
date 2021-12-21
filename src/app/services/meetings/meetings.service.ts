@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Meeting} from "../../domain/meeting";
 import {environment} from "../../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -10,37 +11,37 @@ export class MeetingsService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    async getAll(): Promise<Meeting[]> {
-        return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings`).toPromise();
+    getAll(): Observable<Meeting[]> {
+        return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings`);
     }
 
-    async getByIdSprint(idSprint: number): Promise<Meeting[]> {
-        return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings/bySprint/${idSprint}`).toPromise();
+    getByIdSprint(idSprint: number): Observable<Meeting[]> {
+        return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings/bySprint/${idSprint}`);
     }
 
-    async getByIdUser(idUser: number): Promise<Meeting[]> {
-        return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings/byUser/${idUser}`).toPromise();
+    getByIdUser(idUser: number): Observable<Meeting[]> {
+        return this.http.get<Meeting[]>(`${environment.apiUrl}/meetings/byUser/${idUser}`);
     }
 
-    async getById(id: number): Promise<Meeting> {
-        return this.http.get<Meeting>(`${environment.apiUrl}/meetings/byId/${id}`).toPromise();
+    getById(id: number): Observable<Meeting> {
+        return this.http.get<Meeting>(`${environment.apiUrl}/meetings/byId/${id}`);
     }
 
     // Post requests
-    async addMeeting(meeting: Meeting): Promise<Meeting> {
+    addMeeting(meeting: Meeting): Observable<Meeting> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
-        return this.http.post<Meeting>(`${environment.apiUrl}/meetings`, JSON.stringify(meeting), httpOptions).toPromise();
+        return this.http.post<Meeting>(`${environment.apiUrl}/meetings`, JSON.stringify(meeting), httpOptions);
     }
 
     // Put requests
-    async updateSchedule(id: number, schedule: Date): Promise<boolean> {
-        return this.http.put<boolean>(`${environment.apiUrl}/meetings/${id}`, schedule).toPromise();
+    updateSchedule(id: number, schedule: Date): Observable<boolean> {
+        return this.http.put<boolean>(`${environment.apiUrl}/meetings/${id}`, schedule);
     }
 
     // Delete requests
-    async deleteMeeting(id: number): Promise<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrl}/meetings/${id}`).toPromise();
+    deleteMeeting(id: number): Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.apiUrl}/meetings/${id}`);
     }
 }

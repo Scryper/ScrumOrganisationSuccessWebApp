@@ -71,7 +71,4 @@ export class ProductBacklogComponent implements OnInit {
         })
     }
 
-    modifyUserStory(userStory:UserStory) {
-        console.log(userStory);
-    }
 }

@@ -5,7 +5,7 @@ import {UsersProjectsService} from "../../../services/developers-projects/users-
 import {Project} from "../../../domain/project";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UserService} from "../../../services";
-import {DevelopersTechnologiesService} from "../../../services/developers-technologies/developers-technologies.service";
+import {UsersTechnologiesService} from "../../../services/users-technologies/users-technologies.service";
 import {TechnologiesService} from "../../../services/technologies/technologies.service";
 
 interface idUserTechno {
@@ -40,7 +40,7 @@ export class UsersRequestComponent implements OnInit {
                 private developersProjectsService: UsersProjectsService,
                 private projectService: ProjectsService,
                 private userService:UserService,
-                private developersTechnologiesService:DevelopersTechnologiesService,
+                private developersTechnologiesService:UsersTechnologiesService,
                 private technologiesService:TechnologiesService) { }
 
     fillIdTechnologyDevelopers(){

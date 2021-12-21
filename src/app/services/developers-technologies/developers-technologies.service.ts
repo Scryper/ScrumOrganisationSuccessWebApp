@@ -10,17 +10,17 @@ export class DevelopersTechnologiesService {
     constructor(private http: HttpClient) { }
 
     // Get all requests
-    async getAll() {
+    getAll() {
         return this.http.get<DeveloperTechnology[]>(`${environment.apiUrl}/userTechnologies`).toPromise();
     }
 
     // Get requests
-    async getByDeveloperId(id: number): Promise<DeveloperTechnology[]> {
+    getByDeveloperId(id: number | undefined): Promise<DeveloperTechnology[]> {
         return this.http.get<DeveloperTechnology[]>(`${environment.apiUrl}/userTechnologies/byUser/${id}`).toPromise();
     }
 
     // Post requests
-    async addDeveloperTechnology(developerTechnology: DeveloperTechnology): Promise<DeveloperTechnology> {
+    addDeveloperTechnology(developerTechnology: DeveloperTechnology): Promise<DeveloperTechnology> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
@@ -28,7 +28,7 @@ export class DevelopersTechnologiesService {
     }
 
     // Delete requests
-    async deleteDeveloperTechnology(idDeveloper: number, idTechnology: number): Promise<DeveloperTechnology> {
+    deleteDeveloperTechnology(idDeveloper: number, idTechnology: number): Promise<DeveloperTechnology> {
         return this.http.delete<DeveloperTechnology>(`${environment.apiUrl}/userTechnologies/${idDeveloper},${idTechnology}`).toPromise();
     }
 }

@@ -42,6 +42,8 @@ export class ProjectsService {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
+        console.log(project)
+        console.log(project.id)
         return this.http.put<Project>(`${environment.apiUrl}/projects/updateStatus/${project.id}`, JSON.stringify(project), httpOptions).toPromise();
     }
 }

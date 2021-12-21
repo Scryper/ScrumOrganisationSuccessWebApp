@@ -1,6 +1,7 @@
 h2 {
     text-align: center;
     padding-top: 20px;
+    padding-bottom: 10px;
 }
 
 .active .technosContainer {
@@ -24,4 +25,9 @@ h2 {
 
 input {
     margin-top: 10px;
+
+}
+
+.sprintContainer>* {
+    margin: auto;
 }

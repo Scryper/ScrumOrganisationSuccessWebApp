@@ -65,7 +65,7 @@
                        class="robotoLight">{{eltUS}}</p>
                 </div>
                 <input
-                    [routerLink]="['/createSprint']"
+                    [routerLink]="['/createSprint', projectName]"
                     type="button"
                     value="New Sprint"
                     *ngIf="isScrumMaster"

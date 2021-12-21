@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="sendData()">
+<form [formGroup]="form" (ngSubmit)="sendData()" (dblclick)="autoComplete()">
     <div class="inputContainer" formGroupName="main">
         <h1 class="title robotoMedium">{{title}}</h1>
 

@@ -4,6 +4,7 @@ import {UserStory} from "../../../domain/user-story";
 import {ActivatedRoute} from "@angular/router";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'app-create-sprint',
@@ -26,12 +27,7 @@ export class CreateSprintComponent implements OnInit {
         })
     });
 
-    productBacklog = [
-        "US 1 - Move Player",
-        "US 2 - Fight Player",
-        "US 3 - Defend Player",
-        "US 4 - Special attack"
-    ];
+    productBacklog:string[] = [];
 
     constructor(private fb: FormBuilder,
                 private route: ActivatedRoute,
@@ -40,6 +36,7 @@ export class CreateSprintComponent implements OnInit {
 
     ngOnInit(): void {
         this.projectName = this.route.snapshot.paramMap.get("projectName");
+        this.loadProductBacklog();
     }
 
     addToChosenUserStories() {
@@ -89,5 +86,20 @@ export class CreateSprintComponent implements OnInit {
                 this.productBacklog.push("US" + userStory.priority + " : " + userStory.description);
             }
         });
+    }
+
+    autoComplete() {
+        /*let datePipe = new DatePipe('en-GB');
+        let date = datePipe.transform(new Date(), 'yyyy-MM-dd');
+
+        this.form.setValue({
+            main: this.fb.group({
+                deadline:date,
+                description:"Description du sprint"
+            }),
+            UserStory: this.fb.group({
+            })
+        });*/
+
     }
 }

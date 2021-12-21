@@ -125,7 +125,9 @@ export class MyProjectComponent implements OnInit, OnDestroy {
                 }
 
                 // get the links to user stories about this
-                this.getLinksSprintsUserStories(idSprint);
+                if (sprint.id != null) {
+                    this.getLinksSprintsUserStories(sprint.id);
+                }
             }
         });
     }

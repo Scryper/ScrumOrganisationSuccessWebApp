@@ -132,7 +132,6 @@ export class UsersRequestComponent implements OnInit {
                         }
                     });
                 }
-                console.log(this.appliedDevelopers.length)
             }
         });
     }
@@ -143,7 +142,7 @@ export class UsersRequestComponent implements OnInit {
             idProject:0,
             isAppliance:true
         };
-        this.developersProjectsService.updateDeveloperProjectIsAppliance(sosUser.id,this.idProjectActive,userProject).then(tmp => {
+        this.developersProjectsService.updateDeveloperProjectIsAppliance(sosUser.id,this.idProjectActive,userProject).then(() => {
             // Passer le projet en projet actif
             let projectTmp:Project = {
                 "name": "",
@@ -155,12 +154,12 @@ export class UsersRequestComponent implements OnInit {
             projectTmp.status = this.STATUS_ACTIVE;
             projectTmp.id = this.idProjectActive;
 
-            this.projectService.updateStatus(projectTmp).then(tmp2=>{
+            this.projectService.updateStatus(projectTmp).then(()=>{
             });
         });
     }
     refuse(sosUser:SosUser) {
-        this.developersProjectsService.deleteDeveloperProjectByidDeveloperByidProject(sosUser.id,this.idProjectActive).then(tmp => {
+        this.developersProjectsService.deleteDeveloperProjectByidDeveloperByidProject(sosUser.id,this.idProjectActive).then(() => {
 
         });
     }

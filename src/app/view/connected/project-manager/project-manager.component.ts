@@ -26,7 +26,6 @@ export class ProjectManagerComponent implements OnInit {
     oldProjects: Project[] = [];
 
     noProjectsFound:string = "No projects found.";
-    isActiveProjctsEmpty:boolean = false;
 
     subtitles: string[] = [
         "Active project",
@@ -36,8 +35,7 @@ export class ProjectManagerComponent implements OnInit {
 
     constructor(private authenticationService: AuthenticationService,
                 private developerProjectService: UsersProjectsService,
-                private projectService: ProjectsService,
-                private route: Router) { }
+                private projectService: ProjectsService) { }
 
     ngOnInit(): void {
         this.authenticationService.currentUser.subscribe(user => {
@@ -70,7 +68,6 @@ export class ProjectManagerComponent implements OnInit {
 
     private getProjectName(idProject: number) {
         this.projectService.getById(idProject).then(project => {
-            console.log(project.status)
             if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
                 this.activeProjects.push(project);
             } else if(project.status == this.STATUS_TERMINATE) {

@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserProject} from "../../domain/user-project";
 import {environment} from "../../../environments/environment";
 import {DeveloperTechnology} from "../../domain/developer-technology";
+import {UserStory} from "../../domain/user-story";
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +32,11 @@ export class UsersProjectsService {
         return this.http.post<UserProject>(`${environment.apiUrl}/userProject`, JSON.stringify(developerProject), httpOptions).toPromise();
     }
 
+    getUsersByIdProject(idProject: number | undefined){
+        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/byIdProject/${idProject}`).toPromise();
+
+    }
+
     getDevelopersByIdProject(idProject: number | undefined){
         return this.http.get<UserProject>(`${environment.apiUrl}/userProject/developersByIdProject/${idProject}`).toPromise();
 
@@ -42,10 +48,15 @@ export class UsersProjectsService {
     }
 
     // Put requests
-
+    updateDeveloperProjectIsAppliance(idDeveloper: number | undefined, idProject: number | undefined, userProject:UserProject) {
+        const httpOptions = {
+            headers: new HttpHeaders({'Content-Type': 'application/json'})
+        }
+        return this.http.put<UserProject>(`${environment.apiUrl}/userProject/${idDeveloper}, ${idProject}`, JSON.stringify(userProject), httpOptions).toPromise();
+    }
     // Delete requests
-    /*deleteDeveloperProjectByidDeveloperByidProject(idDeveloper: number | undefined, idProject: number | undefined): Promise<UserProject> {
-        console.log(idDeveloper,idProject);
-        return this.http.delete<UserProject>(`${environment.apiUrl}/developerProject/${idDeveloper},${idProject}`).toPromise();
-    }*/
+    deleteDeveloperProjectByidDeveloperByidProject(idDeveloper: number | undefined, idProject: number | undefined): Promise<UserProject> {
+        console.log(idProject)
+        return this.http.delete<UserProject>(`${environment.apiUrl}/userProject/${idDeveloper}, ${idProject}`).toPromise();
+    }
 }

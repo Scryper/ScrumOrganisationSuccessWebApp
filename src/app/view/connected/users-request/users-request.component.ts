@@ -7,6 +7,7 @@ import {ProjectsService} from "../../../services/projects/projects.service";
 import {UserService} from "../../../services";
 import {DevelopersTechnologiesService} from "../../../services/developers-technologies/developers-technologies.service";
 import {TechnologiesService} from "../../../services/technologies/technologies.service";
+import {UserProject} from "../../../domain/user-project";
 
 interface idUserTechno {
     idUser:number,
@@ -24,9 +25,14 @@ export class UsersRequestComponent implements OnInit {
     private STATUS_ACTIVE: number = 2;
     private STATUS_TERMINATE: number = 3;
 
+    private ROLE_DEVELOPER: number = 1;
+    private ROLE_SCRUM_MASTER: number = 2;
+
     nameProject: string | null = "";
     buttonIsPressed: boolean = false;
     clicked: any;
+
+    idProjectActive: number | undefined;
 
     currentUser:SosUser = null!;
 
@@ -35,6 +41,8 @@ export class UsersRequestComponent implements OnInit {
 
     appliedDevelopers:SosUser[] = []
     appliedScrumMasters:SosUser[] = []
+
+    usersApplianceArray:SosUser[] =[];
 
     activeProjects:Project = null!;
     allProjects:Project[] = [];
@@ -49,28 +57,24 @@ export class UsersRequestComponent implements OnInit {
                 private developersTechnologiesService:DevelopersTechnologiesService,
                 private technologiesService:TechnologiesService) { }
 
-    fillIdTechnologyDevelopers(){
-        for(let id of this.idAppliedDevelopers) {
-            this.developersTechnologiesService.getByDeveloperId(id).then(DevTechnoArray =>{
-                for(let DevTechno of DevTechnoArray) {
-                    this.technologiesService.getById(DevTechno.idTechnology).then(techno =>{
-                        this.TechnologyDevelopers.push({idUser:DevTechno.idUser,Technology:techno.name});
-                    });
-                }
-            });
-        }
+    fillIdTechnologyDevelopers(user:SosUser){
+        this.developersTechnologiesService.getByDeveloperId(user.id).then(DevTechnoArray =>{
+            for(let DevTechno of DevTechnoArray) {
+                this.technologiesService.getById(DevTechno.idTechnology).then(techno =>{
+                    this.TechnologyDevelopers.push({idUser:DevTechno.idUser,Technology:techno.name});
+                });
+            }
+        });
     }
 
-    fillIdTechnologyScrumMasters(){
-        for(let id of this.idAppliedScrumMasters) {
-            this.developersTechnologiesService.getByDeveloperId(id).then(SMTechnoArray =>{
-                for(let SMTechno of SMTechnoArray) {
-                    this.technologiesService.getById(SMTechno.idTechnology).then(techno =>{
-                        this.TechnologyScrumMasters.push({idUser:SMTechno.idUser,Technology:techno.name});
-                    });
-                }
-            });
-        }
+    fillIdTechnologyScrumMasters(user:SosUser){
+        this.developersTechnologiesService.getByDeveloperId(user.id).then(SMTechnoArray =>{
+            for(let SMTechno of SMTechnoArray) {
+                this.technologiesService.getById(SMTechno.idTechnology).then(techno =>{
+                    this.TechnologyScrumMasters.push({idUser:SMTechno.idUser,Technology:techno.name});
+                });
+            }
+        });
     }
 
     ngOnInit(): void {
@@ -90,79 +94,79 @@ export class UsersRequestComponent implements OnInit {
         let tmpUser = JSON.parse(<string>localStorage.getItem('currentUser'));
         this.getDevelopersProjectsByIdDeveloperIsAppliance(tmpUser);
     }
-
     private getDevelopersProjectsByIdDeveloperIsAppliance(tmpUser:any) {
         // Get tous projet de l'user
-        let idProjectActive:number;
         this.developersProjectsService.getByIdDeveloper(tmpUser.id).then(tmp =>{
-      
             for(let elt of tmp) {
                 if(elt.isAppliance) {
-                    idProjectActive = elt.idProject;
-
-                    this.getAllProjectService(idProjectActive,tmpUser);
+                    this.idProjectActive = elt.idProject;
+                    this.getAllUsersByIdProject(this.idProjectActive)
                 }
             }
         });
     }
-    private getAllProjectService(idProjectActive:any,tmpUser:any) {
-        // GET ALL project
-        this.projectService.getAll().then(projects=>{
 
-            this.allProjects = projects;
-            for (let elt of this.allProjects) {
-                if(elt.status == this.STATUS_ACTIVE && elt.id == idProjectActive) {
-                    console.log(elt);
-                    this.activeProjects = elt;
+    private getAllUsersByIdProject(idProjectActive: number) {
+        this.developersProjectsService.getUsersByIdProject(idProjectActive).then(tmp=> {
+            for(let elt of Object.values(tmp)) {
+                if(!elt.isAppliance) {
+                    this.usersApplianceArray.push(elt)
                 }
             }
-            this.getDevelopersProjectsByIdProject();
+            this.getDevNotAppliance(this.usersApplianceArray, idProjectActive)
         });
     }
-    private getDevelopersProjectsByIdProject() {
-        // GET ALL DEVS by id project
-        this.developersProjectsService.getDevelopersByIdProject(this.activeProjects.id).then(tmp => {
 
-            for(let elt of Object.values(tmp)) {
-                this.idAppliedDevelopers.push(elt.idDeveloper);
+    private getDevNotAppliance(usersApplianceArray: any, idProjectActive:number) {
+        this.projectService.getById(idProjectActive).then(projectNotTerminate=> {
+            if(projectNotTerminate.status!=this.STATUS_TERMINATE) {
+                for(let elt of usersApplianceArray) {
+                    this.userService.getById(elt.idDeveloper).then(user => {
+                        if(user.role == this.ROLE_DEVELOPER && idProjectActive == projectNotTerminate.id) {
+                            this.appliedDevelopers.push(user);
+                            this.fillIdTechnologyDevelopers(user);
+                        } else if(user.role == this.ROLE_SCRUM_MASTER && idProjectActive == projectNotTerminate.id) {
+                            this.appliedScrumMasters.push(user);
+                            this.fillIdTechnologyScrumMasters(user);
+                        }
+                    });
+                }
             }
-            for(let elt2 of this.idAppliedDevelopers) {
-                this.userService.getById(elt2).then(tmp => {
-                    this.appliedDevelopers.push(tmp);
-                });
-            }
-            this.getDevelopersProjectsScrumMasterByIdProject();
-        });
-    }
-    private getDevelopersProjectsScrumMasterByIdProject() {
-
-        // GET ALL SCRUM_MASTER by id project
-        this.developersProjectsService.getScrumMasterByIdProject(this.activeProjects.id).then(tmp => {
-
-            for(let elt of Object.values(tmp)) {
-                this.idAppliedScrumMasters.push(elt.idDeveloper);
-            }
-            for(let elt2 of this.idAppliedScrumMasters) {
-                this.userService.getById(elt2).then(tmp => {
-                    this.appliedScrumMasters.push(tmp);
-                });
-            }
-            this.fillIdTechnologyDevelopers();
-            this.fillIdTechnologyScrumMasters();
         });
     }
 
     accept(sosUser:SosUser) {
-        console.log(sosUser);
+        let userProject:UserProject = {
+            idDeveloper:0,
+            idProject:0,
+            isAppliance:true
+        };
+        this.developersProjectsService.updateDeveloperProjectIsAppliance(sosUser.id,this.idProjectActive,userProject).then(tmp => {
+            // Passer le projet en projet actif
+            let projectTmp:Project = {
+                "name": "",
+                "deadline": new Date(),
+                "description": "",
+                "repositoryUrl": "",
+                "status": 0
+            };
+            projectTmp.status = this.STATUS_ACTIVE;
+            projectTmp.id = this.idProjectActive;
+
+            this.projectService.updateStatus(projectTmp).then(tmp2=>{
+            });
+        });
     }
     refuse(sosUser:SosUser) {
-        /*this.developersProjectsService.deleteDeveloperProjectByidDeveloperByidProject(sosUser.id,this.activeProjects.id).then(tmp => {
+        this.developersProjectsService.deleteDeveloperProjectByidDeveloperByidProject(sosUser.id,this.idProjectActive).then(tmp => {
 
-        });*/
+        });
     }
 
     toggleButtonPress(isPressed:boolean) {
         this.buttonIsPressed = isPressed;
     }
+
+
 
 }

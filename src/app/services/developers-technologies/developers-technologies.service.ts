@@ -16,7 +16,7 @@ export class DevelopersTechnologiesService {
     }
 
     // Get requests
-    getByDeveloperId(id: number): Promise<DeveloperTechnology[]> {
+    getByDeveloperId(id: number | undefined): Promise<DeveloperTechnology[]> {
         return this.http.get<DeveloperTechnology[]>(`${environment.apiUrl}/userTechnologies/byUser/${id}`).toPromise();
     }
 

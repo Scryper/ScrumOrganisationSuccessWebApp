@@ -81,8 +81,6 @@ export class ProjectManagerComponent implements OnInit {
             for (let i = 0 ; i < developerProjects.length ; i++) {
                 this.getProjectName(developerProjects[i].idProject);
             }
-
-
         });
     }
 
@@ -90,13 +88,10 @@ export class ProjectManagerComponent implements OnInit {
         this.projectService.getById(idProject).then(project => {
             console.log(project.status)
             if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
-
                 this.activeProjects.push(project);
-                console.log(this.activeProjects.length);
             } else if(project.status == this.STATUS_TERMINATE) {
                 this.oldProjects.push(project);
             }
-
         });
     }
 

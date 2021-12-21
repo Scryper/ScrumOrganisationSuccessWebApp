@@ -55,7 +55,7 @@ export class CreateProjectComponent implements OnInit {
             let devProject:UserProject = {
                 idDeveloper : this.userId,
                 idProject : tmp.id!,
-                isAppliance : false
+                isAppliance : true
             }
             this.developersProjectsService.addDeveloperProject(devProject).then(tmp=>{
                 this.router.navigate([this.returnUrl]);

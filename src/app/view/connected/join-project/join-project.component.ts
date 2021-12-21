@@ -89,9 +89,6 @@ export class JoinProjectComponent implements OnInit {
 
     private isUserWorking() {
         this.developersProjectsService.getByIdDeveloper(this.userId).then(developerProjects => {
-            console.log(this.userId);
-            console.log(developerProjects);
-            console.log(this.projects);
             let i: number = 0;
             let result: boolean = false;
             while(i < developerProjects.length && !result) {

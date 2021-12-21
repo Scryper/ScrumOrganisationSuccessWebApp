@@ -19,6 +19,10 @@
             <p *ngFor="let eltTec of TechnologyScrumMasters">{{eltTec.Technology}}</p>
         </div>
     </div>
+    <span *ngIf="appliedScrumMasters.length==0"
+          class="cursorPointer radius standardCard robotoLight">
+                <span>No ScrumMaster Request found.</span>
+    </span>
 
     <h2>Developers Request</h2>
     <div *ngFor="let eltUsers of appliedDevelopers; let i = index;"
@@ -41,4 +45,8 @@
             </p>
         </div>
     </div>
+    <span *ngIf="appliedDevelopers.length==0"
+          class="cursorPointer radius standardCard robotoLight">
+                <span>No Developer Request found.</span>
+    </span>
 </div>

@@ -113,24 +113,26 @@ export class UsersRequestComponent implements OnInit {
                     this.usersApplianceArray.push(elt)
                 }
             }
-            this.getDevNotAppliance(this.usersApplianceArray, idProjectActive)
+            this.getUserNotAppliance(this.usersApplianceArray, idProjectActive)
         });
     }
 
-    private getDevNotAppliance(usersApplianceArray: any, idProjectActive:number) {
+    private getUserNotAppliance(usersApplianceArray: any, idProjectActive:number) {
         this.projectService.getById(idProjectActive).then(projectNotTerminate=> {
+
             if(projectNotTerminate.status!=this.STATUS_TERMINATE) {
                 for(let elt of usersApplianceArray) {
                     this.userService.getById(elt.idDeveloper).then(user => {
-                        if(user.role == this.ROLE_DEVELOPER && idProjectActive == projectNotTerminate.id) {
+                        if(user.role == this.ROLE_DEVELOPER && elt.idProject == projectNotTerminate.id) {
                             this.appliedDevelopers.push(user);
                             this.fillIdTechnologyDevelopers(user);
-                        } else if(user.role == this.ROLE_SCRUM_MASTER && idProjectActive == projectNotTerminate.id) {
+                        } else if(user.role == this.ROLE_SCRUM_MASTER && elt.idProject == projectNotTerminate.id) {
                             this.appliedScrumMasters.push(user);
                             this.fillIdTechnologyScrumMasters(user);
                         }
                     });
                 }
+                console.log(this.appliedDevelopers.length)
             }
         });
     }

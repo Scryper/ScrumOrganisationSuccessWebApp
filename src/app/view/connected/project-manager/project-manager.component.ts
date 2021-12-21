@@ -51,22 +51,6 @@ export class ProjectManagerComponent implements OnInit {
 
         });
         this.loadProjects();
-
-        /*console.log(this.activeProjects)*/
-        /*if(this.activeProjects.length == 0) {
-            this.activeProjects = [
-                {
-                    id: 0,
-                    name: this.noProjectsFound,
-                    status: 0,
-                    description: "",
-                    deadline: new Date(),
-                    repositoryUrl: ""
-                }
-            ];
-
-        }*/
-
     }
 
     toggleButtonPress(isPressed:boolean) {
@@ -102,10 +86,4 @@ export class ProjectManagerComponent implements OnInit {
         });
     }
 
-    navigateIfActiveProjectNotEmpty(projectName:string) {
-        /*console.log(this.isActiveProjctsEmpty);
-        if(!this.isActiveProjctsEmpty) {
-            this.route.navigate(['/myProject', projectName]);
-        }*/
-    }
 }

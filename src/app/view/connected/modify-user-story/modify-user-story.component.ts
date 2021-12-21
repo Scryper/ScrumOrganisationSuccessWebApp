@@ -67,12 +67,11 @@ export class ModifyUserStoryComponent implements OnInit {
             idProject: <number>this.idProject,
             name: this.form.getRawValue().main.name,
             description: this.form.getRawValue().main.description,
-            priority: <number>this.form.getRawValue().main.priority,
-            id:<number>this.idUserStory
+            priority: Number(this.form.getRawValue().main.priority)
         }
 
         //add UserStory in the database
-        this.userStoriesService.updateUserStory(tmpUserStory).then(tmp=>{
+        this.userStoriesService.updateUserStory(tmpUserStory,this.idUserStory).then(()=>{
             //redirect to projects
             let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
             this.router.navigate([returnUrl]);

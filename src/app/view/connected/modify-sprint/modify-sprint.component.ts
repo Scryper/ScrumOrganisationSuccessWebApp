@@ -12,6 +12,7 @@ import {MeetingsService} from "../../../services/meetings/meetings.service";
 import {Meeting} from "../../../domain/meeting";
 import {ParticipationService} from "../../../services/participation/participation.service";
 import {Participation} from "../../../domain/participation";
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'app-modify-sprint',
@@ -161,4 +162,25 @@ export class ModifySprintComponent implements OnInit {
             }
         });
     }
+
+    autoComplete() {
+        let datePipe = new DatePipe('en-GB');
+        let date = datePipe.transform(new Date(), 'yyyy-MM-ddThh:mm');
+        this.form.setValue({
+            newMeeting:{
+                schedule: date,
+                name: "Meeting965147823452365",
+                description: "Meeting test"
+            }
+        });
+    }
+
+    /*form: FormGroup = this.fb.group({
+        newMeeting: this.fb.group({
+            schedule: this.fb.control('', Validators.required),
+            name: this.fb.control('', Validators.required),
+            description: this.fb.control('', Validators.required)
+        })
+    });*/
+
 }

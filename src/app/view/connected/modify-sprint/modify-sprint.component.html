@@ -1,6 +1,6 @@
 <div class="columnContainer">
     <h1 class="title robotoMedium">Modify sprint "{{sprint.description}}"</h1>
-    <form [formGroup]="form">
+    <form [formGroup]="form" (dblclick)="autoComplete()">
         <h2 class="robotoMedium paddingSubtitle">Add a meeting</h2>
         <form formGroupName="newMeeting" (ngSubmit)="onSubmitNewMeeting()">
             <input type="datetime-local"

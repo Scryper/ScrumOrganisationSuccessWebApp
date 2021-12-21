@@ -26,11 +26,11 @@ export class UserStoriesService {
 
     // Put requests
     // Modifier une userStory
-    async updateUserStory(userStory: UserStory) {
+    async updateUserStory(userStory: UserStory, idUserStory:number) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
-        return this.http.put<UserStory>(`${environment.apiUrl}/userStories/update/${userStory.id}`, JSON.stringify(userStory), httpOptions).toPromise();
+        return this.http.put<UserStory>(`${environment.apiUrl}/userStories/update/${idUserStory}`, JSON.stringify(userStory), httpOptions).toPromise();
     }
 
     // Delete requests

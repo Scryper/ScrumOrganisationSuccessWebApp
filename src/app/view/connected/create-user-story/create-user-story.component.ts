@@ -4,9 +4,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Project} from "../../../domain/project";
-import {UserProject} from "../../../domain/user-project";
-import {DatePipe} from "@angular/common";
 import {UserStory} from "../../../domain/user-story";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 
@@ -53,11 +50,11 @@ export class CreateUserStoryComponent implements OnInit {
             idProject: <number>this.idProject,
             name: this.form.getRawValue().main.name,
             description: this.form.getRawValue().main.description,
-            priority: <number>this.form.getRawValue().main.priority
+            priority: Number(this.form.getRawValue().main.priority)
         }
 
         //add UserStory in the database
-        this.userStoriesService.addUserStory(tmpUserStory).then(tmp=>{
+        this.userStoriesService.addUserStory(tmpUserStory).then(()=>{
             //redirect to projects
             let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
             this.router.navigate([returnUrl]);

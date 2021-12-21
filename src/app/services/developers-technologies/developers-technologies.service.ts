@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {DeveloperTechnology} from "../../domain/developer-technology";
 import {environment} from "../../../environments/environment";
-import {Project} from "../../domain/project";
 
 @Injectable({
     providedIn: 'root'
@@ -11,17 +10,17 @@ export class DevelopersTechnologiesService {
     constructor(private http: HttpClient) { }
 
     // Get all requests
-    getAll() {
+    async getAll() {
         return this.http.get<DeveloperTechnology[]>(`${environment.apiUrl}/userTechnologies`).toPromise();
     }
 
     // Get requests
-    getByDeveloperId(id: number): Promise<DeveloperTechnology[]> {
+    async getByDeveloperId(id: number): Promise<DeveloperTechnology[]> {
         return this.http.get<DeveloperTechnology[]>(`${environment.apiUrl}/userTechnologies/byUser/${id}`).toPromise();
     }
 
     // Post requests
-    addDeveloperTechnology(developerTechnology: DeveloperTechnology): Promise<DeveloperTechnology> {
+    async addDeveloperTechnology(developerTechnology: DeveloperTechnology): Promise<DeveloperTechnology> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
@@ -29,7 +28,7 @@ export class DevelopersTechnologiesService {
     }
 
     // Delete requests
-    deleteDeveloperTechnology(idDeveloper: number, idTechnology: number): Promise<DeveloperTechnology> {
+    async deleteDeveloperTechnology(idDeveloper: number, idTechnology: number): Promise<DeveloperTechnology> {
         return this.http.delete<DeveloperTechnology>(`${environment.apiUrl}/userTechnologies/${idDeveloper},${idTechnology}`).toPromise();
     }
 }

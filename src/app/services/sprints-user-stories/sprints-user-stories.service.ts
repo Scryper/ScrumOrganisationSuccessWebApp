@@ -10,25 +10,25 @@ export class SprintsUserStoriesService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    getAll(): Promise<SprintUserStory[]> {
+    async getAll(): Promise<SprintUserStory[]> {
         return this.http.get<SprintUserStory[]>(`${environment.apiUrl}/sprintsUserStories`).toPromise();
     }
 
-    getByIdSprint(idSprint: number): Promise<SprintUserStory[]> {
+    async getByIdSprint(idSprint: number): Promise<SprintUserStory[]> {
         return this.http.get<SprintUserStory[]>(`${environment.apiUrl}/sprintsUserStories/byIdSprint/${idSprint}`).toPromise();
     }
 
-    getByIdUserStory(idUserStory: number): Promise<SprintUserStory[]> {
+    async getByIdUserStory(idUserStory: number): Promise<SprintUserStory[]> {
         return this.http.get<SprintUserStory[]>(`${environment.apiUrl}/sprintsUserStories/byIdUserStory/${idUserStory}`).toPromise();
     }
 
     // Post requests
-    addSprintUserStory(sprintUserStory: SprintUserStory): Promise<SprintUserStory> {
+    async addSprintUserStory(sprintUserStory: SprintUserStory): Promise<SprintUserStory> {
         return this.http.post<SprintUserStory>(`${environment.apiUrl}/sprintsUserStories`, sprintUserStory).toPromise();
     }
 
     // Delete requests
-    deleteSprintUserStory(idSPrint: number, idUserStory: number): Promise<boolean> {
+    async deleteSprintUserStory(idSPrint: number, idUserStory: number): Promise<boolean> {
         return this.http.delete<boolean>(`${environment.apiUrl}/sprintsUserStories/${idSPrint}, ${idUserStory}`).toPromise();
     }
 }

@@ -10,24 +10,24 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    getAll() {
+    async getAll() {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users`);
     }
 
-    getByEmail(email:string): Promise<SosUser> {
+    async getByEmail(email:string): Promise<SosUser> {
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`).toPromise();
     }
 
-    getById(id:number): Promise<SosUser> {
+    async getById(id:number): Promise<SosUser> {
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`).toPromise();
     }
 
-    getByIdProject(idProject: number): Promise<SosUser[]> {
+    async getByIdProject(idProject: number): Promise<SosUser[]> {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users/byProject/${idProject}`).toPromise();
     }
 
     // Post requests
-    addUser(user: SosUser) {
+    async addUser(user: SosUser) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
@@ -35,7 +35,7 @@ export class UserService {
     }
 
     // Put request
-    updateFirstNameLastName(user: SosUser) {
+    async updateFirstNameLastName(user: SosUser) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }

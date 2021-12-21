@@ -10,11 +10,11 @@ export class TechnologiesService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    getAll(): Promise<Technology[]> {
+    async getAll(): Promise<Technology[]> {
         return this.http.get<Technology[]>(`${environment.apiUrl}/technology`).toPromise();
     }
 
-    getById(id: number): Promise<Technology> {
+    async getById(id: number): Promise<Technology> {
         return this.http.get<Technology>(`${environment.apiUrl}/technology/byId/${id}`).toPromise();
     }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import { Observable } from "rxjs";
 import { Project } from "../../domain/project";
 import { environment } from "../../../environments/environment";
 
@@ -11,35 +10,35 @@ export class ProjectsService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    getAll(): Promise<Project[]> {
+    async getAll(): Promise<Project[]> {
         return this.http.get<Project[]>(`${environment.apiUrl}/projects`).toPromise();
     }
 
-    getById(id: number): Promise<Project> {
+    async getById(id: number): Promise<Project> {
         return this.http.get<Project>(`${environment.apiUrl}/projects/byId/${id}`).toPromise();
     }
 
-    getByProjectName(projectName: string | null): Promise<Project> {
+    async getByProjectName(projectName: string | null): Promise<Project> {
         return this.http.get<Project>(`${environment.apiUrl}/projects/byName/${projectName}`).toPromise();
     }
 
     // Post requests
-    addProject(project: Project){
+    async addProject(project: Project){
         const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
         return this.http.post<Project>(`${environment.apiUrl}/projects`, JSON.stringify(project),httpOptions).toPromise();
     }
 
     // Put  requests
-    updateRepositoryUrl(id: number, repositoryUrl: string): Observable<boolean> {
-        return this.http.put<boolean>(`${environment.apiUrl}/projects/${id}`, repositoryUrl);
+    async updateRepositoryUrl(id: number, repositoryUrl: string): Promise<boolean> {
+        return this.http.put<boolean>(`${environment.apiUrl}/projects/${id}`, repositoryUrl).toPromise();
     }
 
     // Delete requests
-    deleteProject(id: number): Observable<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrl}/projects/${id}`);
+    async deleteProject(id: number): Promise<boolean> {
+        return this.http.delete<boolean>(`${environment.apiUrl}/projects/${id}`).toPromise();
     }
 
-    updateStatus(project: Project) {
+    async updateStatus(project: Project) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }

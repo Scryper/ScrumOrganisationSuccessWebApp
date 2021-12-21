@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import {Observable} from "rxjs";
 import { Sprint } from "../../domain/sprint";
 import {environment} from "../../../environments/environment";
 
@@ -11,25 +10,25 @@ export class SprintsService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    getAll(): Observable<Sprint[]> {
-        return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints`);
+    async getAll(): Promise<Sprint[]> {
+        return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints`).toPromise();
     }
 
-    getByIdProject(idProject: number): Promise<Sprint[]> {
+    async getByIdProject(idProject: number): Promise<Sprint[]> {
         return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints/byProject/${idProject}`).toPromise();
     }
 
-    getById(id: number): Promise<Sprint> {
+    async getById(id: number): Promise<Sprint> {
         return this.http.get<Sprint>(`${environment.apiUrl}/sprints/byId/${id}`).toPromise();
     }
 
     // Post requests
-    addSprint(sprint: Sprint): Observable<Sprint> {
-        return this.http.post<Sprint>(`${environment.apiUrl}/sprints`, sprint);
+    async addSprint(sprint: Sprint): Promise<Sprint> {
+        return this.http.post<Sprint>(`${environment.apiUrl}/sprints`, sprint).toPromise();
     }
 
     // Delete requests
-    deleteSprint(id: number): Observable<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrl}/sprints/${id}`);
+    async deleteSprint(id: number): Promise<boolean> {
+        return this.http.delete<boolean>(`${environment.apiUrl}/sprints/${id}`).toPromise();
     }
 }

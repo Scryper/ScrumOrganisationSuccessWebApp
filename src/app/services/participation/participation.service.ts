@@ -10,7 +10,7 @@ export class ParticipationService {
     constructor(private http: HttpClient) { }
 
     // Post requests
-    addParticipation(participation: Participation): Promise<Participation> {
+    async addParticipation(participation: Participation): Promise<Participation> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
@@ -18,7 +18,7 @@ export class ParticipationService {
     }
 
     // Delete requests
-    deleteParticipation(id: number): Promise<boolean> {
+    async deleteParticipation(id: number): Promise<boolean> {
         return this.http.delete<boolean>(`${environment.apiUrl}/participations/${id}`).toPromise();
     }
 }

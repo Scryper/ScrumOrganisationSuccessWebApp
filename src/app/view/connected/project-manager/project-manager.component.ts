@@ -5,8 +5,6 @@ import {UsersProjectsService} from "../../../services/developers-projects/users-
 import {Project} from "../../../domain/project";
 import {Router} from "@angular/router";
 
-
-
 @Component({
     selector: 'app-project-manager',
     templateUrl: './project-manager.component.html',
@@ -25,7 +23,7 @@ export class ProjectManagerComponent implements OnInit {
     oldProjects: Project[] = [];
 
     noProjectsFound:string = "No projects found.";
-    isActiveProjctsEmpty:boolean = false;
+    isActiveProjectEmpty:boolean = false;
 
     subtitles: string[] = [
         "Active project",
@@ -49,15 +47,13 @@ export class ProjectManagerComponent implements OnInit {
             }
         });
         this.loadProjects();
-
-
     }
 
     toggleButtonPress(isPressed:boolean) {
         this.buttonPressed = isPressed;
     }
 
-    private loadProjects() {
+    private async loadProjects() {
         this.activeProjects = [
             {
                 id: 0,
@@ -79,7 +75,7 @@ export class ProjectManagerComponent implements OnInit {
                 repositoryUrl: ""
             }
         ];
-        this.developerProjectService.getByIdDeveloper(this.idUser).then(developerProjects => {
+        await this.developerProjectService.getByIdDeveloper(this.idUser).then(developerProjects => {
             for (let i = 0 ; i < developerProjects.length ; i++) {
                 this.getProjectName(developerProjects[i].idProject);
             }
@@ -101,21 +97,20 @@ export class ProjectManagerComponent implements OnInit {
             }
             // INSERT
             if(this.activeProjects.length == 0 || (this.activeProjects.length == 1 && this.activeProjects[0].name == this.noProjectsFound ) ) {
-                this.isActiveProjctsEmpty = true;
+                this.isActiveProjectEmpty = true;
             }
         });
     }
 
     terminate(project:Project) {
         project.status = 3;
-        this.projectService.updateStatus(project).then(()=>{
+        this.projectService.updateStatus(project).then(() => {
             this.loadProjects();
         });
     }
 
-    navigateIfActiveProjectNotEmpty(projectName:string) {
-        console.log(this.isActiveProjctsEmpty);
-        if(!this.isActiveProjctsEmpty) {
+    navigateIfActiveProjectNotEmpty(projectName: string) {
+        if(!this.isActiveProjectEmpty) {
             this.route.navigate(['/myProject', projectName]);
         }
     }

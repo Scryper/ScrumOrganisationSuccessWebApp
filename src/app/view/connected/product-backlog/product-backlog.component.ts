@@ -64,11 +64,11 @@ export class ProductBacklogComponent implements OnInit, OnDestroy {
     }
 
     deleteUserStory(userStory:UserStory) {
-        // this.userStoriesService.deleteUserStory(userStory).then(tmp=>{
-        //     this.productBacklog=this.productBacklog.filter((tmp)=> {
-        //         return userStory.id!=tmp.id;
-        //     });
-        // })
+        this.subscription = this.userStoriesService.deleteUserStory(userStory).subscribe(() => {
+            this.productBacklog = this.productBacklog.filter((tmp)=> {
+                return userStory.id != tmp.id;
+            });
+        });
     }
 
     modifyUserStory(userStory:UserStory) {

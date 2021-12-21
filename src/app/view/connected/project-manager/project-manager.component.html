@@ -8,7 +8,7 @@
                  class="cursorPointer radius standardCard robotoLight">
                 <span>{{project.name}}</span>
             </span>
-            <button *ngIf="!isActiveProjctsEmpty" class="marginLeft" (click)="terminate(project);">Terminate</button>
+            <button *ngIf="!isActiveProjctsEmpty && project.name != noProjectsFound" class="marginLeft" (click)="terminate(project);">Terminate</button>
         </div>
 
 

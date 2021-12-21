@@ -20,9 +20,15 @@ interface idUserTechno {
 })
 
 export class UsersRequestComponent implements OnInit {
+    private STATUS_INACTIVE: number = 1;
+    private STATUS_ACTIVE: number = 2;
+    private STATUS_TERMINATE: number = 3;
+
     nameProject: string | null = "";
     buttonIsPressed: boolean = false;
     clicked: any;
+
+    currentUser:SosUser = null!;
 
     idAppliedDevelopers:number[] = []
     idAppliedScrumMasters:number[] = []
@@ -87,18 +93,26 @@ export class UsersRequestComponent implements OnInit {
 
     private getDevelopersProjectsByIdDeveloperIsAppliance(tmpUser:any) {
         // Get tous projet de l'user
-        let tmpIdProject:number;
-        this.developersProjectsService.getByIdDeveloperIsAppliance(tmpUser.id).then(tmp =>{
-            tmpIdProject = tmp[0].idProject;
-            this.getAllProjectService(tmpIdProject);
+        let idProjectActive:number;
+        this.developersProjectsService.getByIdDeveloper(tmpUser.id).then(tmp =>{
+      
+            for(let elt of tmp) {
+                if(elt.isAppliance) {
+                    idProjectActive = elt.idProject;
+
+                    this.getAllProjectService(idProjectActive,tmpUser);
+                }
+            }
         });
     }
-    private getAllProjectService(tmpIdProject:any) {
+    private getAllProjectService(idProjectActive:any,tmpUser:any) {
         // GET ALL project
         this.projectService.getAll().then(projects=>{
+
             this.allProjects = projects;
             for (let elt of this.allProjects) {
-                if(elt.status == 2 && elt.id == tmpIdProject) {
+                if(elt.status == this.STATUS_ACTIVE && elt.id == idProjectActive) {
+                    console.log(elt);
                     this.activeProjects = elt;
                 }
             }
@@ -108,6 +122,7 @@ export class UsersRequestComponent implements OnInit {
     private getDevelopersProjectsByIdProject() {
         // GET ALL DEVS by id project
         this.developersProjectsService.getDevelopersByIdProject(this.activeProjects.id).then(tmp => {
+
             for(let elt of Object.values(tmp)) {
                 this.idAppliedDevelopers.push(elt.idDeveloper);
             }
@@ -120,8 +135,10 @@ export class UsersRequestComponent implements OnInit {
         });
     }
     private getDevelopersProjectsScrumMasterByIdProject() {
+
         // GET ALL SCRUM_MASTER by id project
         this.developersProjectsService.getScrumMasterByIdProject(this.activeProjects.id).then(tmp => {
+
             for(let elt of Object.values(tmp)) {
                 this.idAppliedScrumMasters.push(elt.idDeveloper);
             }

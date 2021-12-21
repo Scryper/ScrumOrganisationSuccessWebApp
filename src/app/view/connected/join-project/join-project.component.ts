@@ -51,7 +51,7 @@ export class JoinProjectComponent implements OnInit {
         let devProject:UserProject = {
             idDeveloper : this.userId,
             idProject : project.id!,
-            isAppliance : true
+            isAppliance : false
         }
         // send request
         this.developersProjectsService.addDeveloperProject(devProject).then(result => {
@@ -62,7 +62,12 @@ export class JoinProjectComponent implements OnInit {
                         this.projectsIsApply[i] = true;
                     }
                 }
+                // UPDATE STATUS INACTIVE
+                project.status = 1;
+                this.projectService.updateStatus(project).then(()=>{
+                });
             }
+
         });
     }
 

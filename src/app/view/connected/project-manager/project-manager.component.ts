@@ -16,8 +16,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
     private STATUS_INACTIVE: number = 1;
     private STATUS_ACTIVE: number = 2;
 
-    private subscriptionDeveloperProjectService: Subscription | undefined;
-    private subscriptionProjectService: Subscription | undefined;
+    private subscription: Subscription | undefined;
 
     isProjectAlreadyExist: boolean = false;
     buttonPressed: boolean = false;
@@ -43,8 +42,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
                 private route: Router) { }
 
     ngOnDestroy(): void {
-        this.subscriptionDeveloperProjectService?.unsubscribe();
-        this.subscriptionProjectService?.unsubscribe();
+        this.subscription?.unsubscribe();
     }
 
     ngOnInit(): void {
@@ -86,7 +84,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
                 repositoryUrl: ""
             }
         ];
-        this.subscriptionDeveloperProjectService =this.developerProjectService.getByIdDeveloper(this.idUser).subscribe(developerProjects => {
+        this.subscription = this.developerProjectService.getByIdDeveloper(this.idUser).subscribe(developerProjects => {
             for (let i = 0 ; i < developerProjects.length ; i++) {
                 this.getProjectName(developerProjects[i].idProject);
             }
@@ -94,7 +92,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
     }
 
     private getProjectName(idProject: number) {
-        this.subscriptionProjectService = this.projectService.getById(idProject).subscribe(project => {
+        this.subscription = this.projectService.getById(idProject).subscribe(project => {
             if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
                 if(this.activeProjects[0].name == this.noProjectsFound) {
                     this.activeProjects.pop();
@@ -115,9 +113,9 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
 
     terminate(project:Project) {
         project.status = 3;
-        // this.projectService.updateStatus(project).then(() => {
-        //     this.loadProjects();
-        // });
+        this.subscription = this.projectService.updateStatus(project).subscribe(() => {
+            this.loadProjects();
+        });
     }
 
     navigateIfActiveProjectNotEmpty(projectName: string) {

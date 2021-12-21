@@ -1,26 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 import {ActivatedRoute} from "@angular/router";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UserStory} from "../../../domain/user-story";
-import {SosUser} from "../../../domain/sos-user";
+import {map} from "rxjs/operators";
+import {Subscription} from "rxjs";
 import {Role} from "../../../domain/role";
+import {SosUser} from "../../../domain/sos-user";
 
 @Component({
     selector: 'app-product-backlog',
     templateUrl: './product-backlog.component.html',
     styleUrls: ['../../../app.component.css', './product-backlog.component.css']
 })
-export class ProductBacklogComponent implements OnInit {
+export class ProductBacklogComponent implements OnInit, OnDestroy {
     projectName: string | null = "";
     isButtonPressed: boolean = false;
     idProject: number = 0;
 
     productBacklog:UserStory[] =[];
+    private subscription: Subscription | undefined;
+    isProductOwner: boolean = false;
 
     currentUser:SosUser=null!;
-
-    isProductOwner:boolean = false;
 
 
     constructor(private route: ActivatedRoute,
@@ -28,33 +30,35 @@ export class ProductBacklogComponent implements OnInit {
                 private userStoryService: UserStoriesService,
                 private projectService: ProjectsService) { }
 
+    ngOnDestroy(): void {
+        this.subscription?.unsubscribe();
+    }
+
     ngOnInit(): void {
-
-        this.currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
-        if(this.currentUser.role == Role.ProductOwner) this.isProductOwner = true;
-
+        this.isProductOwner = JSON.parse(<string>localStorage.getItem('currentUser')).role == Role.ProductOwner;
         this.idProject = <number><unknown>this.route.snapshot.paramMap.get("idProject");
         this.projectName = this.route.snapshot.paramMap.get("projectName");
         this.loadProductBacklog();
     }
 
     private loadProductBacklog() {
-        this.getProject();
+        this.subscription = this.getProject().subscribe();
     }
 
     private getProject() {
-        this.projectService.getByProjectName(this.projectName).then(project => {
-            if (project.id != null) {
-                this.getUserStories(project.id);
+        return this.projectService.getByProjectName(this.projectName).pipe(
+            map(project => {
+                if (project.id != null) {
+                    this.getUserStories(project.id);
+                }
             }
-        });
+        ));
     }
 
     private getUserStories(id: number) {
-        this.userStoryService.getByIdProject(id).then(userStories => {
-            for (let i = 0 ; i < userStories.length ; i++) {
-                let userStory: UserStory = userStories[i];
-                this.productBacklog.push(userStory);
+        this.userStoryService.getByIdProject(id).subscribe(userStories => {
+            for(let i = 0 ; i < userStories.length ; i++) {
+                this.productBacklog.push(userStories[i]);
             }
         });
     }
@@ -64,11 +68,10 @@ export class ProductBacklogComponent implements OnInit {
     }
 
     deleteUserStory(userStory:UserStory) {
-        this.userStoriesService.deleteUserStory(userStory).then(()=>{
-            this.productBacklog=this.productBacklog.filter((tmp)=> {
-                return userStory.id!=tmp.id;
+        this.subscription = this.userStoriesService.deleteUserStory(userStory).subscribe(() => {
+            this.productBacklog = this.productBacklog.filter((tmp)=> {
+                return userStory.id != tmp.id;
             });
-        })
+        });
     }
-
 }

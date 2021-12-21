@@ -1,4 +1,4 @@
 export interface SprintUserStory {
-    idSprint: number,
-    idUserStory: number
+    idSprint: number | undefined,
+    idUserStory: number | undefined
 }

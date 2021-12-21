@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CalendarOptions} from '@fullcalendar/angular';
 import {MeetingsService} from "../../../services/meetings/meetings.service";
 import {AuthenticationService} from "../../../services";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-meeting',
@@ -20,6 +21,8 @@ export class MeetingComponent implements OnInit {
         locale: 'fr'
     };
 
+    private meetingSubscription: Subscription | undefined;
+
     constructor(private meetingService: MeetingsService,
                 private authenticationService: AuthenticationService) { }
 
@@ -28,7 +31,7 @@ export class MeetingComponent implements OnInit {
     }
 
     loadEvents(id: number) {
-        this.meetingService.getByIdUser(id).then(meetings => {
+        this.meetingSubscription = this.meetingService.getByIdUser(id).subscribe(meetings => {
             let events = [];
             for (let i = 0; i < meetings.length; i++) {
                  events.push({

@@ -65,14 +65,14 @@ export class SignUpComponent implements OnInit {
             this.differentPasswords = false;
             this.signUpService.setValues(password, email);
             //verify if the email is in the database
-            this.userService.getByEmail(email).then(result => {
-                if(result == null) {
-                    this.sendData();
-                }
-                else {
-                    this.userExists = true;
-                }
-            });
+            // this.userService.getByEmail(email).then(result => {
+            //     if(result == null) {
+            //         this.sendData();
+            //     }
+            //     else {
+            //         this.userExists = true;
+            //     }
+            // });
         } else {
             this.differentPasswords = true;
         }
@@ -127,10 +127,10 @@ export class SignUpComponent implements OnInit {
         this.isMajor = (currentYear - birthYear + offset) >= 18;
 
         if(this.isMajor) {
-            this.userService.addUser(user).then(() => {
-                this.accountCreationSuccessful = true;
-                this.resetFormValues();
-            });
+            // this.userService.addUser(user).then(() => {
+            //     this.accountCreationSuccessful = true;
+            //     this.resetFormValues();
+            // });
         }
     }
 

@@ -1,5 +1,5 @@
 export interface Sprint {
-    id: number,
+    id?: number,
     idProject: number,
     sprintNumber: number,
     description: string,

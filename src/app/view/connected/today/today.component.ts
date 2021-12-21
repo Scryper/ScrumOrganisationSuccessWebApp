@@ -39,31 +39,31 @@ export class TodayComponent implements OnInit {
     }
 
     private loadEvents(id: number) {
-        this.meetingService.getByIdUser(id).then(meetings => {
-            for (let i = 0 ; i < meetings.length ; i++) {
-                let meeting: Meeting = meetings[i];
-                let todayAsDate: Date = new Date();
-                let meetingAsDate: Date = new Date(meeting.schedule); // converting db date to angular date
-
-                // slice day month and year to compare dates
-                let slicedTodaysDate: number[] = this.sliceDateParts(todayAsDate);
-                let slicedMeetingDate: number[] = this.sliceDateParts(meetingAsDate);
-
-                // if the date of the meeting is today
-                // add it to the list of meetings
-                if(this.isSameDate(slicedTodaysDate, slicedMeetingDate)) {
-                    if(this.meetings[0].name == "No meetings today.") {
-                        this.meetings.pop();
-                    }
-
-                    // displays the schedule to xxhxx
-                    let meetingHourSchedule: string = " ";
-                    meetingHourSchedule += meetingAsDate.getHours() + "h";
-                    meetingHourSchedule += (meetingAsDate.getMinutes() == 0) ? "00" : meetingAsDate.getMinutes();
-                    this.meetings.push({name: meeting.description + meetingHourSchedule, meetingUrl: meeting.meetingUrl});
-                }
-            }
-        });
+        // this.meetingService.getByIdUser(id).then(meetings => {
+        //     for (let i = 0 ; i < meetings.length ; i++) {
+        //         let meeting: Meeting = meetings[i];
+        //         let todayAsDate: Date = new Date();
+        //         let meetingAsDate: Date = new Date(meeting.schedule); // converting db date to angular date
+        //
+        //         // slice day month and year to compare dates
+        //         let slicedTodaysDate: number[] = this.sliceDateParts(todayAsDate);
+        //         let slicedMeetingDate: number[] = this.sliceDateParts(meetingAsDate);
+        //
+        //         // if the date of the meeting is today
+        //         // add it to the list of meetings
+        //         if(this.isSameDate(slicedTodaysDate, slicedMeetingDate)) {
+        //             if(this.meetings[0].name == "No meetings today.") {
+        //                 this.meetings.pop();
+        //             }
+        //
+        //             // displays the schedule to xxhxx
+        //             let meetingHourSchedule: string = " ";
+        //             meetingHourSchedule += meetingAsDate.getHours() + "h";
+        //             meetingHourSchedule += (meetingAsDate.getMinutes() == 0) ? "00" : meetingAsDate.getMinutes();
+        //             this.meetings.push({name: meeting.description + meetingHourSchedule, meetingUrl: meeting.meetingUrl});
+        //         }
+        //     }
+        // });
     }
 
     // Slices the date in different parts (day, month, year)

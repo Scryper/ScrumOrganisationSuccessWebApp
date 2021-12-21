@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { DatePipe } from "@angular/common";
 import { UsersProjectsService } from "../../../services/developers-projects/users-projects.service";
 import { SosUser } from "../../../domain/sos-user";
 import {UserProject} from "../../../domain/user-project";
+import {map} from "rxjs/operators";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-project-preview',
     templateUrl: './project-preview.component.html',
     styleUrls: ['../../../app.component.css', './project-preview.component.css']
 })
-export class ProjectPreviewComponent implements OnInit {
+export class ProjectPreviewComponent implements OnInit, OnDestroy {
     isButtonPressed: boolean = false;
-    unassigned: boolean = false;
+    assigned: boolean = false;
 
     userId: number = 0;
     projectId: number = 0;
@@ -26,9 +28,15 @@ export class ProjectPreviewComponent implements OnInit {
     DATE_FORMAT: string = 'dd/MM/yyyy';
     currentUser: SosUser | undefined;
 
+    private subscription: Subscription | undefined;
+
     constructor(private route: ActivatedRoute,
                 private projectService: ProjectsService,
                 private developersProjectsService: UsersProjectsService) { }
+
+    ngOnDestroy(): void {
+        this.subscription?.unsubscribe();
+    }
 
     ngOnInit(): void {
         this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
@@ -38,24 +46,26 @@ export class ProjectPreviewComponent implements OnInit {
     }
 
     private loadProjectInfo() {
-        this.getProject();
+        this.subscription = this.getProject().subscribe();
     }
 
     private getProject() {
-        this.projectService.getByProjectName(this.projectName).then(project => {
-            this.deadline = this.datePipe.transform(project.deadline, this.DATE_FORMAT);
-            this.description = project.description;
-            if (project.id != null) {
-                this.projectId = project.id;
-            }
-            this.isApply();
-        });
+        return this.projectService.getByProjectName(this.projectName).pipe(
+            map((project => {
+                this.deadline = this.datePipe.transform(project.deadline, this.DATE_FORMAT);
+                this.description = project.description;
+                if (project.id != null) {
+                    this.projectId = project.id;
+                }
+                //this.isApply();
+            })
+        ));
     }
 
     isApply() {
-        this.developersProjectsService.getByIdDeveloperIdProject(this.userId, this.projectId).then(developerProject => {
-            this.unassigned = developerProject != null;
-        });
+        // this.developersProjectsService.getByIdDeveloperIdProject(this.userId, this.projectId).then(developerProject => {
+        //     this.unassigned = developerProject != null;
+        // });
     }
 
     toggleButtonPress(isPressed: boolean) {
@@ -68,10 +78,10 @@ export class ProjectPreviewComponent implements OnInit {
             idProject: this.projectId,
             isAppliance: true
         };
-        this.developersProjectsService.addDeveloperProject(appliance).then(result => {
-            if(result != null) {
-                this.unassigned = !this.unassigned;
-            }
-        });
+        // this.developersProjectsService.addDeveloperProject(appliance).then(result => {
+        //     if(result != null) {
+        //         this.unassigned = !this.unassigned;
+        //     }
+        // });
     }
 }

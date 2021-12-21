@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserProject} from "../../domain/user-project";
 import {environment} from "../../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -10,24 +11,32 @@ export class UsersProjectsService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    getByIdDeveloper(idDeveloper: number): Promise<UserProject[]> {
-        return this.http.get<UserProject[]>(`${environment.apiUrl}/userProject/byIdDeveloper/${idDeveloper}`).toPromise();
+    getByIdDeveloper(idDeveloper: number): Observable<UserProject[]> {
+        return this.http.get<UserProject[]>(`${environment.apiUrl}/userProject/byIdDeveloper/${idDeveloper}`);
     }
 
-    getByIdDeveloperIsAppliance(idDeveloper : number) : Promise<UserProject[]>{
-        return this.http.get<UserProject[]>(`${environment.apiUrl}/userProject/byIdDeveloperIsAppliance/${idDeveloper}`).toPromise();
+    getByIdDeveloperIsAppliance(idDeveloper: number) : Observable<UserProject[]> {
+        return this.http.get<UserProject[]>(`${environment.apiUrl}/userProject/byIdDeveloperIsAppliance/${idDeveloper}`);
     }
 
-    getByIdDeveloperIdProject(idDeveloper:number,idProject:number) : Promise<UserProject>{
-        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/byIdDeveloperIdProject/${idDeveloper},${idProject}`).toPromise();
+    getByIdDeveloperIdProject(idDeveloper: number, idProject: number) : Observable<UserProject> {
+        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/byIdDeveloperIdProject/${idDeveloper},${idProject}`);
+    }
+
+    getDevelopersByIdProject(idProject: number | undefined): Observable<UserProject> {
+        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/developersByIdProject/${idProject}`);
+    }
+
+    getScrumMasterByIdProject(idProject: number | undefined): Observable<UserProject> {
+        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/scrumMasterByIdProject/${idProject}`);
     }
 
     // Post requests
-    addDeveloperProject(developerProject : UserProject) {
+    addDeveloperProject(developerProject : UserProject): Observable<UserProject> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
-        return this.http.post<UserProject>(`${environment.apiUrl}/userProject`, JSON.stringify(developerProject), httpOptions).toPromise();
+        return this.http.post<UserProject>(`${environment.apiUrl}/userProject`, JSON.stringify(developerProject), httpOptions);
     }
 
     getUsersByIdProject(idProject: number | undefined){

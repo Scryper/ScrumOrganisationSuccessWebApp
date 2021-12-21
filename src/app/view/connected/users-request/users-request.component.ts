@@ -5,7 +5,7 @@ import {UsersProjectsService} from "../../../services/developers-projects/users-
 import {Project} from "../../../domain/project";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UserService} from "../../../services";
-import {DevelopersTechnologiesService} from "../../../services/developers-technologies/developers-technologies.service";
+import {UsersTechnologiesService} from "../../../services/users-technologies/users-technologies.service";
 import {TechnologiesService} from "../../../services/technologies/technologies.service";
 import {UserProject} from "../../../domain/user-project";
 
@@ -54,7 +54,7 @@ export class UsersRequestComponent implements OnInit {
                 private developersProjectsService: UsersProjectsService,
                 private projectService: ProjectsService,
                 private userService:UserService,
-                private developersTechnologiesService:DevelopersTechnologiesService,
+                private developersTechnologiesService:UsersTechnologiesService,
                 private technologiesService:TechnologiesService) { }
 
     fillIdTechnologyDevelopers(user:SosUser){
@@ -94,6 +94,7 @@ export class UsersRequestComponent implements OnInit {
         let tmpUser = JSON.parse(<string>localStorage.getItem('currentUser'));
         this.getDevelopersProjectsByIdDeveloperIsAppliance(tmpUser);
     }
+
     private getDevelopersProjectsByIdDeveloperIsAppliance(tmpUser:any) {
         // Get tous projet de l'user
         this.developersProjectsService.getByIdDeveloper(tmpUser.id).then(tmp =>{
@@ -167,7 +168,4 @@ export class UsersRequestComponent implements OnInit {
     toggleButtonPress(isPressed:boolean) {
         this.buttonIsPressed = isPressed;
     }
-
-
-
 }

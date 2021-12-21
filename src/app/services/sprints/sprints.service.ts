@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Sprint } from "../../domain/sprint";
 import {environment} from "../../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -10,25 +11,29 @@ export class SprintsService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    async getAll(): Promise<Sprint[]> {
-        return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints`).toPromise();
+    getAll(): Observable<Sprint[]> {
+        return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints`);
     }
 
-    async getByIdProject(idProject: number): Promise<Sprint[]> {
-        return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints/byProject/${idProject}`).toPromise();
+    getByIdProject(idProject: number): Observable<Sprint[]> {
+        return this.http.get<Sprint[]>(`${environment.apiUrl}/sprints/byProject/${idProject}`);
     }
 
-    async getById(id: number): Promise<Sprint> {
-        return this.http.get<Sprint>(`${environment.apiUrl}/sprints/byId/${id}`).toPromise();
+    getById(id: number): Observable<Sprint> {
+        return this.http.get<Sprint>(`${environment.apiUrl}/sprints/byId/${id}`);
+    }
+
+    getMaxNumberOfSprints(idProject: number): Observable<number> {
+        return this.http.get<number>(`${environment.apiUrl}/sprints/getMaxSprintNumber/${idProject}`);
     }
 
     // Post requests
-    async addSprint(sprint: Sprint): Promise<Sprint> {
-        return this.http.post<Sprint>(`${environment.apiUrl}/sprints`, sprint).toPromise();
+    addSprint(sprint: Sprint): Observable<Sprint> {
+        return this.http.post<Sprint>(`${environment.apiUrl}/sprints`, sprint);
     }
 
     // Delete requests
-    async deleteSprint(id: number): Promise<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrl}/sprints/${id}`).toPromise();
+    deleteSprint(id: number): Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.apiUrl}/sprints/${id}`);
     }
 }

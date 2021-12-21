@@ -4,13 +4,16 @@
         <div *ngFor="let userStory of productBacklog; let i = index;"
              class="alignCenter">
             <span class="standardCard radius robotoLight">US{{userStory.priority}} : {{userStory.name}}</span>
-            <input *ngIf="isProductOwner" type="button" value="Delete" (click)="deleteUserStory(userStory);">
-            <input *ngIf="isProductOwner" type="button" value="Modify"
-                   [routerLink]="['/modifyUserStory',projectName,idProject,userStory.id]">
+            <input *ngIf="isProductOwner"
+                   type="button" value="Delete" (click)="deleteUserStory(userStory);">
+            <input *ngIf="isProductOwner"
+                   type="button" value="Modify"
+                   [routerLink]="['/modifyUserStory', projectName, idProject, userStory.id]">
         </div>
 
-        <input *ngIf="isProductOwner" type="button" value="Add User story"
-               [routerLink]="['/createUserStory',projectName,idProject]">
+        <input *ngIf="isProductOwner"
+               type="button" value="Add User story"
+               [routerLink]="['/createUserStory', projectName, idProject]">
         <br/>
         <input
             [routerLink]="['/myProject', projectName]"

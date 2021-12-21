@@ -1,23 +1,29 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {AuthenticationService} from "../../../services";
-import {ProjectsService} from "../../../services/projects/projects.service";
-import {DatePipe} from "@angular/common";
-import {SprintsService} from "../../../services/sprints/sprints.service";
-import {Sprint} from "../../../domain/sprint";
-import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
-import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
-import {Role} from "../../../domain/role";
-import {SosUser} from "../../../domain/sos-user";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { AuthenticationService } from "../../../services";
+import { ProjectsService } from "../../../services/projects/projects.service";
+import { DatePipe } from "@angular/common";
+import { SprintsService } from "../../../services/sprints/sprints.service";
+import { Sprint } from "../../../domain/sprint";
+import { UserStoriesService } from "../../../services/user-stories/user-stories.service";
+import { SprintsUserStoriesService } from "../../../services/sprints-user-stories/sprints-user-stories.service";
+import { Role } from "../../../domain/role";
+import { SosUser } from "../../../domain/sos-user";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'app-my-project',
     templateUrl: './my-project.component.html',
     styleUrls: ['../../../app.component.css', './my-project.component.css']
 })
-export class MyProjectComponent implements OnInit {
+export class MyProjectComponent implements OnInit, OnDestroy {
     private NO_PROJECT: string = "No projects found.";
     private DATE_FORMAT: string = 'dd/MM/yyyy';
+
+    private projectSubscription: Subscription | undefined;
+    private sprintSubscription: Subscription | undefined;
+    private sprintUserStorySubscription: Subscription | undefined;
+    private userStorySubscription: Subscription | undefined;
 
     isProductBacklogButtonPressed: boolean = false;
     isBackButtonPressed: boolean = false;
@@ -65,6 +71,10 @@ export class MyProjectComponent implements OnInit {
         }
     }
 
+    ngOnDestroy(): void {
+        this.projectSubscription?.unsubscribe();
+    }
+
     toggleProductBacklogButtonPress(isPressed: boolean) {
         this.isProductBacklogButtonPressed = isPressed;
     }
@@ -86,7 +96,7 @@ export class MyProjectComponent implements OnInit {
     }
 
     private getProject() {
-        this.projectService.getByProjectName(this.projectName).then(project => {
+        this.projectSubscription = this.projectService.getByProjectName(this.projectName).subscribe(project => {
             this.deadline = this.datePipe.transform(project.deadline, this.DATE_FORMAT);
             this.description = project.description;
             this.repositoryUrl = project.repositoryUrl;
@@ -96,10 +106,9 @@ export class MyProjectComponent implements OnInit {
     }
 
     private getSprints(idProject: number) {
-        this.sprintService.getByIdProject(idProject).then(sprints => {
+        this.sprintSubscription = this.sprintService.getByIdProject(idProject).subscribe(sprints => {
             for(let i = 0 ; i < sprints.length ; i++) {
                 let sprint: Sprint = sprints[i];
-                let idSprint: number = sprint.id;
                 // save the dates as dates elements:
                 // Angular date object and sql server date object are not the same
                 // so this "cast" is necessary
@@ -116,22 +125,24 @@ export class MyProjectComponent implements OnInit {
                 }
 
                 // get the links to user stories about this
-                this.getLinksSprintsUserStories(idSprint);
+                if (sprint.id != null) {
+                    this.getLinksSprintsUserStories(sprint.id);
+                }
             }
         });
     }
 
     private getLinksSprintsUserStories(idSprint: number): void {
-        this.sprintUserStoryService.getByIdSprint(idSprint).then(sprintsUserStories => {
+        this.sprintUserStorySubscription = this.sprintUserStoryService.getByIdSprint(idSprint).subscribe(sprintsUserStories => {
             for (let i = 0 ; i < sprintsUserStories.length ; i++) {
-                let idUserStory: number = sprintsUserStories[i].idUserStory;
+                let idUserStory: number = <number>sprintsUserStories[i].idUserStory;
                 this.getUserStory(idUserStory, idSprint);
             }
         });
     }
 
     private getUserStory(idUserStory: number, idSprint: number) {
-        this.userStoryService.getById(idUserStory).then(userStory => {
+        this.userStorySubscription = this.userStoryService.getById(idUserStory).subscribe(userStory => {
             // Only one sprint so no need to do a for
             if(this.actualSprint.id == idSprint) {
                 this.actualSprint.US.push("US" + userStory.priority + " : " + userStory.description);
@@ -147,7 +158,7 @@ export class MyProjectComponent implements OnInit {
 }
 
 export interface ZippedSprint {
-    id: number;
+    id: number | undefined;
     name: string;
     US: string[];
 }

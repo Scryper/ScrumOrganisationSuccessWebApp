@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService, UserService} from "../../../services";
 import {SosUser} from "../../../domain/sos-user";
 import {Technology} from "../../../domain/technology";
 import {TechnologiesService} from "../../../services/technologies/technologies.service";
-import {DevelopersTechnologiesService} from "../../../services/developers-technologies/developers-technologies.service";
-import {DeveloperTechnology} from "../../../domain/developer-technology";
+import {UsersTechnologiesService} from "../../../services/users-technologies/users-technologies.service";
+import {UserTechnology} from "../../../domain/user-technology";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['../../../app.component.css', './profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
+    private subscription: Subscription | undefined;
+
     private _lastName = '';
     private _firstName = '';
     email = '';
@@ -33,35 +37,49 @@ export class ProfileComponent implements OnInit {
             firstName: this.fb.control(this._firstName, Validators.required)
         })
     });
+    private otherSubscription: Subscription |undefined;
 
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
                 private technologyService: TechnologiesService,
-                private developerTechnology: DevelopersTechnologiesService,
+                private userTechnology: UsersTechnologiesService,
                 private userService: UserService,
                 private route: Router) { }
 
-    ngOnInit(): void {
-        this.fillProfile(JSON.parse(<string>localStorage.getItem('currentUser')));
-        this.loadAvailableTechnologies();
-        this.fillIdTechnologies();
+    ngOnDestroy() {
+        this.subscription?.unsubscribe();
+        this.otherSubscription?.unsubscribe();
     }
 
-    fillIdTechnologies() {
-        let tmpDeveloperTechnology:DeveloperTechnology[];
-        this.developerTechnology.getByDeveloperId(this.idUser).then(developerTechnologies => {
-            tmpDeveloperTechnology = developerTechnologies;
-            for(let elt of tmpDeveloperTechnology) {
-                this.idTechnologies.push(elt.idTechnology);
-            }
-            this.fillIsHisTechnologies();
-        });
+    ngOnInit(): void {
+        this.fillProfile(JSON.parse(<string>localStorage.getItem('currentUser')));
+        this.subscription = this.loadAvailableTechnologies().pipe(
+            map(() => {
+                this.fillIsHisTechnologies();
+            })
+        ).subscribe();
+    }
+
+    private loadAvailableTechnologies() {
+        return this.technologyService.getAll().pipe(
+            map(technologies => {
+                for (let i = 0 ; i < technologies.length ; i++) {
+                    this.technologies.push(technologies[i]);
+                    this.idTechnologies.push(technologies[i].id);
+                }
+            })
+        );
     }
 
     fillIsHisTechnologies() {
-        for(let elt of this.technologies) {
-            this.isHisTechnologies.push(this.idTechnologies.includes(elt.id));
-        }
+        this.userTechnology.getByUserId(this.idUser).subscribe(userTechnologies => {
+            for (let userTechnology of userTechnologies) {
+                let id: number = userTechnology.idTechnology;
+                let result: boolean = this.idTechnologies.includes(id);
+                let index: number = this.idTechnologies.indexOf(id);
+                this.isHisTechnologies[index] = result;
+            }
+        });
     }
 
     toggleButtonPress(isPressed: boolean) {
@@ -73,41 +91,26 @@ export class ProfileComponent implements OnInit {
         this._firstName = user.firstname;
         this.email = user.email;
 
-        if(user != null) {
-            if (user.id != null) {
-                this.idUser = user.id;
-            }
-            this.profilePicture = user.profilePicture;
-            this.form.controls['main'].setValue({
-                lastName: user.lastname,
-                firstName: user.firstname
-            });
-        } else {
-            this.form.controls['main'].setValue({
-                lastName: "",
-                firstName: ""
-            });
+        if (user.id != null) {
+            this.idUser = user.id;
         }
-    }
-
-    private loadAvailableTechnologies() {
-        this.technologyService.getAll().then(technologies => {
-            for (let i = 0 ; i < technologies.length ; i++) {
-                this.technologies.push(technologies[i]);
-            }
+        this.profilePicture = user.profilePicture;
+        this.form.controls['main'].setValue({
+            lastName: user.lastname,
+            firstName: user.firstname
         });
     }
 
     deleteTechnology(idTechnology: number) {
-        this.developerTechnology.deleteDeveloperTechnology(this.idUser, idTechnology);
+        this.otherSubscription = this.userTechnology.deleteUserTechnology(this.idUser, idTechnology).subscribe();
     }
 
     addTechnology(idTechnology: number) {
-        let tmpDeveloperTechnology:DeveloperTechnology = {
-            idUser:this.idUser,
-            idTechnology:idTechnology
+        let tmpUserTechnology: UserTechnology = {
+            idUser: this.idUser,
+            idTechnology: idTechnology
         };
-        this.developerTechnology.addDeveloperTechnology(tmpDeveloperTechnology);
+        this.otherSubscription = this.userTechnology.addUserTechnology(tmpUserTechnology).subscribe();
     }
 
     doDeleteOrAddTechnology(event:any, elt:Technology) {
@@ -133,7 +136,7 @@ export class ProfileComponent implements OnInit {
             portfolio: ""
         };
         if(confirm("You need to logout to save your changes.\nDo you want to logout ?")) {
-            this.userService.updateFirstNameLastName(tmpUser).then((tmp) => {
+            this.otherSubscription = this.userService.updateFirstNameLastName(tmpUser).subscribe(() => {
                     this.authenticationService.logout();
                     this.route.navigate(['/login']);
             });

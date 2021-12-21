@@ -4,6 +4,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Project} from "../../../domain/project";
+import {UserProject} from "../../../domain/user-project";
+import {DatePipe} from "@angular/common";
 import {UserStory} from "../../../domain/user-story";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 

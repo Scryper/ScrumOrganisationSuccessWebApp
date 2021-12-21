@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Participation} from "../../domain/participation";
 import {environment} from "../../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -10,15 +11,15 @@ export class ParticipationService {
     constructor(private http: HttpClient) { }
 
     // Post requests
-    async addParticipation(participation: Participation): Promise<Participation> {
+    addParticipation(participation: Participation): Observable<Participation> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
-        return this.http.post<Participation>(`${environment.apiUrl}/participations`, JSON.stringify(participation), httpOptions).toPromise();
+        return this.http.post<Participation>(`${environment.apiUrl}/participations`, JSON.stringify(participation), httpOptions);
     }
 
     // Delete requests
-    async deleteParticipation(id: number): Promise<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrl}/participations/${id}`).toPromise();
+    deleteParticipation(id: number): Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.apiUrl}/participations/${id}`);
     }
 }

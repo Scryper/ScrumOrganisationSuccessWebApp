@@ -10,6 +10,7 @@ import {TechnologiesService} from "../../../services/technologies/technologies.s
 import {UserProject} from "../../../domain/user-project";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
+import {Role} from "../../../domain/role";
 
 interface idUserTechno {
     idUser:number,
@@ -49,7 +50,6 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
     usersApplianceArray:SosUser[] =[];
     activeProjects:Project = null!;
 
-    allProjects:Project[] = [];
     TechnologyDevelopers:idUserTechno[] = [];
     TechnologyScrumMasters:idUserTechno[] = [];
 
@@ -184,14 +184,28 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
                     projectTmp.id = this.idProjectActive;
 
                     this.projectService.updateStatus(projectTmp).subscribe();
+                    this.deleteUserFromList(sosUser);
                 })
             ).subscribe();
     }
     refuse(sosUser:SosUser) {
         this.subscription = this.developersProjectsService.deleteDeveloperProjectByidDeveloperByidProject(sosUser.id,this.idProjectActive).subscribe();
+        this.deleteUserFromList(sosUser);
     }
 
     toggleButtonPress(isPressed:boolean) {
         this.buttonIsPressed = isPressed;
+    }
+
+    private deleteUserFromList(user: SosUser) {
+        if(user.role == Role.ScrumMaster) {
+            this.appliedScrumMasters = this.appliedScrumMasters.filter(element => {
+                return element.id != user.id;
+            });
+        } else {
+            this.appliedScrumMasters = this.appliedDevelopers.filter(element => {
+                return element.id != user.id;
+            });
+        }
     }
 }

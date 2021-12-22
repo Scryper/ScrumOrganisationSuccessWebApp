@@ -32,6 +32,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
             repositoryURL:this.fb.control('', Validators.required)
         })
     });
+    isBackButtonPressed: boolean = false;
 
     constructor(private fb: FormBuilder,
                 private projectService : ProjectsService,
@@ -92,5 +93,9 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
                 repositoryURL: "URL repository."
             }
         });
+    }
+
+    toggleBackButtonPress(isPressed: boolean) {
+        this.isBackButtonPressed = isPressed;
     }
 }

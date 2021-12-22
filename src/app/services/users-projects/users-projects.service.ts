@@ -41,7 +41,6 @@ export class UsersProjectsService {
 
     getUsersByIdProject(idProject: number | undefined): Observable<UserProject> {
         return this.http.get<UserProject>(`${environment.apiUrl}/userProject/byIdProject/${idProject}`);
-
     }
 
     // Put requests

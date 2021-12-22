@@ -28,10 +28,6 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
 
     private STATUS_ACTIVE: number = 2;
 
-    private STATUS_TERMINATE: number = 3;
-    private ROLE_DEVELOPER: number = 1;
-
-    private ROLE_SCRUM_MASTER: number = 2;
     nameProject: string | null = "";
     buttonIsPressed: boolean = false;
 
@@ -44,19 +40,10 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
 
     idAppliedScrumMasters:number[] = []
     appliedDevelopers:SosUser[] = []
-
     appliedScrumMasters:SosUser[] = []
-
-    usersApplianceArray:SosUser[] =[];
-
     idUsersWorksArray:number[] = [];
-
     usersWorksArray:SosUser[] = []
-
     activeProjects:Project = null!;
-
-    TechnologyDevelopers:idUserTechno[] = [];
-    TechnologyScrumMasters:idUserTechno[] = [];
 
     isScrumMasterEmpty:boolean = true;
 
@@ -66,9 +53,7 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute,
                 private usersProjectsService: UsersProjectsService,
                 private projectService: ProjectsService,
-                private userService: UserService,
-                private usersTechnologiesService: UsersTechnologiesService,
-                private technologiesService: TechnologiesService) { }
+                private userService: UserService) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -76,157 +61,96 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.isScrumMasterEmpty = true;
-        this.activeProjects = {
-            id: 0,
-            name: "No projects found.",
-            status: 0,
-            description: "",
-            deadline: new Date(),
-            repositoryUrl: ""
-        };
         this.nameProject = this.route.snapshot.paramMap.get("nameProject");
-        this.fillUsersRequest();
+        this.currentUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+        this.fillUsers();
     }
 
+    private fillUsers() {
+        this.subscription = this.getCurrentProject().subscribe();
+    }
 
+    //get the active project the product owner is currently working on
+    private getCurrentProject() {
+        return this.projectService.getActiveProject(this.currentUser.id!)
+            .pipe(
+                map(
+                (userProjects)=>{
+                    //on retourne un array pour éviter les bugs si qqn a plusieurs projets (ne devrait pas arriver)
+                    if(userProjects!=null && userProjects.length!=0){
+                        this.idProjectActive =userProjects[0].id;
+                        this.getApplyingUsers(userProjects[0].id!);
+                    }
+                }
+        ));
+    }
 
-    fillIdTechnologyDevelopers(user:SosUser){
-        if (user.id != null) {
-            this.subscription = this.usersTechnologiesService.getByUserId(user.id)
-                .pipe(
-                    map(DevTechnoArray => {
-                        for (let DevTechno of DevTechnoArray) {
-                            this.technologiesService.getById(DevTechno.idTechnology).subscribe(techno => {
-                                this.TechnologyDevelopers.push({idUser: DevTechno.idUser, Technology: techno.name});
-                            });
+        //get all the user that are applying
+    private getApplyingUsers(idProject : number){
+        this.userService.getByIdProjectIsApplying(idProject).pipe(
+            map(
+                (users)=>{
+                    //separate the scrum masters from the dev
+                    for(let user of users){
+                        if(user.role==Role.Developer){
+                            this.appliedDevelopers.push(user);
                         }
+                        else if(user.role==Role.ScrumMaster){
+                            this.appliedScrumMasters.push(user);
+                        }
+                    }
+
+                    //check if there is already a scrum master in the list of user working on it
+                    this.isAlreadyScrumMaster(idProject).subscribe();
+                }
+           )
+        ).subscribe();
+    }
+
+    //check if there is already a scrum master in the list of user working on it
+    private isAlreadyScrumMaster(idProject : number){
+        return this.userService.getByIdProjectIsWorking(idProject).pipe(map(users => {
+            for(let user of users){
+                if (user.role==Role.ScrumMaster){
+                    this.isScrumMasterEmpty = false;
+                }
+            }
+        }))
+    }
+
+    //accept a user
+    accept(sosUser:SosUser) {
+        if(sosUser.role==1 || (sosUser.role==2 && this.isScrumMasterEmpty == true)){
+            let userProject :UserProject = {
+                idDeveloper:0,
+                idProject:0,
+                isAppliance:false
+            };
+
+            this.subscription = this.usersProjectsService.updateDeveloperProjectIsAppliance(sosUser.id,this.idProjectActive,userProject)
+                .pipe(
+                    map(() => {
+                        // Passer le projet en projet actif
+                        let projectTmp:Project = {
+                            "name": "",
+                            "deadline": new Date(),
+                            "description": "",
+                            "repositoryUrl": "",
+                            "status": 0
+                        };
+                        projectTmp.status = this.STATUS_ACTIVE;
+                        projectTmp.id = this.idProjectActive;
+
+                        this.projectService.updateStatus(projectTmp).subscribe();
+                        this.deleteUserFromList(sosUser);
+                        this.isScrumMasterEmpty = false;
                     })
                 ).subscribe();
         }
+
     }
 
-    fillIdTechnologyScrumMasters(user:SosUser){
-        if (user.id != null) {
-            this.subscription = this.usersTechnologiesService.getByUserId(user.id)
-                .pipe(
-                    map(SMTechnoArray => {
-                            for (let SMTechno of SMTechnoArray) {
-                                this.technologiesService.getById(SMTechno.idTechnology).subscribe(techno => {
-                                    this.TechnologyScrumMasters.push({idUser: SMTechno.idUser, Technology: techno.name});
-                                });
-                            }
-                        }
-                    )
-                ).subscribe();
-        }
-    }
-
-
-    private fillUsersRequest() {
-        let tmpUser = JSON.parse(<string>localStorage.getItem('currentUser'));
-        this.getDevelopersProjectsByIdDeveloperIsAppliance(tmpUser);
-    }
-
-    private getDevelopersProjectsByIdDeveloperIsAppliance(tmpUser:any) {
-
-        // Get tous projet de l'user
-        this.subscription = this.usersProjectsService.getByIdDeveloper(tmpUser.id)
-            .pipe(
-                map(tmp =>{
-
-                    for(let elt of tmp) {
-                            this.idProjectActive = elt.idProject;
-                            this.getAllUsersByIdProject(this.idProjectActive)
-                    }
-                })
-            ).subscribe();
-    }
-
-    private getAllUsersByIdProject(idProjectActive: number) {
-        this.subscription = this.usersProjectsService.getUsersByIdProject(idProjectActive)
-            .pipe(
-                map(tmp=> {
-
-                    for(let elt of Object.values(tmp)) {
-                        if(elt.isAppliance) {
-                            this.usersApplianceArray.push(elt)
-                        } else {
-                            this.idUsersWorksArray.push(elt.idDeveloper);
-                        }
-                    }
-                    this.getUserNotAppliance(this.usersApplianceArray, idProjectActive);
-                })
-            ).subscribe();
-    }
-
-    private getUserNotAppliance(usersApplianceArray: any, idProjectActive:number) {
-        this.subscription = this.projectService.getById(idProjectActive)
-            .pipe(
-                map(projectNotTerminate=> {
-                    if(projectNotTerminate.status!=this.STATUS_TERMINATE) {
-                        for(let elt of usersApplianceArray) {
-                            this.userService.getById(elt.idDeveloper).subscribe(user => {
-                                if(user.role == this.ROLE_DEVELOPER && elt.idProject == projectNotTerminate.id) {
-                                    this.appliedDevelopers.push(user);
-                                    this.fillIdTechnologyDevelopers(user);
-                                } else if(user.role == this.ROLE_SCRUM_MASTER && elt.idProject == projectNotTerminate.id) {
-                                    this.appliedScrumMasters.push(user);
-                                    this.fillIdTechnologyScrumMasters(user);
-                                }
-                            });
-                        }
-
-
-                    }
-                })
-            ).subscribe();
-    }
-
-    accept(sosUser:SosUser) {
-        this.subscription = this.usersProjectsService.getScrumMasterByIdProject(this.idProjectActive)
-            .pipe(
-                map(tmp => {
-                        for (let elt of Object.values(tmp)) {
-                            if(!elt.isAppliance) {
-                                this.isScrumMasterEmpty = false;
-                            }
-                        }
-
-                        if(sosUser.role == Role.ScrumMaster && !this.isScrumMasterEmpty) {
-                            this.acceptTxt = "Scrum already chosen";
-                            return;
-                        }
-                        this.acceptTxt = "Accept";
-                        let userProject:UserProject = {
-                            idDeveloper:0,
-                            idProject:0,
-                            isAppliance:false
-                        };
-
-                        this.subscription = this.usersProjectsService.updateDeveloperProjectIsAppliance(sosUser.id,this.idProjectActive,userProject)
-                            .pipe(
-                                map(() => {
-                                    // Passer le projet en projet actif
-                                    let projectTmp:Project = {
-                                        "name": "",
-                                        "deadline": new Date(),
-                                        "description": "",
-                                        "repositoryUrl": "",
-                                        "status": 0
-                                    };
-                                    projectTmp.status = this.STATUS_ACTIVE;
-                                    projectTmp.id = this.idProjectActive;
-
-                                    this.projectService.updateStatus(projectTmp).subscribe();
-                                    this.deleteUserFromList(sosUser);
-                                })
-                            ).subscribe();
-
-                    }
-                )
-            ).subscribe();
-    }
-
+    //refuse the apply of an user
     refuse(sosUser:SosUser) {
         this.subscription = this.usersProjectsService.deleteDeveloperProjectByidDeveloperByidProject(sosUser.id,this.idProjectActive).subscribe();
         this.deleteUserFromList(sosUser);
@@ -247,4 +171,5 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
             });
         }
     }
+
 }

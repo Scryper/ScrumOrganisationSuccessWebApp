@@ -23,6 +23,10 @@ export class ProjectsService {
         return this.http.get<Project>(`${environment.apiUrl}/projects/byName/${projectName}`);
     }
 
+    getActiveProject(idUser : number) : Observable<Project[]>{
+        return this.http.get<Project[]>(`${environment.apiUrl}/projects/activeByIdUser/${idUser}`);
+    }
+
     // Post requests
     addProject(project: Project): Observable<Project> {
         const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}

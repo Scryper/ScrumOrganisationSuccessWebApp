@@ -4,11 +4,6 @@
              (mouseenter)="isEditButtonHidden=false;"
              (mouseleave)="isEditButtonHidden=true;">
             <img src="{{profilePicture}}" alt="">
-            <input id="editButton"
-                   type="button"
-                   value="Edit"
-                   class="inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom robotoMedium"
-                   [hidden]="isEditButtonHidden">
         </div>
 
         <div class="inputContainer" formGroupName="main">

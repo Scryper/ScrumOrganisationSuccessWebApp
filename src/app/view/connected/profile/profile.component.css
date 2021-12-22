@@ -3,12 +3,28 @@ img {
     height: 130px;
 }
 
-* {
-    margin: auto;
+.addBtn {
+    width: 50px;
 }
 
-.addBtn {
-  width: 50px;
+.rowContainer {
+    column-count: 2;
+}
+
+.heightCorrect {
+    height: 500px;
+}
+
+.marginRight {
+    margin-right: 50%;
+}
+
+.marginLeft {
+    margin-left: 50%;
+}
+
+.marginTop {
+    padding-top: 10%;
 }
 
 #profilePictureContainer {
@@ -60,5 +76,3 @@ h2 {
 .leftText {
     text-align: left!important;
 }
-
-

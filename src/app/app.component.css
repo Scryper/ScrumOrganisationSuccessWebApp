@@ -141,6 +141,13 @@ a:hover {
     align-items: center;
 }
 
+.pageContainer {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content:space-evenly;
+}
+
 .colorGreen {
     color: green;
 }
@@ -158,13 +165,6 @@ a:hover {
     justify-content : center;
     border: solid black 2px;
     margin: 5px;
-}
-
-.pageContainer {
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    justify-content:space-evenly;
 }
 
 .paddingSubtitle {

@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthenticationService, UserService} from "../../../services";
-import {SosUser} from "../../../domain/sos-user";
-import {Technology} from "../../../domain/technology";
-import {TechnologiesService} from "../../../services/technologies/technologies.service";
-import {UsersTechnologiesService} from "../../../services/users-technologies/users-technologies.service";
-import {UserTechnology} from "../../../domain/user-technology";
-import {Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {map} from "rxjs/operators";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AuthenticationService, UserService } from "../../../services";
+import { SosUser } from "../../../domain/sos-user";
+import { Technology } from "../../../domain/technology";
+import { TechnologiesService } from "../../../services/technologies/technologies.service";
+import { UsersTechnologiesService } from "../../../services/users-technologies/users-technologies.service";
+import { UserTechnology } from "../../../domain/user-technology";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Component({
     selector: 'app-profile',
@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         })
     });
     private otherSubscription: Subscription |undefined;
+    experience: number = 0;
 
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
@@ -55,7 +56,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.fillProfile(JSON.parse(<string>localStorage.getItem('currentUser')));
         this.subscription = this.loadAvailableTechnologies().pipe(
             map(() => {
-                this.fillIsHisTechnologies();
+                this.fillIsHisTechnologies().pipe(
+                    map(() => {
+                        this.userService.daysOfXp(this.idUser).subscribe(xp => this.experience = xp);
+                    })
+                ).subscribe();
             })
         ).subscribe();
     }
@@ -72,14 +77,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
     fillIsHisTechnologies() {
-        this.userTechnology.getByUserId(this.idUser).subscribe(userTechnologies => {
-            for (let userTechnology of userTechnologies) {
-                let id: number = userTechnology.idTechnology;
-                let result: boolean = this.idTechnologies.includes(id);
-                let index: number = this.idTechnologies.indexOf(id);
-                this.isHisTechnologies[index] = result;
-            }
-        });
+        return this.userTechnology.getByUserId(this.idUser).pipe(
+            map(userTechnologies => {
+                for (let userTechnology of userTechnologies) {
+                    let id: number = userTechnology.idTechnology;
+                    let result: boolean = this.idTechnologies.includes(id);
+                    let index: number = this.idTechnologies.indexOf(id);
+                    this.isHisTechnologies[index] = result;
+                }
+            })
+        );
     }
 
     toggleButtonPress(isPressed: boolean) {

@@ -25,6 +25,8 @@ export class ModifyUserStoryComponent implements OnInit {
     idUserStory: number = 0;
     currentUser: SosUser = null!;
 
+    isPriorityNaN:boolean=false;
+
     userId: number = 0;
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -60,6 +62,7 @@ export class ModifyUserStoryComponent implements OnInit {
 
     sendData() {
 
+
         // Modifier une userStory
         //create project
         let tmpUserStory: UserStory = {
@@ -69,12 +72,18 @@ export class ModifyUserStoryComponent implements OnInit {
             priority: Number(this.form.getRawValue().main.priority)
         }
 
-        //add UserStory in the database
-        this.subscription = this.userStoriesService.updateUserStory(tmpUserStory,this.idUserStory).subscribe(()=>{
-            //redirect to projects
-            let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
-            this.router.navigate([returnUrl]);
-        });
+
+        if(!isNaN(Number(this.form.getRawValue().main.priority))) {
+            //add UserStory in the database
+            this.subscription = this.userStoriesService.updateUserStory(tmpUserStory,this.idUserStory).subscribe(()=>{
+                //redirect to projects
+                let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
+                this.router.navigate([returnUrl]);
+            });
+        } else {
+            this.isPriorityNaN = true;
+        }
+
     }
 
     toggleButtonPress(isPressed:boolean) {

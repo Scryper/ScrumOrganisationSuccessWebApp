@@ -31,6 +31,11 @@
             value="Modify"
             [disabled]="form.invalid"
             class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+
+        <span *ngIf="isPriorityNaN"
+              class="cursorPointer radius standardCard robotoLight">
+                <span>Priority Not a number</span>
+        </span>
     </div>
 </form>
 

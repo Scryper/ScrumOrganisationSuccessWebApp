@@ -39,6 +39,7 @@ import { CreateUserStoryComponent } from './view/connected/create-user-story/cre
 import { ModifyUserStoryComponent } from './view/connected/modify-user-story/modify-user-story.component';
 import { CreateMeetingComponent } from './view/connected/create-meeting/create-meeting.component';
 import { UserListComponent } from './view/connected/user-list/user-list.component';
+import { CommentsComponent } from './view/connected/comments/comments.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     dayGridPlugin,
@@ -78,7 +79,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         ModifyUserStoryComponent,
         NotFoundComponent,
         CreateMeetingComponent,
-        UserListComponent
+        UserListComponent,
+        CommentsComponent
     ],
     imports: [
         BrowserModule,

@@ -49,7 +49,7 @@ export class UserListComponent implements OnInit {
     }
 
     private getUsers(){
-        return this.userService.getByIdProject(this.idProject).pipe(
+        return this.userService.getByIdProjectIsWorking(this.idProject).pipe(
           map(users=>{
               for (let user of users){
                   if(user.id !=this.id){

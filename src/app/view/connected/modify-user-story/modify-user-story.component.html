@@ -32,10 +32,12 @@
             [disabled]="form.invalid"
             class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
 
-        <span *ngIf="isPriorityNaN"
-              class="cursorPointer radius standardCard robotoLight">
-                <span>Priority Not a number</span>
-        </span>
+        <div *ngIf="isPriorityNaN"
+             class="alignCenter sizeNormal">
+            <p class="robotoMedium red bgWhiteBlue radius border padding marginTop alignText">
+                Priority should be a number
+            </p>
+        </div>
     </div>
 </form>
 

@@ -44,6 +44,7 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
 
     private subscription: Subscription | undefined;
     private projectName: string | null = "";
+    isDateOk: boolean = true;
 
     constructor(private fb: FormBuilder,
                 private sprintService: SprintsService,
@@ -95,23 +96,28 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
             description: rawValues.description,
             meetingUrl: rawValues.name
         };
-        this.subscription = this.meetingService.addMeeting(meeting)
-            .pipe(
-                map(meeting => {
-                    if (meeting.id != null) {
-                        this.idMeeting = meeting.id;
-                    }
-                    for(let idUser of this.idsUsersOnProject) {
-                        let participation: Participation = {
-                            idMeeting: this.idMeeting,
-                            idUser: idUser
+
+        if(new Date() < new Date(rawValues.schedule)) {
+            this.subscription = this.meetingService.addMeeting(meeting)
+                .pipe(
+                    map(meeting => {
+                            if (meeting.id != null) {
+                                this.idMeeting = meeting.id;
+                            }
+                            for(let idUser of this.idsUsersOnProject) {
+                                let participation: Participation = {
+                                    idMeeting: this.idMeeting,
+                                    idUser: idUser
+                                }
+                                this.participationService.addParticipation(participation).subscribe();
+                            }
+                            this.router.navigate(['/myProject',this.projectName]);
                         }
-                        this.participationService.addParticipation(participation).subscribe();
-                    }
-                    this.router.navigate(['/myProject',this.projectName]);
-                }
-            )
-        ).subscribe();
+                    )
+                ).subscribe();
+        } else {
+            this.isDateOk = false;
+        }
     }
 
     autoComplete() {

@@ -31,6 +31,7 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
             priority:this.fb.control('', Validators.required)
         })
     });
+    isBackButtonPressed: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private fb: FormBuilder,
@@ -79,5 +80,9 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
                 priority: 1
             }
         });
+    }
+
+    toggleBackButtonPress(isPressed: boolean) {
+        this.isBackButtonPressed = isPressed;
     }
 }

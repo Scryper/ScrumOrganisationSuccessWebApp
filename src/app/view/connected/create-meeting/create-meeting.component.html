@@ -38,6 +38,20 @@
                     You can't add a meeting in the past, unless you are Dr Strange
                 </p>
             </div>
+
+            <div>
+                <div class="elementMyProject">
+                    <input
+                        [routerLink]="['/myProject', projectName]"
+                        type="button"
+                        value="Back"
+                        (mousedown)="toggleBackButtonPress(true);"
+                        (mouseup)="toggleBackButtonPress(false);"
+                        (mouseleave)="toggleBackButtonPress(false);"
+                        [ngClass]="{'isPressedClass': isBackButtonPressed === true}"
+                        class="cursorPointer inputSizeBack robotoMedium bgLightRed radius noBorder fontSizeMedium shadowBottom marginTop">
+                </div>
+            </div>
         </div>
     </form>
 </div>

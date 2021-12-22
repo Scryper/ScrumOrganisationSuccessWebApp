@@ -43,8 +43,9 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
     });
 
     private subscription: Subscription | undefined;
-    private projectName: string | null = "";
+    projectName: string | null = "";
     isDateOk: boolean = true;
+    isBackButtonPressed: boolean = false;
 
     constructor(private fb: FormBuilder,
                 private sprintService: SprintsService,
@@ -130,5 +131,9 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
                 description: "Meeting test"
             }
         });
+    }
+
+    toggleBackButtonPress(isPressed: boolean) {
+        this.isBackButtonPressed = isPressed;
     }
 }

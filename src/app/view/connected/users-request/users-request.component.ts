@@ -60,7 +60,7 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
 
     isScrumMasterEmpty:boolean = true;
 
-
+    acceptTxt:string = "Accept";
 
 
     constructor(private route: ActivatedRoute,
@@ -75,6 +75,7 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.isScrumMasterEmpty = true;
         this.activeProjects = {
             id: 0,
             name: "No projects found.",
@@ -192,9 +193,10 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
                         }
 
                         if(sosUser.role == Role.ScrumMaster && !this.isScrumMasterEmpty) {
+                            this.acceptTxt = "Scrum already chosen";
                             return;
                         }
-
+                        this.acceptTxt = "Accept";
                         let userProject:UserProject = {
                             idDeveloper:0,
                             idProject:0,

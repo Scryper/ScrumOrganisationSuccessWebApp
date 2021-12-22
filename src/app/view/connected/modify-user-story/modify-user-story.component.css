@@ -23,3 +23,13 @@ input:last-of-type {
 .marginTop {
     margin-top: 20px;
 }
+
+.formSize {
+    width: 420px;
+    height: 550px;
+}
+
+.formMargin {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}

@@ -63,7 +63,7 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
         let devProject:UserProject = {
             idDeveloper : this.userId,
             idProject : project.id!,
-            isAppliance : false
+            isAppliance : true
         }
         // send request
         this.subscription = this.developersProjectsService.addDeveloperProject(devProject)

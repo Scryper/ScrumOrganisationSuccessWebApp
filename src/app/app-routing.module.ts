@@ -10,7 +10,6 @@ import { TodayComponent } from "./view/connected/today/today.component";
 import { ProjectManagerComponent } from "./view/connected/project-manager/project-manager.component";
 import { CreateProjectComponent } from "./view/connected/create-project/create-project.component";
 import { MyProjectComponent } from "./view/connected/my-project/my-project.component";
-import { NotificationComponent } from "./view/connected/notification/notification.component";
 import { NotFoundComponent } from "./view/not-found/not-found.component";
 import {MeetingComponent} from "./view/connected/meeting/meeting.component";
 import { AuthGuard } from './helpers';
@@ -38,7 +37,6 @@ const routes: Routes = [
     {path: 'projectManager', component : ProjectManagerComponent, canActivate:[AuthGuard]},
     {path: 'createProject', component : CreateProjectComponent, canActivate:[AuthGuard]},
     {path: 'myProject/:projectName', component : MyProjectComponent, canActivate:[AuthGuard]},
-    {path: 'notification', component : NotificationComponent, canActivate:[AuthGuard]},
     {path: 'productBacklog/:projectName/:idProject', component : ProductBacklogComponent, canActivate:[AuthGuard]},
     {path: 'joinProject', component : JoinProjectComponent, canActivate:[AuthGuard]},
     {path: 'usersRequest', component : UsersRequestComponent, canActivate:[AuthGuard]},

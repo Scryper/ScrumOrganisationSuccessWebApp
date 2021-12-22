@@ -26,7 +26,6 @@ import { ProfileComponent } from './view/connected/profile/profile.component';
 import { CreateProjectComponent } from './view/connected/create-project/create-project.component';
 import { ProjectManagerComponent } from './view/connected/project-manager/project-manager.component';
 import { MyProjectComponent } from './view/connected/my-project/my-project.component';
-import { NotificationComponent } from './view/connected/notification/notification.component';
 import {ErrorInterceptor, JwtInterceptor} from "./helpers";
 import { ProductBacklogComponent } from './view/connected/product-backlog/product-backlog.component';
 import { JoinProjectComponent } from './view/connected/join-project/join-project.component';
@@ -66,7 +65,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         CreateProjectComponent,
         ProjectManagerComponent,
         MyProjectComponent,
-        NotificationComponent,
         JitsiComponent,
         UsersRequestComponent,
         JoinProjectComponent,

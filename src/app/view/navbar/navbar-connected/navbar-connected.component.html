@@ -8,9 +8,6 @@
             <img class="devImg rounded displayNoneResp" src="{{rightMenu[0].img}}" alt="No profile picture.">
         </a>
         <a routerLink="/{{rightMenu[0].router}}" class="labelDevImg linkTxt robotoLight category">{{rightMenu[0].name}}</a>
-        <a routerLink="/{{rightMenu[1].router}}" class="logoDevImg cursorPointer">
-            <img class="devImg displayNoneResp" src="./assets/images/others/{{rightMenu[1].img}}" alt="Bell">
-        </a>
         <a [ngClass]="{
             'colorTomato': userType === 'Developer',
             'colorGold' : userType === 'ProductOwner',

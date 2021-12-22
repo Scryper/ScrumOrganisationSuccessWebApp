@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services";
 import {ProjectsService} from "../../../services/projects/projects.service";
-import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
+import {UsersProjectsService} from "../../../services/users-projects/users-projects.service";
 import {Project} from "../../../domain/project";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
@@ -64,27 +64,9 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
     }
 
     private loadProjects() {
-        this.activeProjects = [
-            {
-                id: 0,
-                name: this.noProjectsFound,
-                status: 0,
-                description: "",
-                deadline: new Date(),
-                repositoryUrl: ""
-            }
-        ];
+        this.activeProjects = [];
+        this.oldProjects = [];
 
-        this.oldProjects = [
-            {
-                id: 0,
-                name: this.noProjectsFound,
-                status: 0,
-                description: "",
-                deadline: new Date(),
-                repositoryUrl: ""
-            }
-        ];
         this.subscription = this.developerProjectService.getByIdDeveloper(this.idUser).subscribe(developerProjects => {
             for (let i = 0 ; i < developerProjects.length ; i++) {
                 this.getProjectName(developerProjects[i].idProject);

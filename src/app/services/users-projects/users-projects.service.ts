@@ -39,18 +39,8 @@ export class UsersProjectsService {
         return this.http.post<UserProject>(`${environment.apiUrl}/userProject`, JSON.stringify(developerProject), httpOptions);
     }
 
-    getUsersByIdProject(idProject: number | undefined){
-        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/byIdProject/${idProject}`).toPromise();
-
-    }
-
-    getDevelopersByIdProject(idProject: number | undefined){
-        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/developersByIdProject/${idProject}`).toPromise();
-
-    }
-
-    getScrumMasterByIdProject(idProject: number | undefined){
-        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/scrumMasterByIdProject/${idProject}`).toPromise();
+    getUsersByIdProject(idProject: number | undefined): Observable<UserProject> {
+        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/byIdProject/${idProject}`);
 
     }
 
@@ -59,12 +49,11 @@ export class UsersProjectsService {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
-        return this.http.put<UserProject>(`${environment.apiUrl}/userProject/${idDeveloper}, ${idProject}`, JSON.stringify(userProject), httpOptions).toPromise();
+        return this.http.put<UserProject>(`${environment.apiUrl}/userProject/${idDeveloper}, ${idProject}`, JSON.stringify(userProject), httpOptions);
     }
 
     // Delete requests
-    deleteDeveloperProjectByidDeveloperByidProject(idDeveloper: number | undefined, idProject: number | undefined): Promise<UserProject> {
-        console.log(idProject)
-        return this.http.delete<UserProject>(`${environment.apiUrl}/userProject/${idDeveloper}, ${idProject}`).toPromise();
+    deleteDeveloperProjectByidDeveloperByidProject(idDeveloper: number | undefined, idProject: number | undefined): Observable<UserProject> {
+        return this.http.delete<UserProject>(`${environment.apiUrl}/userProject/${idDeveloper}, ${idProject}`);
     }
 }

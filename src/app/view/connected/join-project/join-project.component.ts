@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Project} from "../../../domain/project";
 import { AuthenticationService } from "../../../services";
-import { UsersProjectsService } from "../../../services/developers-projects/users-projects.service";
+import { UsersProjectsService } from "../../../services/users-projects/users-projects.service";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { SosUser } from "../../../domain/sos-user";
 import { UserProject } from "../../../domain/user-project";
@@ -66,21 +66,22 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
             isAppliance : false
         }
         // send request
-        this.developersProjectsService.addDeveloperProject(devProject).then(result => {
-            if(result != null) {
-                // change the appliance's value to avoid making multiple requests for the same project
-                for(let i = 0 ; i < this.projects.length ; i++){
-                    if(this.projects[i].id == project.id){
-                        this.projectsIsApply[i] = true;
+        this.subscription = this.developersProjectsService.addDeveloperProject(devProject)
+            .pipe(
+                map(result => {
+                    if(result != null) {
+                        // change the appliance's value to avoid making multiple requests for the same project
+                        for(let i = 0 ; i < this.projects.length ; i++){
+                            if(this.projects[i].id == project.id){
+                                this.projectsIsApply[i] = true;
+                            }
+                        }
+                        // UPDATE STATUS INACTIVE
+                        project.status = 1;
+                        this.projectService.updateStatus(project).subscribe();
                     }
-                }
-                // UPDATE STATUS INACTIVE
-                project.status = 1;
-                this.projectService.updateStatus(project).then(()=>{
-                });
-            }
-
-        });
+                })
+        ).subscribe();
     }
 
     private isAssigned() {

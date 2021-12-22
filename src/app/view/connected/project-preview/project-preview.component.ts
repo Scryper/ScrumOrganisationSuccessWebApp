@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { DatePipe } from "@angular/common";
-import { UsersProjectsService } from "../../../services/developers-projects/users-projects.service";
+import { UsersProjectsService } from "../../../services/users-projects/users-projects.service";
 import { SosUser } from "../../../domain/sos-user";
 import {UserProject} from "../../../domain/user-project";
 import {map} from "rxjs/operators";
@@ -31,8 +31,7 @@ export class ProjectPreviewComponent implements OnInit, OnDestroy {
     private subscription: Subscription | undefined;
 
     constructor(private route: ActivatedRoute,
-                private projectService: ProjectsService,
-                private developersProjectsService: UsersProjectsService) { }
+                private projectService: ProjectsService) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();

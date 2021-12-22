@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {Sprint} from "../../../domain/sprint";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserStory} from "../../../domain/user-story";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SprintsService} from "../../../services/sprints/sprints.service";
@@ -9,7 +8,6 @@ import {UserStoriesService} from "../../../services/user-stories/user-stories.se
 import {UserService} from "../../../services";
 import {MeetingsService} from "../../../services/meetings/meetings.service";
 import {ParticipationService} from "../../../services/participation/participation.service";
-import {SprintUserStory} from "../../../domain/sprint-user-story";
 import {Meeting} from "../../../domain/meeting";
 import {Participation} from "../../../domain/participation";
 import {DatePipe} from "@angular/common";

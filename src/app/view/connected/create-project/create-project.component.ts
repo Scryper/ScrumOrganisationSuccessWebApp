@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {DatePipe} from "@angular/common";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {Project} from "../../../domain/project";
 import {UserProject} from "../../../domain/user-project";
 import {SosUser} from "../../../domain/sos-user";
-import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {UsersProjectsService} from "../../../services/users-projects/users-projects.service";
+import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-create-project',
     templateUrl: './create-project.component.html',
     styleUrls: ['../../../app.component.css', './create-project.component.css']
 })
-export class CreateProjectComponent implements OnInit {
+export class CreateProjectComponent implements OnInit, OnDestroy {
+    private subscription: Subscription | undefined;
+
     buttonIsPressed: boolean = false;
     title: string = "Create project";
     currentUser: SosUser = null!;
@@ -34,6 +38,10 @@ export class CreateProjectComponent implements OnInit {
                 private developersProjectsService : UsersProjectsService,
                 private router : Router) { }
 
+    ngOnDestroy(): void {
+        this.subscription?.unsubscribe();
+    }
+
     ngOnInit(): void {
         this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
         this.userId = (this.currentUser.id==undefined)?0:this.currentUser.id;
@@ -50,18 +58,23 @@ export class CreateProjectComponent implements OnInit {
         }
 
         //add project in the database
-        this.projectService.addProject(projet).then(tmp=>{
-            //assigner le product owner to the project
-            let devProject:UserProject = {
-                idDeveloper : this.userId,
-                idProject : tmp.id!,
-                isAppliance : true
-            }
-            this.developersProjectsService.addDeveloperProject(devProject).then(tmp=>{
-                this.router.navigate([this.returnUrl]);
-            });
-            //redirect to projects
-        })
+        this.subscription = this.projectService.addProject(projet)
+            .pipe(
+                map(project => {
+                    //assigner le product owner to the project
+                    let devProject:UserProject = {
+                        idDeveloper : this.userId,
+                        idProject : project.id!,
+                        isAppliance : true
+                    }
+                    this.developersProjectsService.addDeveloperProject(devProject).pipe(
+                        map(() => {
+                            this.router.navigate([this.returnUrl]);
+                        })
+                    ).subscribe();
+                    //redirect to projects
+                })
+            ).subscribe();
     }
 
     toggleButtonPress(isPressed:boolean) {

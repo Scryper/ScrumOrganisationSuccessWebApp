@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SosUser} from "../../../domain/sos-user";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProjectsService} from "../../../services/projects/projects.service";
-import {UsersProjectsService} from "../../../services/developers-projects/users-projects.service";
+import {UsersProjectsService} from "../../../services/users-projects/users-projects.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Project} from "../../../domain/project";
-import {UserProject} from "../../../domain/user-project";
-import {DatePipe} from "@angular/common";
 import {UserStory} from "../../../domain/user-story";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-create-user-story',
   templateUrl: './create-user-story.component.html',
   styleUrls: ['../../../app.component.css', './create-user-story.component.css']
 })
-export class CreateUserStoryComponent implements OnInit {
+export class CreateUserStoryComponent implements OnInit, OnDestroy {
+    private subscription: Subscription | undefined;
 
     buttonIsPressed: boolean = false;
     title: string = "Create User Story";
@@ -40,6 +39,10 @@ export class CreateUserStoryComponent implements OnInit {
                 private userStoriesService:UserStoriesService,
                 private router : Router) { }
 
+    ngOnDestroy(): void {
+        this.subscription?.unsubscribe();
+    }
+
     ngOnInit(): void {
         this.projectName = this.route.snapshot.paramMap.get("projectName");
         this.idProject = Number(this.route.snapshot.paramMap.get("idProject"));
@@ -57,11 +60,11 @@ export class CreateUserStoryComponent implements OnInit {
         }
 
         //add UserStory in the database
-        this.userStoriesService.addUserStory(tmpUserStory).then(()=>{
+        this.subscription = this.userStoriesService.addUserStory(tmpUserStory).subscribe(()=>{
             //redirect to projects
             let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
             this.router.navigate([returnUrl]);
-        })
+        });
     }
 
     toggleButtonPress(isPressed:boolean) {
@@ -77,5 +80,4 @@ export class CreateUserStoryComponent implements OnInit {
             }
         });
     }
-
 }

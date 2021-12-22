@@ -186,3 +186,11 @@ a:hover {
     text-align: center;
     justify-content: space-evenly;
 }
+
+.sizeNormal {
+    width: 420px;
+}
+
+.alignCenter {
+    text-align: center;
+}

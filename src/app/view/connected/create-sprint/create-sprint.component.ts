@@ -36,6 +36,7 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
     });
 
     productBacklog: UserStory[] = [];
+    isBackButtonPressed: boolean = false;
 
     constructor(private fb: FormBuilder,
                 private route: ActivatedRoute,
@@ -146,5 +147,9 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
                 description:"Description du sprint"
             }
         });
+    }
+
+    toggleBackButtonPress(isPressed: boolean) {
+        this.isBackButtonPressed = isPressed;
     }
 }

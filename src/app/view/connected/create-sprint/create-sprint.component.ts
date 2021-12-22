@@ -26,6 +26,7 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
     chosenUserStories: UserStory[] = [];
     buttonIsPressed: boolean = false;
     projectName: string | null = "";
+    dateIsInPast : boolean = false;
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -68,20 +69,29 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
     }
 
     sendData() {
-        this.subscription = this.sprintService.getMaxNumberOfSprints(this.idProject)
-            .pipe(
-                map(result => {
-                    let rawValues = this.form.getRawValue().main;
-                    let sprint: Sprint = {
-                        idProject: this.idProject,
-                        sprintNumber: result + 1, // result is the max number of sprints already present in the database
-                        startDate: new Date(),
-                        description: rawValues.description,
-                        deadline: new Date(rawValues.deadline)
-                    };
-                    this.addSprint(sprint);
-                })
-            ).subscribe();
+        this.dateIsInPast = false;
+        let rawValues = this.form.getRawValue().main;
+        //vérification of the date
+        if(new Date(rawValues.deadline)>new Date()){
+            this.subscription = this.sprintService.getMaxNumberOfSprints(this.idProject)
+                .pipe(
+                    map(result => {
+
+                        let sprint: Sprint = {
+                            idProject: this.idProject,
+                            sprintNumber: result + 1, // result is the max number of sprints already present in the database
+                            startDate: new Date(),
+                            description: rawValues.description,
+                            deadline: new Date(rawValues.deadline)
+                        };
+                        this.addSprint(sprint);
+                    })).subscribe();
+        }
+        else{
+            this.dateIsInPast = true;
+            //date est dans le passé
+        }
+
     }
 
     toggleButtonPress(isPressed:boolean) {
@@ -128,17 +138,13 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
     }
 
     autoComplete() {
-        /*let datePipe = new DatePipe('en-GB');
+        let datePipe = new DatePipe('en-GB');
         let date = datePipe.transform(new Date(), 'yyyy-MM-dd');
-
         this.form.setValue({
-            main: this.fb.group({
-                deadline:date,
+            main: {
+                deadline : date,
                 description:"Description du sprint"
-            }),
-            UserStory: this.fb.group({
-            })
-        });*/
-
+            }
+        });
     }
 }

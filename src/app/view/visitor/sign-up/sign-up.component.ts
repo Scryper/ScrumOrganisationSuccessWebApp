@@ -65,14 +65,14 @@ export class SignUpComponent implements OnInit {
             this.differentPasswords = false;
             this.signUpService.setValues(password, email);
             //verify if the email is in the database
-            // this.userService.getByEmail(email).then(result => {
-            //     if(result == null) {
-            //         this.sendData();
-            //     }
-            //     else {
-            //         this.userExists = true;
-            //     }
-            // });
+            this.userService.getByEmail(email).subscribe(result => {
+                if(result == null) {
+                     this.sendData();
+                 }
+                 else {
+                     this.userExists = true;
+                 }
+             });
         } else {
             this.differentPasswords = true;
         }
@@ -80,7 +80,7 @@ export class SignUpComponent implements OnInit {
 
     autoComplete() {
         let datePipe = new DatePipe('en-GB');
-        let date = datePipe.transform(new Date(), 'yyyy-MM-dd');
+        let date = datePipe.transform(new Date(1998,11,26), 'yyyy-MM-dd');
         this.form.setValue({
             main: {
                 email: "Florian@test.com",
@@ -111,6 +111,7 @@ export class SignUpComponent implements OnInit {
         };
 
         let date: Date = new Date();
+
         let currentYear: number = date.getFullYear();
         let birthYear: number = birthdateUser.getFullYear();
         let offset: number;
@@ -127,10 +128,14 @@ export class SignUpComponent implements OnInit {
         this.isMajor = (currentYear - birthYear + offset) >= 18;
 
         if(this.isMajor) {
-            // this.userService.addUser(user).then(() => {
-            //     this.accountCreationSuccessful = true;
-            //     this.resetFormValues();
-            // });
+            this.userService.addUser(user).subscribe(() => {
+                 this.accountCreationSuccessful = true;
+                 this.resetFormValues();
+                 this.router.navigate(["/login"]);
+             });
+        }else{
+            console.log("pas majeur");
+            //afficher qu'il n'est pas majeur
         }
     }
 

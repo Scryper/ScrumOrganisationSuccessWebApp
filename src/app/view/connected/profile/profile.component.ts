@@ -135,11 +135,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
             token: "",
             portfolio: ""
         };
-        if(confirm("You need to logout to save your changes.\nDo you want to logout ?")) {
-            this.otherSubscription = this.userService.updateFirstNameLastName(tmpUser).subscribe(() => {
-                    this.authenticationService.logout();
-                    this.route.navigate(['/login']);
-            });
-        }
+        this.otherSubscription = this.userService.updateFirstNameLastName(tmpUser).subscribe(() => {
+                this.authenticationService.logout();
+                this.route.navigate(['/login']);
+        });
     }
 }

@@ -62,9 +62,6 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
         this.oldProjects = [];
 
         this.subscription = this.developerProjectService.getByIdDeveloper(this.idUser).subscribe(developerProjects => {
-            for (let elt of developerProjects) {
-                console.log(elt)
-            }
             for (let i = 0 ; i < developerProjects.length ; i++) {
                 if(!developerProjects[i].isAppliance) {
                     this.getProjectName(developerProjects[i].idProject);
@@ -76,9 +73,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
 
     private getProjectName(idProject: number) {
         this.subscription = this.projectService.getById(idProject).subscribe(project => {
-            console.log(project.status == this.STATUS_ACTIVE)
             if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
-                console.log(project)
                 this.activeProject.push(project);
             } else if(project.status == this.STATUS_TERMINATE) {
                 this.oldProjects.push(project);

@@ -88,15 +88,28 @@
 
     <div>
         <div class="elementMyProject">
-            <input
-                [routerLink]="['/projectManager']"
+            <div>
+                <input
+                [routerLink]="['/userList', projectName, idProject]"
                 type="button"
-                value="Back"
-                (mousedown)="toggleBackButtonPress(true);"
-                (mouseup)="toggleBackButtonPress(false);"
-                (mouseleave)="toggleBackButtonPress(false);"
-                [ngClass]="{'isPressedClass': isBackButtonPressed === true}"
-                class="cursorPointer inputSizeBack robotoMedium bgLightRed radius noBorder fontSizeMedium shadowBottom">
+                value="Delete users"
+                (mousedown)="toggleDeleteButtonPress(true);"
+                (mouseup)="toggleDeleteButtonPress(false);"
+                (mouseleave)="toggleDeleteButtonPress(false);"
+                [ngClass]="{'isPressedClass': isDeleteButtonPressed === true}"
+                class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+            </div>
+            <div>
+                <input
+                    [routerLink]="['/projectManager']"
+                    type="button"
+                    value="Back"
+                    (mousedown)="toggleBackButtonPress(true);"
+                    (mouseup)="toggleBackButtonPress(false);"
+                    (mouseleave)="toggleBackButtonPress(false);"
+                    [ngClass]="{'isPressedClass': isBackButtonPressed === true}"
+                    class="cursorPointer inputSizeBack robotoMedium bgLightRed radius noBorder fontSizeMedium shadowBottom">
+            </div>
         </div>
     </div>
 </div>

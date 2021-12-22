@@ -63,7 +63,10 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
 
         this.subscription = this.developerProjectService.getByIdDeveloper(this.idUser).subscribe(developerProjects => {
             for (let i = 0 ; i < developerProjects.length ; i++) {
-                this.getProjectName(developerProjects[i].idProject);
+                if(!developerProjects[i].isAppliance) {
+                    this.getProjectName(developerProjects[i].idProject);
+                }
+
             }
         });
     }

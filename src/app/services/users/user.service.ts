@@ -27,6 +27,10 @@ export class UserService {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users/byProject/${idProject}`);
     }
 
+    getByIdProjectIsWorking(idProject: number): Observable<SosUser[]> {
+        return this.http.get<SosUser[]>(`${environment.apiUrl}/users/byProjectIsWorking/${idProject}`);
+    }
+
     daysOfXp(idUser: number): Observable<number> {
         return  this.http.get<number>(`${environment.apiUrl}/users/daysOfXP/${idUser}`);
     }

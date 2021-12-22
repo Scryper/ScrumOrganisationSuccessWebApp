@@ -66,7 +66,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
                     let devProject:UserProject = {
                         idDeveloper : this.userId,
                         idProject : project.id!,
-                        isAppliance : true
+                        isAppliance : false
                     }
                     this.developersProjectsService.addDeveloperProject(devProject).pipe(
                         map(() => {

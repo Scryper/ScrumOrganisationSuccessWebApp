@@ -95,7 +95,6 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
             description: rawValues.description,
             meetingUrl: rawValues.name
         };
-        console.log(meeting);
         this.subscription = this.meetingService.addMeeting(meeting)
             .pipe(
                 map(meeting => {

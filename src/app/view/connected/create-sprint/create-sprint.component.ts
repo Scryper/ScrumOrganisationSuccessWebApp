@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserStory } from "../../../domain/user-story";
-import { ActivatedRoute } from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { UserStoriesService } from "../../../services/user-stories/user-stories.service";
 import { Subscription } from "rxjs";
@@ -9,7 +9,8 @@ import { map } from "rxjs/operators";
 import { Sprint } from "../../../domain/sprint";
 import { SprintsService } from "../../../services/sprints/sprints.service";
 import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
-import {SprintUserStory} from "../../../domain/sprint-user-story";import {DatePipe} from "@angular/common";
+import {SprintUserStory} from "../../../domain/sprint-user-story";
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'app-create-sprint',
@@ -40,7 +41,8 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
                 private projectService: ProjectsService,
                 private userStoryService: UserStoriesService,
                 private sprintService: SprintsService,
-                private sprintUserStoryService: SprintsUserStoriesService) { }
+                private sprintUserStoryService: SprintsUserStoriesService,
+                private router: Router) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -120,6 +122,7 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
                     };
                     this.sprintUserStoryService.addSprintUserStory(sprintUserStory).subscribe();
                 }
+                this.router.navigate(["/myProject", this.projectName]);
             })
         ).subscribe();
     }

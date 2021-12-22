@@ -6,3 +6,7 @@ h2 {
 input {
     margin-bottom: 20px;
 }
+
+.inputSizeSubmitSmall:first-of-type {
+    margin-right: 10px;
+}

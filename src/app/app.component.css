@@ -59,6 +59,12 @@ a:hover {
     width: 220px;
 }
 
+.inputSizeSubmitSmall {
+    height: 40px;
+    width: 110px;
+
+}
+
 .inputSizeBack {
     height: 40px;
     width: 110px;

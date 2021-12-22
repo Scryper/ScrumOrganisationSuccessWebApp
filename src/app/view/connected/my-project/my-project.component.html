@@ -24,9 +24,8 @@
                 class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
         </div>
 
-        <div class="sprintContainer elementMyProject"
-             *ngIf="actualSprint.name != '' || oldSprints.length != 0">
-            <input *ngIf="isScrumMaster"
+        <div class="sprintContainer elementMyProject">
+            <input *ngIf="isScrumMaster && actualSprint.name != ''"
                    [routerLink]="['/createMeeting',projectName,actualSprint.id]"
                    type="button"
                    value="Create Meeting"
@@ -35,7 +34,11 @@
                    (mouseleave)="toggleModifySprintButtonPress(false);"
                    [ngClass]="{'isPressedClass': isModifySprintButtonPressed === true}"
                    class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
-            <h1 *ngIf="actualSprint.name != ''" class="robotoMedium">Active sprint</h1>
+            <h1 class="robotoMedium">Active sprint</h1>
+            <span *ngIf="actualSprint.name == ''"
+                  class="cursorPointer radius standardCard robotoLight">
+                <span>No active sprint found.</span>
+            </span>
             <div [class.active]="clicked !== projectName"
                  (click)="clicked = (clicked === projectName ? null : projectName)"
                  class="alignCenter"
@@ -51,8 +54,12 @@
 
             </div>
 
-            <div *ngIf="oldSprints.length != 0">
+            <div>
                 <h1 class="robotoMedium">Old sprints</h1>
+                <span *ngIf="oldSprints.length == 0"
+                      class="cursorPointer radius standardCard robotoLight">
+                <span>No active sprint found.</span>
+            </span>
                 <div *ngFor="let eltSprint of oldSprints; let i = index;"
                      [class.active]="clicked !== eltSprint"
                      (click)="clicked = (clicked === eltSprint ? null : eltSprint)"
@@ -69,7 +76,7 @@
                     [routerLink]="['/createSprint', projectName]"
                     type="button"
                     value="New Sprint"
-                    *ngIf="isScrumMaster"
+                    *ngIf="actualSprint.name == '' && isScrumMaster"
                     (mousedown)="toggleCreateSprintButtonPress(true);"
                     (mouseup)="toggleCreateSprintButtonPress(false);"
                     (mouseleave)="toggleCreateSprintButtonPress(false);"

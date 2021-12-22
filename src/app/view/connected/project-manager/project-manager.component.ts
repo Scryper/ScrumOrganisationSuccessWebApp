@@ -27,11 +27,8 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
     activeProjects: Project[] = [];
     oldProjects: Project[] = [];
 
-    noProjectsFound:string = "No projects found.";
-
     subtitles: string[] = [
         "Active project",
-        "Active projects",
         "Old projects"
     ];
 

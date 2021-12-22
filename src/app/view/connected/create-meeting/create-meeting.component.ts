@@ -99,11 +99,9 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
         this.subscription = this.meetingService.addMeeting(meeting)
             .pipe(
                 map(meeting => {
-                    console.log(meeting);
                     if (meeting.id != null) {
                         this.idMeeting = meeting.id;
                     }
-                    console.log(this.idsUsersOnProject);
                     for(let idUser of this.idsUsersOnProject) {
                         let participation: Participation = {
                             idMeeting: this.idMeeting,

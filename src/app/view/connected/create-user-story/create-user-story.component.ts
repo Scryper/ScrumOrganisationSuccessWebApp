@@ -32,6 +32,7 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
         })
     });
     isBackButtonPressed: boolean = false;
+    isPriorityNaN: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private fb: FormBuilder,
@@ -60,12 +61,16 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
             priority: Number(this.form.getRawValue().main.priority)
         }
 
-        //add UserStory in the database
-        this.subscription = this.userStoriesService.addUserStory(tmpUserStory).subscribe(()=>{
-            //redirect to projects
-            let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
-            this.router.navigate([returnUrl]);
-        });
+        if(!isNaN(Number(this.form.getRawValue().main.priority))) {
+            //add UserStory in the database
+            this.subscription = this.userStoriesService.addUserStory(tmpUserStory).subscribe(()=>{
+                //redirect to projects
+                let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
+                this.router.navigate([returnUrl]);
+            });
+        } else {
+            this.isPriorityNaN = true;
+        }
     }
 
     toggleButtonPress(isPressed:boolean) {

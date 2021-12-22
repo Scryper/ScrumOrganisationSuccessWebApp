@@ -78,6 +78,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
         this.subscription = this.projectService.getById(idProject).subscribe(project => {
             console.log(project.status == this.STATUS_ACTIVE)
             if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
+                console.log(project)
                 this.activeProject.push(project);
             } else if(project.status == this.STATUS_TERMINATE) {
                 this.oldProjects.push(project);

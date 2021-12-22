@@ -44,5 +44,12 @@
             value="Create"
             [disabled]="form.invalid || chosenUserStories.length <= 0"
             class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+
+        <div *ngIf="dateIsInPast"
+             class="alignCenter sizeNormal">
+            <p class="robotoMedium red bgWhiteBlue radius border padding marginTop alignText">
+                You can't add a sprint finishing in the past!
+            </p>
+        </div>
     </div>
 </form>

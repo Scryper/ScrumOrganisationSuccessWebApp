@@ -194,3 +194,7 @@ a:hover {
 .alignCenter {
     text-align: center;
 }
+
+.formSize {
+    width: 420px;
+}

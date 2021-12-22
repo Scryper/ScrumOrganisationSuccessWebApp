@@ -24,7 +24,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
     username: string = "";
     idUser: number = 0;
 
-    activeProjects: Project[] = [];
+    activeProject: Project[] = [];
     oldProjects: Project[] = [];
 
     subtitles: string[] = [
@@ -58,7 +58,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
     }
 
     private loadProjects() {
-        this.activeProjects = [];
+        this.activeProject = [];
         this.oldProjects = [];
 
         this.subscription = this.developerProjectService.getByIdDeveloper(this.idUser).subscribe(developerProjects => {
@@ -71,7 +71,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
     private getProjectName(idProject: number) {
         this.subscription = this.projectService.getById(idProject).subscribe(project => {
             if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
-                this.activeProjects.push(project);
+                this.activeProject.push(project);
             } else if(project.status == this.STATUS_TERMINATE) {
                 this.oldProjects.push(project);
             }

@@ -134,6 +134,7 @@ a:hover {
     box-shadow: 0 -2px 4px black;
     background-color: #009B86;
 }
+
 .inputContainer, .listContainer, .todoList, .pageContainer, .notifContainer {
     display: flex;
     flex-direction: column;

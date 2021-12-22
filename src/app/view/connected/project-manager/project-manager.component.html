@@ -8,7 +8,8 @@
                  class="cursorPointer radius standardCard robotoLight">
                 <span>{{project.name}}</span>
             </span>
-            <button class="marginLeft" (click)="terminate(project);">Terminate</button>
+            <button *ngIf="isProductOwner"
+                    class="marginLeft" (click)="terminate(project);">Terminate</button>
         </div>
             <span *ngIf="activeProjects.length==0"
                 class="cursorPointer radius standardCard robotoLight">
@@ -22,6 +23,10 @@
             *ngFor="let project of oldProjects">
             {{project.name}}</li>
     </ul>
+    <span *ngIf="oldProjects.length==0"
+    class="cursorPointer radius standardCard robotoLight">
+        <span>No projects found.</span>
+    </span>
 
     <input
         [routerLink]="['/createProject']"

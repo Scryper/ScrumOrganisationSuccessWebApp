@@ -3,7 +3,6 @@ import {AuthenticationService} from "../../../services";
 import {ProjectsService} from "../../../services/projects/projects.service";
 import {UsersProjectsService} from "../../../services/users-projects/users-projects.service";
 import {Project} from "../../../domain/project";
-import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {Role} from "../../../domain/role";
 
@@ -29,7 +28,6 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
     oldProjects: Project[] = [];
 
     noProjectsFound:string = "No projects found.";
-    isActiveProjectEmpty:boolean = false;
 
     subtitles: string[] = [
         "Active project",
@@ -39,8 +37,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
 
     constructor(private authenticationService: AuthenticationService,
                 private developerProjectService: UsersProjectsService,
-                private projectService: ProjectsService,
-                private route: Router) { }
+                private projectService: ProjectsService) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -77,17 +74,10 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
     private getProjectName(idProject: number) {
         this.subscription = this.projectService.getById(idProject).subscribe(project => {
             if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
-                if(this.activeProjects[0].name == this.noProjectsFound) {
-                    this.activeProjects.pop();
-                }
                 this.activeProjects.push(project);
             } else if(project.status == this.STATUS_TERMINATE) {
                 this.oldProjects.push(project);
             }
-            // the active project is empty if the list is empty (should not happen)
-            // or if there is only one element in the list and it is the default project
-            this.isActiveProjectEmpty = this.activeProjects.length == 0
-                || (this.activeProjects.length == 1 && this.activeProjects[0].name == this.noProjectsFound);
         });
     }
 
@@ -96,11 +86,5 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
         this.subscription = this.projectService.updateStatus(project).subscribe(() => {
             this.loadProjects();
         });
-    }
-
-    navigateIfActiveProjectNotEmpty(projectName: string) {
-        if(!this.isActiveProjectEmpty) {
-            this.route.navigate(['/myProject', projectName]);
-        }
     }
 }

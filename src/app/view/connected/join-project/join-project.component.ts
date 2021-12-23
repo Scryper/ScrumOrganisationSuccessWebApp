@@ -17,10 +17,15 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
     private STATUS_FINISHED: number = 3;
 
     projects: Project[] = [];
+
+    nonAppliedProjects:Project[] =[];
+    appliedProjects:Project[] =[];
+
     projectsName: string[] = [];
     projectsIsApply: boolean[] = [];
 
     assigned: boolean = false;
+    IsNonAppliedEmpty : boolean = false;
     currentUser: SosUser = null!;
     userId: number = 0;
 
@@ -37,25 +42,49 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
         this.userId = (this.currentUser.id == undefined) ? 0 : this.currentUser.id;
-        this.subscription = this.loadProjects()
-            .pipe(map(() => {
-                this.isAssigned()
-            })
-        ).subscribe();
+
+        this.subscription = this.loadAllProjects().pipe(map(()=>{
+            this.isAssigned();
+        })).subscribe();
     }
 
-    private loadProjects() {
-        return this.projectService.getAll().pipe(
-            map(projects => {
-                for(let project of projects) {
-                    if(project.status != this.STATUS_FINISHED) {
-                        this.projects.push(project);
-                        this.projectsName.push(project.name);
-                        this.isAppliance(project);
+
+
+
+
+    //getAllProjects
+    private loadAllProjects(){
+        return this.projectService.getActiveProject().pipe(map(projects=>{
+            this.projects = projects
+            this.loadLinkedProjects().subscribe();
+        }));
+    }
+
+    //getAllLinkedProjects
+    private loadLinkedProjects(){
+        return this.projectService.getByIdUserNotFinishedIsLinked(this.userId).pipe(map(projects=>{
+            this.appliedProjects = projects;
+
+            //substract the two list
+            //retire les éléments linked du tableau avec tous les éléments
+            this.nonAppliedProjects=[];
+            for(let projet of this.projects){
+                let tmpBool = true
+                for(let projetApplied of this.appliedProjects){
+                    if(projet.id==projetApplied.id){
+                        tmpBool = false
                     }
                 }
+                if(tmpBool)this.nonAppliedProjects.push(projet);
             }
-        ));
+
+            if(this.nonAppliedProjects.length==0){
+                this.IsNonAppliedEmpty = true;
+            }else{
+                this.IsNonAppliedEmpty = false;
+            }
+            console.log(this.IsNonAppliedEmpty)
+        }));
     }
 
     joinProject(project: Project) {
@@ -71,11 +100,9 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
                 map(result => {
                     if(result != null) {
                         // change the appliance's value to avoid making multiple requests for the same project
-                        for(let i = 0 ; i < this.projects.length ; i++){
-                            if(this.projects[i].id == project.id){
-                                this.projectsIsApply[i] = true;
-                            }
-                        }
+                        this.subscription = this.loadAllProjects().pipe(map(()=>{
+                            this.isAssigned();
+                        })).subscribe();
                         // UPDATE STATUS INACTIVE
                         project.status = 1;
                         this.projectService.updateStatus(project).subscribe();

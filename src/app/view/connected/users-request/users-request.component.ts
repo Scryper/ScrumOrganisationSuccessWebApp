@@ -72,7 +72,7 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
 
     //get the active project the product owner is currently working on
     private getCurrentProject() {
-        return this.projectService.getActiveProject(this.currentUser.id!)
+        return this.projectService.getByIdUserActiveProject(this.currentUser.id!)
             .pipe(
                 map(
                 (userProjects)=>{

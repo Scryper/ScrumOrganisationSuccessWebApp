@@ -23,8 +23,16 @@ export class ProjectsService {
         return this.http.get<Project>(`${environment.apiUrl}/projects/byName/${projectName}`);
     }
 
-    getActiveProject(idUser : number) : Observable<Project[]>{
+    getByIdUserActiveProject(idUser : number) : Observable<Project[]>{
         return this.http.get<Project[]>(`${environment.apiUrl}/projects/activeByIdUser/${idUser}`);
+    }
+
+    getActiveProject() : Observable<Project[]>{
+        return this.http.get<Project[]>(`${environment.apiUrl}/projects/active/`);
+    }
+
+    getByIdUserNotFinishedIsLinked(idUser : number) : Observable<Project[]>{
+        return this.http.get<Project[]>(`${environment.apiUrl}/projects/byIdUserNotFinishedIsLinked/${idUser}`);
     }
 
     // Post requests

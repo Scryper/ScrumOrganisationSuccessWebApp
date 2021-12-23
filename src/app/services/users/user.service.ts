@@ -35,6 +35,10 @@ export class UserService {
         return this.http.get<SosUser[]>(`${environment.apiUrl}/users/byProjectIsApplying/${idProject}`);
     }
 
+    getByCommentOnUserStory(idUserStory:number): Observable<SosUser[]> {
+        return this.http.get<SosUser[]>(`${environment.apiUrl}/users/byCommentOnUserStory/${idUserStory}`);
+    }
+
     daysOfXp(idUser: number): Observable<number> {
         return  this.http.get<number>(`${environment.apiUrl}/users/daysOfXP/${idUser}`);
     }
@@ -54,4 +58,6 @@ export class UserService {
         }
         return this.http.put<SosUser>(`${environment.apiUrl}/users/firstNameLastNameUpdate/${user.id}`, JSON.stringify(user), httpOptions);
     }
+
+
 }

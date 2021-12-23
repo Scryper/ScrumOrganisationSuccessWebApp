@@ -47,7 +47,7 @@
                  *ngIf="actualSprint.name != ''">
 
                 <input
-                    [routerLink]="['/sprintUserStory', projectName, idProject, actualSprint.id]"
+                    [routerLink]="['/sprintUserStory', actualSprint.name, actualSprint.id]"
                     type="button"
                     value="Sprint {{actualSprint.id}} : {{actualSprint.name}}"
                     class="cursorPointer standardCard radius robotoLight">
@@ -69,7 +69,7 @@
                      class="alignCenter">
 
                     <input
-                        [routerLink]="['/sprintUserStory', projectName, idProject, eltSprint.id]"
+                        [routerLink]="['/sprintUserStory',eltSprint.name, eltSprint.id]"
                         type="button"
                         value="Sprint {{eltSprint.id}} : {{eltSprint.name}}"
                         class="cursorPointer standardCard radius robotoLight">

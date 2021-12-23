@@ -51,7 +51,7 @@ const routes: Routes = [
     {path: 'createMeeting/:projectName/:sprintId', component : CreateMeetingComponent,canActivate:[AuthGuard]},
     {path: 'userList/:projectName/:idProject', component : UserListComponent, canActivate:[AuthGuard]},
     {path: 'comments/:idUserStory', component : CommentsComponent, canActivate:[AuthGuard]},
-    {path: 'sprintUserStory/:projectName/:idProject/:idSprint', component : SprintUserStoryComponent, canActivate:[AuthGuard]},
+    {path: 'sprintUserStory/:sprintName/:idSprint', component : SprintUserStoryComponent, canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];
 

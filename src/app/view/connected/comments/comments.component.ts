@@ -28,39 +28,14 @@ export class CommentsComponent implements OnInit, OnDestroy {
         user:null!
     }
 
-    commentUser:CommentUser[] = [];
-
-    currentUser:SosUser= {
-        id:0,
-        birthdate: new Date(),
-        email: "",
-        firstname: "",
-        lastname: "",
-        password: "",
-        role: 0
-    };
+    actualUserStory:UserStory = null!;
+    currentUser:SosUser=null!;
+    idActualUserStory:number=0;
 
     addContent:string = "";
-    addcomment:SosComment = {
-        content: "",
-        idUser: 0,
-        idUserStory: 0,
-        postedAt: new Date()
-    };
 
-    idActualUserStory:number=0;
-    actualUserStory:UserStory = {
-        id:0,
-        name:"",
-        idProject:0,
-        description:"",
-        priority:0
-    };
-    comments:SosComment[] = [];
-
+    commentUser:CommentUser[] = [];
     usersComment:SosUser[] = [];
-
-    usersName:string[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
               private userStoriesService:UserStoriesService,
@@ -73,35 +48,16 @@ export class CommentsComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-
+      this.commentUser=[];
+      this.usersComment = [];
       this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
       this.idActualUserStory = Number(this.activatedRoute.snapshot.paramMap.get("idUserStory"));
       this.fillActualUserStory();
   }
 
 
-    //get comments
-    //get les users grace a l'id comments
-    //bind both
-
-    //get userstory
-    private getCurrentUserStory(){
-      this.subscription = this.userStoriesService.getById(this.idActualUserStory).pipe(map(
-          userStory =>{
-              this.actualUserStory = userStory;
-
-              //get comments
-
-          }
-      )).subscribe();
-    }
-
-
-
-
-
-
   private fillActualUserStory() {
+      this.commentUser=[];
       this.subscription = this.userStoriesService.getById(this.idActualUserStory)
           .pipe(
               map(userStories => {
@@ -135,24 +91,40 @@ export class CommentsComponent implements OnInit, OnDestroy {
       return latest_date!;
   }
 
-  private fillAddComment() {
-      let datepipe = new DatePipe('en-US');
-      let latest_date =datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
-      let date = new Date(latest_date!);
-      console.log(date)
-      this.addcomment.content = this.addContent;
-      if (this.currentUser.id != null) {
-          this.addcomment.idUser = this.currentUser.id;
-      }
-      this.addcomment.idUserStory = this.idActualUserStory;
-      this.addcomment.postedAt = date;
-  }
 
     addComment() {
-        this.fillAddComment();
-        this.subscription = this.commentsService.addComment(this.addcomment).subscribe();
-        this.comments.push(this.addcomment);
-        this.fillUsersComment();
+      //initialize empty comment
+        let addcomment = {
+            content: "",
+            idUser: 0,
+            idUserStory: 0,
+            postedAt: new Date()
+        };
+
+      //get the date and format it
+        let datepipe = new DatePipe('en-US');
+        let latest_date =datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+        let date = new Date(latest_date!);
+
+        //set le content du comment
+        addcomment.content = this.addContent;
+        addcomment.idUser = this.currentUser.id!;
+        addcomment.idUserStory = this.idActualUserStory;
+        addcomment.postedAt = date;
+
+        this.commentsService.addComment(addcomment).pipe(map(()=>{
+            this.commentUser.push({ comment:addcomment,
+                                    user:this.currentUser});
+            let notCommentedYet = true;
+            for(let elt of this.usersComment){
+                if(elt.id==this.currentUser.id)notCommentedYet=false
+            }
+            if(notCommentedYet)this.usersComment.push(this.currentUser);
+
+        })).subscribe();
+
+        this.addContent = "";
+
     }
 
     // récupère les utilisateurs qui ont commenté l'US et les ajouter a un vecteur
@@ -160,7 +132,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
         return this.userService.getByCommentOnUserStory(this.idActualUserStory)
             .pipe(
                 map(users => {
-
+                    this.usersComment = [];
                     for (let elt of users) {
                         this.usersComment.push(elt);
                     }

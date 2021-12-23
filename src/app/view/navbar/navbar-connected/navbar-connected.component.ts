@@ -60,7 +60,6 @@ export class NavbarConnectedComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
     }
-
     ngOnInit(): void {
         this.subscription = this.authenticationService.currentUser.subscribe(user => this.changeName(user));
     }
@@ -68,7 +67,6 @@ export class NavbarConnectedComponent implements OnInit, OnDestroy {
     switchIsOpen() {
         this.isOpen = !this.isOpen;
     }
-
     logOut() {
         this.authenticationService.logout();
         this.router.navigate(["login"]);
@@ -76,7 +74,7 @@ export class NavbarConnectedComponent implements OnInit, OnDestroy {
 
     private changeName(user: SosUser) {
         if(user != null) {
-            // Actualise name of User in rightMenu
+            // Update the name of the user in the right Menu
             if (user.profilePicture != "") {
                 if (user.profilePicture != null) {
                     this.rightMenu[0].img = user.profilePicture;

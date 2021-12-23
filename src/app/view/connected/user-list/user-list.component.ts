@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SosUser} from "../../../domain/sos-user";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
-import {ProjectsService} from "../../../services/projects/projects.service";
 import {Role} from "../../../domain/role";
 import {map} from "rxjs/operators";
 import {UserService} from "../../../services";
@@ -14,14 +13,15 @@ import {UsersProjectsService} from "../../../services/users-projects/users-proje
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css' , '../../../app.component.css', '../product-backlog/product-backlog.component.css']
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
+    private subscription: Subscription | undefined;
+
     projectName: string | null = "";
     isButtonPressed: boolean = false;
     idProject: number = 0;
     id : number = 0;
 
     users: SosUser[]=[];
-    private subscription: Subscription | undefined;
     isProductOwner: boolean = false;
     currentUser:SosUser=null!;
 
@@ -48,6 +48,7 @@ export class UserListComponent implements OnInit {
         this.subscription = this.getUsers().subscribe();
     }
 
+    // Get all the users who work on a project
     private getUsers(){
         return this.userService.getByIdProjectIsWorking(this.idProject).pipe(
           map(users=>{
@@ -60,6 +61,7 @@ export class UserListComponent implements OnInit {
         )
     }
 
+    // Delete user from the database
     deleteUserProject(user:SosUser) {
         this.subscription?.unsubscribe();
         this.subscription = this.userProjectService.deleteDeveloperProjectByidDeveloperByidProject(user.id,this.idProject).pipe(
@@ -70,7 +72,7 @@ export class UserListComponent implements OnInit {
         ).subscribe();
     }
 
-    toggleButtonPress(b: boolean) {
-
+    toggleButtonPress(isPressed: boolean) {
+        this.isButtonPressed = isPressed;
     }
 }

@@ -53,12 +53,13 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
         this.userId = (this.currentUser.id==undefined)?0:this.currentUser.id;
     }
 
+    // Add UserStory in the database
     sendData() {
         this.isAddOk = false;
         this.isPriorityNaN = false;
         this.userStoryAlreadyExists = false;
 
-        //create project
+        // Create project
         let tmpUserStory: UserStory = {
             idProject: <number>this.idProject,
             name: this.form.getRawValue().main.name,
@@ -67,7 +68,7 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
         }
 
         if(!isNaN(Number(this.form.getRawValue().main.priority))) {
-            //add UserStory in the database
+            // Add UserStory in the database
             this.subscription = this.userStoriesService.addUserStory(tmpUserStory)
                 .subscribe(() => {
                         this.isAddOk = true;
@@ -78,10 +79,6 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
         } else {
             this.isPriorityNaN = true;
         }
-    }
-
-    toggleButtonPress(isPressed:boolean) {
-        this.buttonIsPressed = isPressed;
     }
 
     autoComplete() {
@@ -96,5 +93,8 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
 
     toggleBackButtonPress(isPressed: boolean) {
         this.isBackButtonPressed = isPressed;
+    }
+    toggleButtonPress(isPressed:boolean) {
+        this.buttonIsPressed = isPressed;
     }
 }

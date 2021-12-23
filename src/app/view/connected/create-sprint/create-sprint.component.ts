@@ -56,12 +56,14 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
         this.loadProductBacklog();
     }
 
+    // Add User story selected to the chosen user story vector
     addToChosenUserStories() {
         if (this.selectedUserStory != null && !this.chosenUserStories.includes(this.selectedUserStory)) {
             this.chosenUserStories.push(this.selectedUserStory);
         }
     }
 
+    // Assign selected user story from view in model
     assignToSelected(selected: string) {
         for (let userStory of this.productBacklog) {
             if(userStory.name == selected) {
@@ -72,16 +74,16 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
 
     sendData() {
         this.dateIsInPast = false;
-
         let rawValues = this.form.getRawValue().main;
-        // date verification
+        // Date verification, if the date is in the future
         if(new Date(rawValues.deadline)>new Date()){
+            // Get the number of sprints
             this.subscription = this.sprintService.getMaxNumberOfSprints(this.idProject)
                 .pipe(
                     map(result => {
                         let sprint: Sprint = {
                             idProject: this.idProject,
-                            sprintNumber: result + 1, // result is the max number of sprints already present in the database
+                            sprintNumber: result + 1, // Result is the max number of sprints already present in the database
                             startDate: new Date(),
                             description: rawValues.description,
                             deadline: new Date(rawValues.deadline)
@@ -90,19 +92,15 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
                     })).subscribe();
         }
         else {
-            this.dateIsInPast = true; // date is in the past
+            this.dateIsInPast = true; // Date is in the past
         }
-
-    }
-
-    toggleButtonPress(isPressed:boolean) {
-        this.isButtonPressed = isPressed;
     }
 
     private loadProductBacklog() {
         this.subscription = this.getProject().subscribe();
     }
 
+    // Get the id of the active project
     private getProject() {
         return this.projectService.getByProjectName(this.projectName).pipe(
             map(project => {
@@ -114,6 +112,7 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
         ));
     }
 
+    // Get the user stories that match the project id
     private getUserStories(id: number) {
         this.userStoryService.getByIdProject(id).subscribe(userStories => {
             for (let i = 0 ; i < userStories.length ; i++) {
@@ -123,6 +122,7 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Add a sprint to the active sprint
     private addSprint(sprint: Sprint) {
         this.isAddOk = false;
         this.sprintAlreadyExists = false;
@@ -158,5 +158,8 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
 
     toggleBackButtonPress(isPressed: boolean) {
         this.isBackButtonPressed = isPressed;
+    }
+    toggleButtonPress(isPressed:boolean) {
+        this.isButtonPressed = isPressed;
     }
 }

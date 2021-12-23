@@ -61,7 +61,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
       this.fillActualUserStory();
   }
 
-
+  // Get Actual User Story
   private fillActualUserStory() {
       this.commentUser=[];
       this.subscription = this.userStoriesService.getById(this.idActualUserStory)
@@ -74,17 +74,17 @@ export class CommentsComponent implements OnInit, OnDestroy {
           ).subscribe()
   }
 
-  //récupère les commentaires d'une user story spécifique
+  // Get comments from a specific user story
   private fillComments() {
       this.subscription = this.commentsService.getByIdUserStory(this.idActualUserStory)
           .pipe(
               map(commentsTmp => {
 
-                  // récupère les utilisateurs qui ont commenté l'US et les ajouter a un vecteur
+                  // Fetch users who commented User Stories and add it to a vector
                   this.fillUsersComment();
 
-                  //parcours tous les commentaires et pour chacun
-                    //parcours les utilisateurs qui ont commenté et ajoute au tableau final COMMENT - USER la valeur du commentaire et de lutilisateur
+                  // Browse all comments and for each
+                    // Browse through the users who have commented and add the comment and user value to the final COMMENT - USER vector
                   for (let elt of commentsTmp) {
                       this.fillCommentUser(elt.idUser,elt)
                   }
@@ -92,15 +92,15 @@ export class CommentsComponent implements OnInit, OnDestroy {
           ).subscribe()
   }
 
+  // Modify the date format
   formatDate(date:Date):string {
       let datepipe = new DatePipe('en-US');
       let latest_date =datepipe.transform(date, 'dd/MM/yyyy | HH:mm:ss');
       return latest_date!;
   }
 
-
     addComment() {
-      //initialize empty comment
+      // Initialize empty comment
         let addcomment = {
             content: "",
             idUser: 0,
@@ -108,12 +108,12 @@ export class CommentsComponent implements OnInit, OnDestroy {
             postedAt: new Date()
         };
 
-      //get the date and format it
+        // Get the date and format it
         let datepipe = new DatePipe('en-US');
         let latest_date =datepipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
         let date = new Date(latest_date!);
 
-        //set le content du comment
+        // Set the content of the comment
         addcomment.content = this.addContent;
         addcomment.idUser = this.currentUser.id!;
         addcomment.idUserStory = this.idActualUserStory;
@@ -134,7 +134,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
 
     }
 
-    // récupère les utilisateurs qui ont commenté l'US et les ajouter a un vecteur
+    // Fetch users who commented User Stories and add it to a vector
     fillUsersComment() {
         return this.userService.getByCommentOnUserStory(this.idActualUserStory)
             .pipe(
@@ -147,7 +147,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
             )
     }
 
-    //parcours les utilisateurs qui ont commenté et ajoute au tableau final COMMENT - USER la valeur du commentaire et de lutilisateur
+    // Browse the users who have commented and add the comment and user value to the final vector COMMENT - USER
     fillCommentUser(idUser:number, comment:SosComment) {
       for (let elt of this.usersComment) {
           if (idUser == elt.id) {
@@ -163,5 +163,4 @@ export class CommentsComponent implements OnInit, OnDestroy {
     toggleBackButtonPress(isPressed: boolean) {
         this.isBackButtonPressed = isPressed;
     }
-
 }

@@ -65,9 +65,13 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         let idSprintAsString: string | null = this.activatedRoute.snapshot.paramMap.get("sprintId");
         this.projectName = this.activatedRoute.snapshot.paramMap.get("projectName");
+
+        // Cast to int because params are string by default
         if (typeof idSprintAsString === "string") {
-            this.idSprint = parseInt(idSprintAsString, 10); // cast to int because params are string by default
+            this.idSprint = parseInt(idSprintAsString, 10);
         }
+
+        // Get the project ID and user IDs
         this.subscription = this.projectService.getByProjectName(this.projectName)
             .pipe(
                 map(project => {
@@ -86,10 +90,6 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
             ).subscribe();
     }
 
-    toggleButtonSaveNewMeetingPressed(isPressed: boolean) {
-        this.isButtonSaveNewMeetingPressed = isPressed;
-    }
-
     onSubmitNewMeeting() {
         this.isDateOk = true;
         this.isAddingOfMeetingOk = false;
@@ -103,7 +103,9 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
             meetingUrl: rawValues.name
         };
 
+        // If the date is in the future
         if(new Date() < new Date(rawValues.schedule)) {
+            // Add meeting, get ID meeting
             this.subscription = this.meetingService.addMeeting(meeting)
                 .pipe(
                     map(meeting => {
@@ -143,5 +145,8 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
 
     toggleBackButtonPress(isPressed: boolean) {
         this.isBackButtonPressed = isPressed;
+    }
+    toggleButtonSaveNewMeetingPressed(isPressed: boolean) {
+        this.isButtonSaveNewMeetingPressed = isPressed;
     }
 }

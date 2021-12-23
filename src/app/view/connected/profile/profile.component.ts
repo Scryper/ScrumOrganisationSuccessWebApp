@@ -65,34 +65,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         ).subscribe();
     }
 
-    private loadAvailableTechnologies() {
-        return this.technologyService.getAll().pipe(
-            map(technologies => {
-                for (let i = 0 ; i < technologies.length ; i++) {
-                    this.technologies.push(technologies[i]);
-                    this.idTechnologies.push(technologies[i].id);
-                }
-            })
-        );
-    }
-
-    fillIsHisTechnologies() {
-        return this.userTechnology.getByUserId(this.idUser).pipe(
-            map(userTechnologies => {
-                for (let userTechnology of userTechnologies) {
-                    let id: number = userTechnology.idTechnology;
-                    let result: boolean = this.idTechnologies.includes(id);
-                    let index: number = this.idTechnologies.indexOf(id);
-                    this.isHisTechnologies[index] = result;
-                }
-            })
-        );
-    }
-
-    toggleButtonPress(isPressed: boolean) {
-        this.buttonIsPressed = isPressed;
-    }
-
+    // Fill User profile values
     fillProfile(user: SosUser) {
         this._lastName = user.lastname;
         this._firstName = user.firstname;
@@ -108,10 +81,38 @@ export class ProfileComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Fill technologies array and idTechnologies array
+    private loadAvailableTechnologies() {
+        return this.technologyService.getAll().pipe(
+            map(technologies => {
+                for (let i = 0 ; i < technologies.length ; i++) {
+                    this.technologies.push(technologies[i]);
+                    this.idTechnologies.push(technologies[i].id);
+                }
+            })
+        );
+    }
+
+    // Fill IsHisTechnologies array
+    fillIsHisTechnologies() {
+        return this.userTechnology.getByUserId(this.idUser).pipe(
+            map(userTechnologies => {
+                for (let userTechnology of userTechnologies) {
+                    let id: number = userTechnology.idTechnology;
+                    let result: boolean = this.idTechnologies.includes(id);
+                    let index: number = this.idTechnologies.indexOf(id);
+                    this.isHisTechnologies[index] = result;
+                }
+            })
+        );
+    }
+
+    // Delete user technology from the database
     deleteTechnology(idTechnology: number) {
         this.otherSubscription = this.userTechnology.deleteUserTechnology(this.idUser, idTechnology).subscribe();
     }
 
+    // Add user technology in the database
     addTechnology(idTechnology: number) {
         let tmpUserTechnology: UserTechnology = {
             idUser: this.idUser,
@@ -120,16 +121,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.otherSubscription = this.userTechnology.addUserTechnology(tmpUserTechnology).subscribe();
     }
 
+    // Toggle if it's his technology or not
     modifyTechnologies(event : any, elt:Technology){
         let index = this.technologies.indexOf(elt);
-        if(event.target.checked) {
-            this.isHisTechnologies[index]=true;
-        } else {
-            this.isHisTechnologies[index]=false;
-        }
+        this.isHisTechnologies[index] = !!event.target.checked;
     }
-    sendData() {
 
+    sendData() {
         let tmpUser:SosUser = {
             id: this.idUser,
             firstname: this.form.getRawValue().main.firstName,
@@ -144,8 +142,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
             portfolio: ""
         };
 
-
-        //remplir un array pour constater l'état actuel des techno, comparer ensuite avec ce qu'on a pour voir ceux qu'on doit modifier
+        // Fill in an array to see the current state of techno,
+        // then compare with what we have to see those we must modify
         this.userTechnology.getByUserId(this.idUser).pipe(
             map(userTechnologies => {
                 let dbTechnologies = [];
@@ -155,10 +153,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
                     let index: number = this.idTechnologies.indexOf(id);
                     dbTechnologies[index] = result;
                 }
-                //comparer ensuite avec ce qu'on a pour voir ceux qu'on doit modifier
+
+                // Then compare with what we have to see which ones we must modify
                 for(let i = 0; i<this.technologies.length; i++){
                     if(dbTechnologies[i] != this.isHisTechnologies[i]){
-                        //verification si on doit l'ajouter ou le supprimer
+
+                        // Check whether to add or remove it
                         if(this.isHisTechnologies[i]){
                             this.addTechnology(this.technologies[i].id);
                         }
@@ -170,10 +170,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
             })
         ).subscribe();
 
+        // Update the first and last name then disconnect the user
         this.otherSubscription = this.userService.updateFirstNameLastName(tmpUser).subscribe(() => {
             this.authenticationService.logout();
             this.route.navigate(['/login']);
         });
-
+    }
+    toggleButtonPress(isPressed: boolean) {
+        this.buttonIsPressed = isPressed;
     }
 }

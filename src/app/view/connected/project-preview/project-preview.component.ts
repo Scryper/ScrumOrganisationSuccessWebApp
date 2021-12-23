@@ -2,9 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { DatePipe } from "@angular/common";
-import { UsersProjectsService } from "../../../services/users-projects/users-projects.service";
 import { SosUser } from "../../../domain/sos-user";
-import {UserProject} from "../../../domain/user-project";
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 
@@ -14,6 +12,8 @@ import {Subscription} from "rxjs";
     styleUrls: ['../../../app.component.css', './project-preview.component.css']
 })
 export class ProjectPreviewComponent implements OnInit, OnDestroy {
+    private subscription: Subscription | undefined;
+
     isButtonPressed: boolean = false;
     assigned: boolean = false;
 
@@ -27,8 +27,6 @@ export class ProjectPreviewComponent implements OnInit, OnDestroy {
     datePipe = new DatePipe('en-GB');
     DATE_FORMAT: string = 'dd/MM/yyyy';
     currentUser: SosUser | undefined;
-
-    private subscription: Subscription | undefined;
 
     constructor(private route: ActivatedRoute,
                 private projectService: ProjectsService) { }
@@ -48,6 +46,7 @@ export class ProjectPreviewComponent implements OnInit, OnDestroy {
         this.subscription = this.getProject().subscribe();
     }
 
+    // Get project information for the selected project
     private getProject() {
         return this.projectService.getByProjectName(this.projectName).pipe(
             map((project => {
@@ -56,31 +55,12 @@ export class ProjectPreviewComponent implements OnInit, OnDestroy {
                 if (project.id != null) {
                     this.projectId = project.id;
                 }
-                //this.isApply();
             })
         ));
-    }
-
-    isApply() {
-        // this.developersProjectsService.getByIdDeveloperIdProject(this.userId, this.projectId).then(developerProject => {
-        //     this.unassigned = developerProject != null;
-        // });
     }
 
     toggleButtonPress(isPressed: boolean) {
         this.isButtonPressed = isPressed;
     }
 
-    requestToJoin() {
-        let appliance: UserProject = {
-            idDeveloper: this.userId,
-            idProject: this.projectId,
-            isAppliance: true
-        };
-        // this.developersProjectsService.addDeveloperProject(appliance).then(result => {
-        //     if(result != null) {
-        //         this.unassigned = !this.unassigned;
-        //     }
-        // });
-    }
 }

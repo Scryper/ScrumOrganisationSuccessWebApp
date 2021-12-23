@@ -65,31 +65,25 @@ export class JitsiComponent implements OnInit {
     handleClose = () => {
         console.log("handleClose");
     }
-
     handleParticipantLeft = async (participant: any) => {
         console.log("handleParticipantLeft", participant); // { id: "2baa184e" }
         const data = await this.getParticipants();
     }
-
     handleParticipantJoined = async (participant: any) => {
         console.log("handleParticipantJoined", participant); // { id: "2baa184e", displayName: "Shanu Verma", formattedDisplayName: "Shanu Verma" }
         const data = await this.getParticipants();
     }
-
     handleVideoConferenceJoined = async (participant: any) => {
         console.log("handleVideoConferenceJoined", participant); // { roomName: "bwb-bfqi-vmh", id: "8c35a951", displayName: "Akash Verma", formattedDisplayName: "Akash Verma (me)"}
         const data = await this.getParticipants();
     }
-
     handleVideoConferenceLeft = () => {
         console.log("handleVideoConferenceLeft");
         this.router.navigate(['/meetings']);
     }
-
     handleMuteStatus = (audio: any) => {
         console.log("handleMuteStatus", audio); // { muted: true }
     }
-
     handleVideoStatus = (video: any) => {
         console.log("handleVideoStatus", video); // { muted: true }
     }
@@ -104,11 +98,9 @@ export class JitsiComponent implements OnInit {
 
     executeCommand(command: string) {
         this.api.executeCommand(command);;
-
         if(command == 'toggleAudio') {
             this.isAudioMuted = !this.isAudioMuted;
         }
-
         if(command == 'toggleVideo') {
             this.isVideoMuted = !this.isVideoMuted;
         }

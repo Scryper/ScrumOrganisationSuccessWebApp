@@ -11,6 +11,12 @@ import { Role } from "../../../domain/role";
 import { SosUser } from "../../../domain/sos-user";
 import { Subscription } from "rxjs";
 
+export interface ZippedSprint {
+    id: number | undefined;
+    name: string;
+    US: string[];
+}
+
 @Component({
     selector: 'app-my-project',
     templateUrl: './my-project.component.html',
@@ -32,9 +38,7 @@ export class MyProjectComponent implements OnInit, OnDestroy {
 
     isScrumMaster: boolean = false;
     isProductOwner: boolean = false;
-
     clicked: any;
-
     idProject: number = 0;
 
     projectName: string | null = "";
@@ -43,12 +47,12 @@ export class MyProjectComponent implements OnInit, OnDestroy {
     repositoryUrl: string = "";
     datePipe = new DatePipe('en-GB');
 
+    oldSprints: ZippedSprint[] = [];
     actualSprint: ZippedSprint = {
         id: 0,
         name: "",
         US: []
     };
-    oldSprints: ZippedSprint[] = [];
 
     constructor(private route: ActivatedRoute,
                 private authenticationService: AuthenticationService,
@@ -57,6 +61,10 @@ export class MyProjectComponent implements OnInit, OnDestroy {
                 private sprintUserStoryService: SprintsUserStoriesService,
                 private userStoryService: UserStoriesService,
                 private router: Router) { }
+
+    ngOnDestroy(): void {
+        this.projectSubscription?.unsubscribe();
+    }
 
     ngOnInit(): void {
         this.projectName = this.route.snapshot.paramMap.get("projectName");
@@ -71,30 +79,11 @@ export class MyProjectComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
-        this.projectSubscription?.unsubscribe();
-    }
-
-    toggleProductBacklogButtonPress(isPressed: boolean) {
-        this.isProductBacklogButtonPressed = isPressed;
-    }
-
-    toggleBackButtonPress(isPressed: boolean) {
-        this.isBackButtonPressed = isPressed;
-    }
-
-    toggleCreateSprintButtonPress(isPressed: boolean) {
-        this.isCreateSprintButtonPressed = isPressed;
-    }
-
-    toggleDeleteButtonPress(isPressed: boolean){
-        this.isDeleteButtonPressed = isPressed;
-    }
-
     private loadProjectInfo() {
         this.getProject();
     }
 
+    // Set project values
     private getProject() {
         this.projectSubscription = this.projectService.getByProjectName(this.projectName).subscribe(project => {
             this.deadline = this.datePipe.transform(project.deadline, this.DATE_FORMAT);
@@ -109,7 +98,7 @@ export class MyProjectComponent implements OnInit, OnDestroy {
         this.sprintSubscription = this.sprintService.getByIdProject(idProject).subscribe(sprints => {
             for(let i = 0 ; i < sprints.length ; i++) {
                 let sprint: Sprint = sprints[i];
-                // save the dates as dates elements:
+                // Save the dates as dates elements:
                 // Angular date object and sql server date object are not the same
                 // so this "cast" is necessary
                 // then getting the value of the date to compare dates
@@ -117,14 +106,14 @@ export class MyProjectComponent implements OnInit, OnDestroy {
                 let startAsTime: number = new Date(sprint.startDate).getTime();
                 let deadlineAsTime: number = new Date(sprint.deadline).getTime();
 
-                // a sprint is active if today's date is between the start and end of the sprint
+                // A sprint is active if today's date is between the start and end of the sprint
                 if(startAsTime <= todayAsTime && todayAsTime <= deadlineAsTime) {
                     this.actualSprint = {id: sprint.id, name: sprint.description, US: []};
                 } else {
                     this.oldSprints.push({id: sprint.id, name: sprint.description, US: []});
                 }
 
-                // get the links to user stories about this
+                // Get the links to user stories about this
                 if (sprint.id != null) {
                     this.getLinksSprintsUserStories(sprint.id);
                 }
@@ -132,6 +121,7 @@ export class MyProjectComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Get User Story ID
     private getLinksSprintsUserStories(idSprint: number): void {
         this.sprintUserStorySubscription = this.sprintUserStoryService.getByIdSprint(idSprint).subscribe(sprintsUserStories => {
             for (let i = 0 ; i < sprintsUserStories.length ; i++) {
@@ -146,7 +136,7 @@ export class MyProjectComponent implements OnInit, OnDestroy {
             // Only one sprint so no need to do a for
             if(this.actualSprint.id == idSprint) {
                 this.actualSprint.US.push("US" + userStory.priority + " : " + userStory.description);
-                return; // no need to look in the old sprints if i t is the actual one
+                return; // No need to look in the old sprints if it is the actual one
             }
             for (let i = 0 ; i < this.oldSprints.length ; i++) {
                 if(this.oldSprints[i].id == idSprint) {
@@ -155,10 +145,19 @@ export class MyProjectComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+    toggleProductBacklogButtonPress(isPressed: boolean) {
+        this.isProductBacklogButtonPressed = isPressed;
+    }
+    toggleBackButtonPress(isPressed: boolean) {
+        this.isBackButtonPressed = isPressed;
+    }
+    toggleCreateSprintButtonPress(isPressed: boolean) {
+        this.isCreateSprintButtonPressed = isPressed;
+    }
+    toggleDeleteButtonPress(isPressed: boolean){
+        this.isDeleteButtonPressed = isPressed;
+    }
+
 }
 
-export interface ZippedSprint {
-    id: number | undefined;
-    name: string;
-    US: string[];
-}

@@ -20,10 +20,9 @@ export class ProductBacklogComponent implements OnInit, OnDestroy {
 
     productBacklog:UserStory[] =[];
     private subscription: Subscription | undefined;
+
     isProductOwner: boolean = false;
-
     currentUser:SosUser=null!;
-
 
     constructor(private route: ActivatedRoute,
                 private userStoriesService:UserStoriesService,
@@ -45,6 +44,7 @@ export class ProductBacklogComponent implements OnInit, OnDestroy {
         this.subscription = this.getProject().subscribe();
     }
 
+    // Get the project id and call getUserStories
     private getProject() {
         return this.projectService.getByProjectName(this.projectName).pipe(
             map(project => {
@@ -55,6 +55,7 @@ export class ProductBacklogComponent implements OnInit, OnDestroy {
         ));
     }
 
+    // Get user stories and add them to the product backlog
     private getUserStories(id: number) {
         this.userStoryService.getByIdProject(id).subscribe(userStories => {
             for(let i = 0 ; i < userStories.length ; i++) {
@@ -63,15 +64,16 @@ export class ProductBacklogComponent implements OnInit, OnDestroy {
         });
     }
 
-    toggleButtonPress(isPressed: boolean) {
-        this.isButtonPressed = isPressed;
-    }
-
+    // Delete user story from the database
     deleteUserStory(userStory:UserStory) {
         this.subscription = this.userStoriesService.deleteUserStory(userStory).subscribe(() => {
             this.productBacklog = this.productBacklog.filter((tmp)=> {
                 return userStory.id != tmp.id;
             });
         });
+    }
+
+    toggleButtonPress(isPressed: boolean) {
+        this.isButtonPressed = isPressed;
     }
 }

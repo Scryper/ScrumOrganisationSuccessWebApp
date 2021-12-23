@@ -40,10 +40,10 @@ export class SprintUserStoryComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.idProject = <number><unknown>this.activatedRoute.snapshot.paramMap.get("idProject");
-        console.log(this.idProject);
         this.idSprint = Number(this.activatedRoute.snapshot.paramMap.get("idSprint"));
         this.sprintName = this.activatedRoute.snapshot.paramMap.get("sprintName");
 
+        // Get information about the Sprint and the project (description, name)
         this.subscription = this.sprintService.getById(this.idSprint).pipe(
             map(result => {
                 this.sprintName = result.description;
@@ -59,7 +59,7 @@ export class SprintUserStoryComponent implements OnInit, OnDestroy {
         this.fillUserStories();
     }
 
-    // Récupérer les userStories qui match avec la liste d'id précédement récupéré
+    // Get User Stories that match the previously retrieved id list
     private fillUserStories() {
         this.subscription = this.userStoriesService.getByIdSprint(this.idSprint)
             .pipe(
@@ -72,7 +72,6 @@ export class SprintUserStoryComponent implements OnInit, OnDestroy {
     toggleCreateMeetingButtonPress(isPressed: boolean) {
         this.isCreateMeetingButtonPressed = isPressed;
     }
-
     toggleBackButtonPress(isPressed: boolean) {
         this.isBackButtonPressed = isPressed;
     }

@@ -14,8 +14,6 @@ import {map} from "rxjs/operators";
     styleUrls: ['../../../app.component.css', './join-project.component.css']
 })
 export class JoinProjectComponent implements OnInit, OnDestroy {
-    private STATUS_FINISHED: number = 3;
-
     projects: Project[] = [];
 
     nonAppliedProjects:Project[] =[];
@@ -48,11 +46,7 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
         })).subscribe();
     }
 
-
-
-
-
-    //getAllProjects
+    // Get all projects
     private loadAllProjects(){
         return this.projectService.getActiveProject().pipe(map(projects=>{
             this.projects = projects
@@ -60,13 +54,13 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
         }));
     }
 
-    //getAllLinkedProjects
+    // Get all LinkedProjects
     private loadLinkedProjects(){
         return this.projectService.getByIdUserNotFinishedIsLinked(this.userId).pipe(map(projects=>{
             this.appliedProjects = projects;
 
-            //substract the two list
-            //retire les éléments linked du tableau avec tous les éléments
+            // Subtract the two lists from each other
+            // Remove linked elements from array with all elements
             this.nonAppliedProjects=[];
             for(let projet of this.projects){
                 let tmpBool = true
@@ -77,32 +71,27 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
                 }
                 if(tmpBool)this.nonAppliedProjects.push(projet);
             }
-
-            if(this.nonAppliedProjects.length==0){
-                this.IsNonAppliedEmpty = true;
-            }else{
-                this.IsNonAppliedEmpty = false;
-            }
+            this.IsNonAppliedEmpty = this.nonAppliedProjects.length == 0;
         }));
     }
 
     joinProject(project: Project) {
-        //create developerProject
+        // Create developerProject
         let devProject:UserProject = {
             idDeveloper : this.userId,
             idProject : project.id!,
             isAppliance : true
         }
-        // send request
+        // Send request
         this.subscription = this.developersProjectsService.addDeveloperProject(devProject)
             .pipe(
                 map(result => {
                     if(result != null) {
-                        // change the appliance's value to avoid making multiple requests for the same project
+                        // Modify the value of the appliance to avoid making several requests for the same project
                         this.subscription = this.loadAllProjects().pipe(map(()=>{
                             this.isAssigned();
                         })).subscribe();
-                        // UPDATE STATUS INACTIVE
+                        // Update status inactive
                         project.status = 1;
                         this.projectService.updateStatus(project).subscribe();
                     }
@@ -110,13 +99,14 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
         ).subscribe();
     }
 
+    // Allows you to know if a user has already applied for a project
     private isAssigned() {
         this.developersProjectsService.getByIdDeveloperIsAppliance(this.userId).subscribe(tmp => {
             this.assigned = tmp.length != 0;
         });
     }
 
-    //allows to know if the project has already had a appliance of this user
+    // Allows to know if the project has already had an appliance of this user
     isAppliance(project: Project) {
         this.developersProjectsService.getByIdDeveloperIdProject(this.userId, project.id!).subscribe(developerProject => {
             this.projectsIsApply.push(developerProject != null);

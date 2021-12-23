@@ -13,13 +13,11 @@ import {SosUser} from "../../../domain/sos-user";
 })
 export class SignUpComponent implements OnInit {
     title: string = "Create an account";
-
     buttonIsPressed: boolean = false;
     userExists: boolean = false;
+
     differentPasswords: boolean = false;
     accountCreationSuccessful: boolean = false;
-    isAddOk: boolean = false;
-
     isMajor: boolean = true;
 
     typeUserNames:string[] = [
@@ -50,19 +48,19 @@ export class SignUpComponent implements OnInit {
     ngOnInit(): void { }
 
     onSubmit() {
-        //reset the error messages
+        // Reset the error messages
         this.userExists = false;
 
-        //get the value of the email
+        // Get the value of the email
         let email: string =this.form.getRawValue().email;
         let password: string = this.form.getRawValue().password;
         let passwordConfirmation: string = this.form.getRawValue().confirmPassword;
 
-        //verify if the passwords are the same
+        // Verify if the passwords are the same
         if(password == passwordConfirmation) {
             this.differentPasswords = false;
             this.signUpService.setValues(password, email);
-            //verify if the email is in the database
+            // Verify if the email is in the database
             this.userService.getByEmail(email).subscribe(result => {
                 if(result == null) {
                      this.sendData();
@@ -90,11 +88,8 @@ export class SignUpComponent implements OnInit {
         })
     }
 
-    toggleButtonPressed(isPressed: boolean) {
-        this.buttonIsPressed = isPressed;
-    }
-
     sendData() {
+        // Set user values
         let rawValues = this.form.getRawValue();
         let birthdateUser: Date = new Date(rawValues.birthdate);
         let user: SosUser = {
@@ -107,22 +102,21 @@ export class SignUpComponent implements OnInit {
         };
 
         let date: Date = new Date();
-
         let currentYear: number = date.getFullYear();
         let birthYear: number = birthdateUser.getFullYear();
         let offset: number;
+
+        // If the user's birthday month has already passed
         if(date.getMonth() < birthdateUser.getMonth()) {
             offset = -1;
         } else if(date.getMonth() == birthdateUser.getMonth()
             && date.getDay() < birthdateUser.getDay()) {
             offset = -1;
-        }
-        else {
+        } else {
             offset = 0;
         }
 
         this.isMajor = (currentYear - birthYear + offset) >= 18;
-
         if(this.isMajor) {
             this.userService.addUser(user).subscribe(() => {
                  this.accountCreationSuccessful = true;
@@ -131,6 +125,7 @@ export class SignUpComponent implements OnInit {
         }
     }
 
+    // Reset form values
     private resetFormValues() {
         this.form.setValue({
             email: "",
@@ -142,8 +137,7 @@ export class SignUpComponent implements OnInit {
             userType: ""
         });
     }
-
-
+    // find if the form is invalid
     public computeInvalidForm(){
         const invalid = [];
         const controls = this.form.controls;
@@ -152,11 +146,15 @@ export class SignUpComponent implements OnInit {
                 invalid.push(name);
             }
         }
-        return invalid
+        return invalid;
     }
 
     public findInvalidControls() {
         let invalid = this.computeInvalidForm();
         return invalid[0]=="email";
+    }
+
+    toggleButtonPressed(isPressed: boolean) {
+        this.buttonIsPressed = isPressed;
     }
 }

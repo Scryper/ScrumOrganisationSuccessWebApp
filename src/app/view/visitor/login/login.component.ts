@@ -1,18 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {AuthenticationService} from "../../../services";
 import { Router } from "@angular/router";
 import { first } from "rxjs/operators";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['../../../app.component.css', './login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+    private subscription: Subscription | undefined;
+
     isButtonPressed: boolean = false;
     submitted: boolean = false;
     returnUrl: string = '/today';
+
     error: string = '';
     isError:boolean = false;
     title: string = "Login";
@@ -29,12 +33,19 @@ export class LoginComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private authenticationService: AuthenticationService,
                 private router: Router) {
-        // redirect to home if already logged in
+        // Redirect to home if it is already connected
         if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/login']);
         }
     }
 
+    get controls() {
+        return this.form.controls;
+    }
+
+    ngOnDestroy(): void {
+        this.subscription?.unsubscribe();
+    }
     ngOnInit(): void { }
 
     autoComplete() {
@@ -46,27 +57,26 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    toggleButtonPress(isPressed:boolean) {
-        this.isButtonPressed = isPressed;
-    }
-
-    get controls() { return this.form.controls; }
-
     onSubmit() {
         this.submitted = true;
         let rawValue = this.form.getRawValue();
 
-        let userObservable = this.authenticationService.login(rawValue.main.email, rawValue.main.password)
+        // Login user
+        this.subscription = this.authenticationService.login(rawValue.main.email, rawValue.main.password)
             .pipe(first())
             .subscribe(
-                (result) => {
+                () => {
                     this.isError = false;
-                    //need to change the route based on the role of the user
+                    // Need to change the route based on the role of the user
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
                     this.isError = true;
                     this.error = error;
             });
+    }
+
+    toggleButtonPress(isPressed:boolean) {
+        this.isButtonPressed = isPressed;
     }
 }

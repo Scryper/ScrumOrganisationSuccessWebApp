@@ -21,7 +21,6 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
     projectName: string | null = "";
 
     idProject: number = 0;
-
     idUserStory: number = 0;
     currentUser: SosUser = null!;
 
@@ -29,6 +28,7 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
     isUpdateOk: boolean = false;
     userStoryAlreadyExists: boolean = false;
 
+    isBackButtonPressed: boolean = false;
     userId: number = 0;
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -37,7 +37,6 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
             priority:this.fb.control('', Validators.required)
         })
     });
-    isBackButtonPressed: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private fb: FormBuilder,
@@ -65,8 +64,7 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
         this.isPriorityNaN = false;
         this.userStoryAlreadyExists = false;
 
-        // Modify a userStory
-        //create project
+        // Set UserStory values
         let tmpUserStory: UserStory = {
             idProject: <number>this.idProject,
             name: this.form.getRawValue().main.name,
@@ -75,7 +73,7 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
         }
 
         if(!isNaN(Number(this.form.getRawValue().main.priority))) {
-            //add UserStory in the database
+            // Add UserStory in the database
             this.subscription = this.userStoriesService.updateUserStory(tmpUserStory,this.idUserStory)
                 .subscribe(() => {
                         this.isUpdateOk = true;
@@ -88,10 +86,6 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
         }
     }
 
-    toggleButtonPress(isPressed:boolean) {
-        this.buttonIsPressed = isPressed;
-    }
-
     autoComplete() {
         this.form.setValue({
             main: {
@@ -102,6 +96,7 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Set the form values from the values of the current user story
     private fillFormWithCurrentUSValues() {
         this.subscription = this.userStoriesService.getById(this.idUserStory).subscribe(userStory => {
             this.form.controls['main'].setValue({
@@ -114,5 +109,8 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
 
     toggleBackButtonPress(isPressed: boolean) {
         this.isBackButtonPressed = isPressed;
+    }
+    toggleButtonPress(isPressed:boolean) {
+        this.buttonIsPressed = isPressed;
     }
 }

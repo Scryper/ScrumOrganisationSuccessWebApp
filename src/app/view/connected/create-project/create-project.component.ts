@@ -22,7 +22,6 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
     title: string = "Create project";
     currentUser: SosUser = null!;
     userId: number = 0;
-    returnUrl: string = 'projectManager';
 
     form:FormGroup = this.fb.group({
         main: this.fb.group({
@@ -54,7 +53,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
         this.projectAlreadyExists = false;
         this.isAddOk = false;
 
-        //create project
+        // Set project values
         let projet: Project = {
             name: this.form.getRawValue().main.nameProject,
             deadline: this.form.getRawValue().main.deadline,
@@ -63,12 +62,13 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
             status: 1
         }
 
-        //add project in the database
+        // Add project in the database, if the date is in the future
         if(new Date() < new Date(this.form.getRawValue().main.deadline)){
+            // Add project
             this.subscription = this.projectService.addProject(projet)
                 .pipe(
                     map(project => {
-                        //assigner le product owner to the project
+                        // Assign the product owner to the project
                         let devProject:UserProject = {
                             idDeveloper : this.userId,
                             idProject : project.id!,
@@ -77,7 +77,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
                         this.developersProjectsService.addDeveloperProject(devProject).subscribe();
                         this.isAddOk = true;
                     })
-                ).subscribe(() => {}, // ignore sucess result
+                ).subscribe(() => {}, // Ignore success result
                     error => {
                         this.projectAlreadyExists = true;
                     });
@@ -85,10 +85,6 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
         else{
             this.isDateOk = false;
         }
-    }
-
-    toggleButtonPress(isPressed:boolean) {
-        this.buttonIsPressed = isPressed;
     }
 
     autoComplete() {
@@ -106,5 +102,8 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
 
     toggleBackButtonPress(isPressed: boolean) {
         this.isBackButtonPressed = isPressed;
+    }
+    toggleButtonPress(isPressed:boolean) {
+        this.buttonIsPressed = isPressed;
     }
 }

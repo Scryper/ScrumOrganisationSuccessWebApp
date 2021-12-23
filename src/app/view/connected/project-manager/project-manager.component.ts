@@ -12,15 +12,16 @@ import {Role} from "../../../domain/role";
     styleUrls: ['../../../app.component.css', './project-manager.component.css']
 })
 export class ProjectManagerComponent implements OnInit, OnDestroy {
-    private STATUS_INACTIVE: number = 1;
-    private STATUS_ACTIVE: number = 2;
-
     private subscription: Subscription | undefined;
 
+    private STATUS_INACTIVE: number = 1;
+    private STATUS_ACTIVE: number = 2;
     private STATUS_TERMINATE: number = 3;
+
     isProjectAlreadyExist: boolean = false;
-    buttonPressed: boolean = false;
     isProductOwner: boolean = false;
+    buttonPressed: boolean = false;
+
     username: string = "";
     idUser: number = 0;
 
@@ -53,10 +54,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
         this.loadProjects();
     }
 
-    toggleButtonPress(isPressed:boolean) {
-        this.buttonPressed = isPressed;
-    }
-
+    // Get developer projects then call getProjectName
     private loadProjects() {
         this.activeProject = [];
         this.oldProjects = [];
@@ -71,6 +69,7 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Get project then push to active or old projects
     private getProjectName(idProject: number) {
         this.subscription = this.projectService.getById(idProject).subscribe(project => {
             if(project.status == this.STATUS_ACTIVE || (project.status == this.STATUS_INACTIVE && this.isProductOwner)) {
@@ -81,10 +80,15 @@ export class ProjectManagerComponent implements OnInit, OnDestroy {
         });
     }
 
+    // Terminate the active project then reload project
     terminate(project:Project) {
         project.status = this.STATUS_TERMINATE;
         this.subscription = this.projectService.updateStatus(project).subscribe(() => {
             this.loadProjects();
         });
+    }
+
+    toggleButtonPress(isPressed:boolean) {
+        this.buttonPressed = isPressed;
     }
 }

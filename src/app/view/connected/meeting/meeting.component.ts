@@ -12,6 +12,7 @@ import {Subscription} from "rxjs";
 export class MeetingComponent implements OnInit {
     username: string = "";
 
+    // Set calendar options (Size, style, values)
     calendarOptions: CalendarOptions = {
         height:700,
         initialView: 'dayGridMonth',
@@ -31,6 +32,7 @@ export class MeetingComponent implements OnInit {
         this.getUserInfo();
     }
 
+    // Get all meetings event
     loadEvents(id: number) {
         this.meetingSubscription = this.meetingService.getByIdUser(id).subscribe(meetings => {
             let events = [];
@@ -46,6 +48,7 @@ export class MeetingComponent implements OnInit {
         });
     }
 
+    // Get user firstname and user id
     private getUserInfo() {
         this.authenticationService.currentUser.subscribe(user => {
             if (user != null) {

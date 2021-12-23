@@ -11,17 +11,6 @@
         <h2 class="robotoMedium paddingSubtitle">Description</h2>
         <p class="standardCard radius robotoLight">{{description}}</p>
 
-        <input
-            *ngIf="assigned"
-            type="button"
-            value="Request to join"
-            (mousedown)="toggleButtonPress(true);"
-            (mouseup)="toggleButtonPress(false);"
-            (mouseleave)="toggleButtonPress(false);"
-            [ngClass]="{'isPressedClass': isButtonPressed === true}"
-            (click)="requestToJoin()"
-            class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
-
         <br/>
         <input
             [routerLink]="['/joinProject']"

@@ -120,15 +120,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.otherSubscription = this.userTechnology.addUserTechnology(tmpUserTechnology).subscribe();
     }
 
-    doDeleteOrAddTechnology(event:any, elt:Technology) {
+    modifyTechnologies(event : any, elt:Technology){
+        let index = this.technologies.indexOf(elt);
         if(event.target.checked) {
-            this.addTechnology(elt.id);
+            this.isHisTechnologies[index]=true;
         } else {
-            this.deleteTechnology(elt.id);
+            this.isHisTechnologies[index]=false;
         }
     }
-
     sendData() {
+
         let tmpUser:SosUser = {
             id: this.idUser,
             firstname: this.form.getRawValue().main.firstName,
@@ -142,9 +143,37 @@ export class ProfileComponent implements OnInit, OnDestroy {
             token: "",
             portfolio: ""
         };
+
+
+        //remplir un array pour constater l'état actuel des techno, comparer ensuite avec ce qu'on a pour voir ceux qu'on doit modifier
+        this.userTechnology.getByUserId(this.idUser).pipe(
+            map(userTechnologies => {
+                let dbTechnologies = [];
+                for (let userTechnology of userTechnologies) {
+                    let id: number = userTechnology.idTechnology;
+                    let result: boolean = this.idTechnologies.includes(id);
+                    let index: number = this.idTechnologies.indexOf(id);
+                    dbTechnologies[index] = result;
+                }
+                //comparer ensuite avec ce qu'on a pour voir ceux qu'on doit modifier
+                for(let i = 0; i<this.technologies.length; i++){
+                    if(dbTechnologies[i] != this.isHisTechnologies[i]){
+                        //verification si on doit l'ajouter ou le supprimer
+                        if(this.isHisTechnologies[i]){
+                            this.addTechnology(this.technologies[i].id);
+                        }
+                        else{
+                            this.deleteTechnology(this.technologies[i].id);
+                        }
+                    }
+                }
+            })
+        ).subscribe();
+
         this.otherSubscription = this.userService.updateFirstNameLastName(tmpUser).subscribe(() => {
-                this.authenticationService.logout();
-                this.route.navigate(['/login']);
+            this.authenticationService.logout();
+            this.route.navigate(['/login']);
         });
+
     }
 }

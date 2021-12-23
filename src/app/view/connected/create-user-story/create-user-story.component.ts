@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SosUser} from "../../../domain/sos-user";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ProjectsService} from "../../../services/projects/projects.service";
-import {UsersProjectsService} from "../../../services/users-projects/users-projects.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserStory} from "../../../domain/user-story";
-import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
-import {Subscription} from "rxjs";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SosUser } from "../../../domain/sos-user";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ProjectsService } from "../../../services/projects/projects.service";
+import { UsersProjectsService } from "../../../services/users-projects/users-projects.service";
+import { ActivatedRoute } from "@angular/router";
+import { UserStory } from "../../../domain/user-story";
+import { UserStoriesService } from "../../../services/user-stories/user-stories.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-create-user-story',
@@ -33,13 +33,14 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
     });
     isBackButtonPressed: boolean = false;
     isPriorityNaN: boolean = false;
+    isAddOk: boolean = false;
+    userStoryAlreadyExists: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private fb: FormBuilder,
                 private projectService : ProjectsService,
                 private developersProjectsService : UsersProjectsService,
-                private userStoriesService:UserStoriesService,
-                private router : Router) { }
+                private userStoriesService:UserStoriesService) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -53,6 +54,10 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
     }
 
     sendData() {
+        this.isAddOk = false;
+        this.isPriorityNaN = false;
+        this.userStoryAlreadyExists = false;
+
         //create project
         let tmpUserStory: UserStory = {
             idProject: <number>this.idProject,
@@ -63,11 +68,13 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
 
         if(!isNaN(Number(this.form.getRawValue().main.priority))) {
             //add UserStory in the database
-            this.subscription = this.userStoriesService.addUserStory(tmpUserStory).subscribe(()=>{
-                //redirect to projects
-                let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
-                this.router.navigate([returnUrl]);
-            });
+            this.subscription = this.userStoriesService.addUserStory(tmpUserStory)
+                .subscribe(() => {
+                        this.isAddOk = true;
+                    },
+                    error => {
+                        this.userStoryAlreadyExists = true;
+                    });
         } else {
             this.isPriorityNaN = true;
         }

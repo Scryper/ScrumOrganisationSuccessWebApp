@@ -51,7 +51,19 @@
             <div *ngIf="isPriorityNaN"
                  class="alignCenter sizeNormal">
                 <p class="robotoMedium red bgWhiteBlue radius border padding marginTop alignText">
-                    Priority should be a number
+                    Priority should be a number.
+                </p>
+            </div>
+            <div *ngIf="isAddOk"
+                 class="alignCenter sizeNormal">
+                <p class="robotoMedium bgWhiteBlue radius border padding marginTop alignText">
+                    The user story has been added successfully.
+                </p>
+            </div>
+            <div *ngIf="userStoryAlreadyExists"
+                 class="alignCenter sizeNormal">
+                <p class="robotoMedium red bgWhiteBlue radius border padding marginTop alignText">
+                    This user story already exists !
                 </p>
             </div>
         </div>

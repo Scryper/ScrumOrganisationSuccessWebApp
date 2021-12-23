@@ -40,7 +40,7 @@
                         <td class="robotoLight">{{elt.name}}</td>
                         <td></td>
                         <td>
-                            <input type="checkbox" (change)="doDeleteOrAddTechnology($event, elt);" [checked]="isHisTechnologies[index]">
+                            <input type="checkbox" (change)="modifyTechnologies($event, elt);" [checked]="isHisTechnologies[index]">
                         </td>
                     </tr>
                 </tbody>

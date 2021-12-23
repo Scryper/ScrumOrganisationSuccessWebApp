@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { SosUser } from "../../../domain/sos-user";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { UsersProjectsService } from "../../../services/users-projects/users-projects.service";
 import { UserStoriesService } from "../../../services/user-stories/user-stories.service";
@@ -25,7 +25,9 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
     idUserStory: number = 0;
     currentUser: SosUser = null!;
 
-    isPriorityNaN:boolean=false;
+    isPriorityNaN: boolean = false;
+    isUpdateOk: boolean = false;
+    userStoryAlreadyExists: boolean = false;
 
     userId: number = 0;
     form:FormGroup = this.fb.group({
@@ -41,8 +43,7 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
                 private fb: FormBuilder,
                 private projectService : ProjectsService,
                 private developersProjectsService : UsersProjectsService,
-                private userStoriesService:UserStoriesService,
-                private router : Router) { }
+                private userStoriesService:UserStoriesService) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -60,7 +61,11 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
     }
 
     sendData() {
-        // Modifier une userStory
+        this.isUpdateOk = false;
+        this.isPriorityNaN = false;
+        this.userStoryAlreadyExists = false;
+
+        // Modify a userStory
         //create project
         let tmpUserStory: UserStory = {
             idProject: <number>this.idProject,
@@ -71,11 +76,13 @@ export class ModifyUserStoryComponent implements OnInit, OnDestroy {
 
         if(!isNaN(Number(this.form.getRawValue().main.priority))) {
             //add UserStory in the database
-            this.subscription = this.userStoriesService.updateUserStory(tmpUserStory,this.idUserStory).subscribe(()=>{
-                //redirect to projects
-                let returnUrl: string = 'productBacklog/'+this.projectName+'/'+this.idProject;
-                this.router.navigate([returnUrl]);
-            });
+            this.subscription = this.userStoriesService.updateUserStory(tmpUserStory,this.idUserStory)
+                .subscribe(() => {
+                        this.isUpdateOk = true;
+                    },
+                    error => {
+                        this.userStoryAlreadyExists = true;
+                    });
         } else {
             this.isPriorityNaN = true;
         }

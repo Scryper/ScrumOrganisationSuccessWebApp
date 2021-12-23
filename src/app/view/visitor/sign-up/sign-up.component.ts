@@ -18,6 +18,7 @@ export class SignUpComponent implements OnInit {
     userExists: boolean = false;
     differentPasswords: boolean = false;
     accountCreationSuccessful: boolean = false;
+    isAddOk: boolean = false;
 
     isMajor: boolean = true;
 
@@ -79,13 +80,13 @@ export class SignUpComponent implements OnInit {
         let datePipe = new DatePipe('en-GB');
         let date = datePipe.transform(new Date(1998,11,26), 'yyyy-MM-dd');
         this.form.setValue({
-                email: "Florian@test.com",
-                password: "test",
-                confirmPassword: "test",
-                lastname: "Florian",
-                firstname: "test",
-                birthdate: date,
-                userType: "Developer"
+            email: "Florian@test.com",
+            password: "test",
+            confirmPassword: "test",
+            lastname: "Florian",
+            firstname: "test",
+            birthdate: date,
+            userType: "Developer"
         })
     }
 
@@ -126,23 +127,19 @@ export class SignUpComponent implements OnInit {
             this.userService.addUser(user).subscribe(() => {
                  this.accountCreationSuccessful = true;
                  this.resetFormValues();
-                 this.router.navigate(["/login"]);
              });
-        }else{
-            console.log("pas majeur");
-            //afficher qu'il n'est pas majeur
         }
     }
 
     private resetFormValues() {
         this.form.setValue({
-                email: "",
-                password: "",
-                confirmPassword: "",
-                lastname: "",
-                firstname: "",
-                birthdate: "",
-                userType: ""
+            email: "",
+            password: "",
+            confirmPassword: "",
+            lastname: "",
+            firstname: "",
+            birthdate: "",
+            userType: ""
         });
     }
 

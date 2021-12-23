@@ -166,7 +166,7 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
                 return element.id != user.id;
             });
         } else {
-            this.appliedScrumMasters = this.appliedDevelopers.filter(element => {
+            this.appliedDevelopers = this.appliedDevelopers.filter(element => {
                 return element.id != user.id;
             });
         }

@@ -10,7 +10,7 @@
             <li class="cursorPointer standardCard radius robotoLight"
                 [routerLink]="['/projectPreview', project.name]">{{project.name}}</li>
         </ul>
-        <button (click)="joinProject(project)"
+        <button (click)="joinProject(project)" [hidden]="assigned"
                 class="cursorPointer colorGreen">
             Request to join
         </button>

@@ -14,8 +14,4 @@ export class TechnologiesService {
     getAll(): Observable<Technology[]> {
         return this.http.get<Technology[]>(`${environment.apiUrl}/technology`);
     }
-
-    getById(id: number): Observable<Technology> {
-        return this.http.get<Technology>(`${environment.apiUrl}/technology/byId/${id}`);
-    }
 }

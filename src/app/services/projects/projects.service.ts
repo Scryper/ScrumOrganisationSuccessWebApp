@@ -11,10 +11,6 @@ export class ProjectsService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    getAll(): Observable<Project[]> {
-        return this.http.get<Project[]>(`${environment.apiUrl}/projects`);
-    }
-
     getById(id: number): Observable<Project> {
         return this.http.get<Project>(`${environment.apiUrl}/projects/byId/${id}`);
     }
@@ -41,16 +37,7 @@ export class ProjectsService {
         return this.http.post<Project>(`${environment.apiUrl}/projects`, JSON.stringify(project),httpOptions);
     }
 
-    // Put  requests
-    updateRepositoryUrl(id: number, repositoryUrl: string): Observable<boolean> {
-        return this.http.put<boolean>(`${environment.apiUrl}/projects/${id}`, repositoryUrl);
-    }
-
-    // Delete requests
-    deleteProject(id: number): Observable<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrl}/projects/${id}`);
-    }
-
+    // Put requests
     updateStatus(project: Project) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})

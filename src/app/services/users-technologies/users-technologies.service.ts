@@ -10,11 +10,6 @@ import {Observable} from "rxjs";
 export class UsersTechnologiesService {
     constructor(private http: HttpClient) { }
 
-    // Get all requests
-    getAll(): Observable<UserTechnology[]> {
-        return this.http.get<UserTechnology[]>(`${environment.apiUrl}/userTechnologies`);
-    }
-
     // Get requests
     getByUserId(id: number): Observable<UserTechnology[]> {
         return this.http.get<UserTechnology[]>(`${environment.apiUrl}/userTechnologies/byUser/${id}`);

@@ -11,16 +11,8 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     // Get requests
-    getAll(): Observable<SosUser[]> {
-        return this.http.get<SosUser[]>(`${environment.apiUrl}/users`);
-    }
-
     getByEmail(email:string): Observable<SosUser> {
         return this.http.get<SosUser>(`${environment.apiUrl}/users/byEmail/${email}`);
-    }
-
-    getById(id:number): Observable<SosUser> {
-        return this.http.get<SosUser>(`${environment.apiUrl}/users/byId/${id}`);
     }
 
     getByIdProject(idProject: number): Observable<SosUser[]> {
@@ -58,6 +50,4 @@ export class UserService {
         }
         return this.http.put<SosUser>(`${environment.apiUrl}/users/firstNameLastNameUpdate/${user.id}`, JSON.stringify(user), httpOptions);
     }
-
-
 }

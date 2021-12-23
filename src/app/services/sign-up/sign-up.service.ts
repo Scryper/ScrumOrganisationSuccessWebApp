@@ -9,10 +9,6 @@ export class SignUpService {
 
     constructor() { }
 
-    verifyPasswords(password: string, passwordConfirmation: string){
-        return password == passwordConfirmation;
-    }
-
     get password(): string {
         return this._password;
     }

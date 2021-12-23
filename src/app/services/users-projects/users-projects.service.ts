@@ -23,24 +23,12 @@ export class UsersProjectsService {
         return this.http.get<UserProject>(`${environment.apiUrl}/userProject/byIdDeveloperIdProject/${idDeveloper},${idProject}`);
     }
 
-    getDevelopersByIdProject(idProject: number | undefined): Observable<UserProject> {
-        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/developersByIdProject/${idProject}`);
-    }
-
-    getScrumMasterByIdProject(idProject: number | undefined): Observable<UserProject> {
-        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/scrumMasterByIdProject/${idProject}`);
-    }
-
     // Post requests
     addDeveloperProject(developerProject : UserProject): Observable<UserProject> {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
         }
         return this.http.post<UserProject>(`${environment.apiUrl}/userProject`, JSON.stringify(developerProject), httpOptions);
-    }
-
-    getUsersByIdProject(idProject: number | undefined): Observable<UserProject> {
-        return this.http.get<UserProject>(`${environment.apiUrl}/userProject/byIdProject/${idProject}`);
     }
 
     // Put requests

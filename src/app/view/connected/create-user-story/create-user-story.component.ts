@@ -74,8 +74,7 @@ export class CreateUserStoryComponent implements OnInit, OnDestroy {
                     },
                     error => {
                         this.userStoryAlreadyExists = true;
-                    }
-                    );
+                    });
         } else {
             this.isPriorityNaN = true;
         }

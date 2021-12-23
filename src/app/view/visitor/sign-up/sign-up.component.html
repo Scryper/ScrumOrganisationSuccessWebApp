@@ -2,7 +2,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" (dblclick)="autoComplete()">
         <div id="logContainer" class="signUpContainerSize alignText">
             <div id="logFormsContainer">
-                <div id="formSign" formGroupName="main">
+                <div id="formSign">
                     <div class="partOne bgLightBlue radius">
                         <p class="titleSize robotoMedium textShadowBottom">{{title}}</p>
                         <input type="email"
@@ -81,6 +81,10 @@
                     <p *ngIf="!isMajor"
                        class="robotoMedium red bgWhiteBlue radius border padding">
                         You are not major
+                    </p>
+                    <p *ngIf="!userExists&&!differentPasswords&&isMajor && findInvalidControls() && form.dirty"
+                       class="robotoMedium red bgWhiteBlue radius border padding">
+                        Email is invalid
                     </p>
                 </div>
             </div>

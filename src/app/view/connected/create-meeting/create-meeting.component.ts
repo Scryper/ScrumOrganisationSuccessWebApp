@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserStory} from "../../../domain/user-story";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SprintsService} from "../../../services/sprints/sprints.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/sprints-user-stories.service";
 import {UserStoriesService} from "../../../services/user-stories/user-stories.service";
 import {UserService} from "../../../services";

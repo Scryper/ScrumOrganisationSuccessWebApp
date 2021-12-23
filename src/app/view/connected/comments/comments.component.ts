@@ -22,13 +22,18 @@ interface CommentUser {
 })
 export class CommentsComponent implements OnInit, OnDestroy {
     private subscription: Subscription | undefined;
+    isBackButtonPressed: boolean = false;
+    projectName: string | null = "";
+    idProject: number = 0;
 
     tmp:CommentUser = {
         comment:null!,
         user:null!
     }
 
-    actualUserStory:UserStory = null!;
+    actualUserStory:UserStory = {
+        description: "", idProject: 0, name: "", priority: 0
+    };
     currentUser:SosUser=null!;
     idActualUserStory:number=0;
 
@@ -50,6 +55,8 @@ export class CommentsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.commentUser=[];
       this.usersComment = [];
+      this.idProject = <number><unknown>this.activatedRoute.snapshot.paramMap.get("idProject");
+      this.projectName = this.activatedRoute.snapshot.paramMap.get("projectName");
       this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
       this.idActualUserStory = Number(this.activatedRoute.snapshot.paramMap.get("idUserStory"));
       this.fillActualUserStory();
@@ -151,6 +158,10 @@ export class CommentsComponent implements OnInit, OnDestroy {
               this.commentUser.push(this.tmp);
           }
       }
+    }
+
+    toggleBackButtonPress(isPressed: boolean) {
+        this.isBackButtonPressed = isPressed;
     }
 
 }

@@ -55,7 +55,6 @@ export class CommentsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.commentUser=[];
       this.usersComment = [];
-      this.idProject = <number><unknown>this.activatedRoute.snapshot.paramMap.get("idProject");
       this.projectName = this.activatedRoute.snapshot.paramMap.get("projectName");
       this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
       this.idActualUserStory = Number(this.activatedRoute.snapshot.paramMap.get("idUserStory"));
@@ -69,6 +68,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
           .pipe(
               map(userStories => {
                   this.actualUserStory = userStories;
+                  this.idProject = userStories.idProject;
                   this.subscription = this.fillUsersComment().pipe(map(()=>{this.fillComments();})).subscribe();
               })
           ).subscribe()

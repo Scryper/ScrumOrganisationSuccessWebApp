@@ -3,7 +3,7 @@
         <h1 class="title robotoMedium">Product Backlog</h1>
         <div *ngFor="let userStory of productBacklog; let i = index;"
              class="alignCenter">
-            <span [routerLink]="['/comments', userStory.id, projectName, idProject]"
+            <span [routerLink]="['/comments', userStory.id, projectName]"
                 class="standardCard radius robotoLight cursorPointer">US{{userStory.priority}} : {{userStory.name}}</span>
             <input *ngIf="isProductOwner"
                    type="button" value="Delete" (click)="deleteUserStory(userStory);"

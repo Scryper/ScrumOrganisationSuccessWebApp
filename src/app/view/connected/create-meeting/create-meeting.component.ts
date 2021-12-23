@@ -116,11 +116,10 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
                             }
                             this.participationService.addParticipation(participation).subscribe();
                         }
-                        catchError(error => of([]));
                         this.isAddingOfMeetingOk = true;
                     })
-                ).subscribe(() => {},
-                    error => {
+                ).subscribe(() => {}, // ignore the result
+                    error => { // display error on screen
                         this.meetingAlreadyExists = true;
                     }
                 );

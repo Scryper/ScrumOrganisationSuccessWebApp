@@ -21,7 +21,6 @@ import {ProjectsService} from "../../../services/projects/projects.service";
   styleUrls: ['../../../app.component.css', './create-meeting.component.css']
 })
 export class CreateMeetingComponent implements OnInit, OnDestroy {
-
     isButtonSaveNewMeetingPressed: boolean = false;
 
     isInSprint: boolean[] = [];
@@ -46,6 +45,7 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
     projectName: string | null = "";
     isDateOk: boolean = true;
     isBackButtonPressed: boolean = false;
+    isAddingOfMeetingOk: boolean = false;
 
     constructor(private fb: FormBuilder,
                 private sprintService: SprintsService,
@@ -55,8 +55,7 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
                 private userService: UserService,
                 private meetingService: MeetingsService,
                 private participationService: ParticipationService,
-                private projectService: ProjectsService,
-                private router: Router) { }
+                private projectService: ProjectsService) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -112,7 +111,7 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
                                 }
                                 this.participationService.addParticipation(participation).subscribe();
                             }
-                            this.router.navigate(['/myProject',this.projectName]);
+                            this.isAddingOfMeetingOk = true;
                         }
                     )
                 ).subscribe();

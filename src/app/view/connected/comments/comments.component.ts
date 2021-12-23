@@ -10,6 +10,11 @@ import {DatePipe} from "@angular/common";
 import {SosUser} from "../../../domain/sos-user";
 import {UserService} from "../../../services";
 
+interface CommentUser {
+    comment:SosComment,
+    user:SosUser
+}
+
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
@@ -17,6 +22,14 @@ import {UserService} from "../../../services";
 })
 export class CommentsComponent implements OnInit, OnDestroy {
     private subscription: Subscription | undefined;
+
+    tmp:CommentUser = {
+        comment:null!,
+        user:null!
+    }
+
+    commentUser:CommentUser[] = [];
+
     currentUser:SosUser= {
         id:0,
         birthdate: new Date(),
@@ -47,6 +60,8 @@ export class CommentsComponent implements OnInit, OnDestroy {
 
     usersComment:SosUser[] = [];
 
+    usersName:string[] = [];
+
   constructor(private activatedRoute: ActivatedRoute,
               private userStoriesService:UserStoriesService,
               private commentsService:CommentsService,
@@ -58,6 +73,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
+
       this.currentUser = <SosUser>JSON.parse(<string>localStorage.getItem('currentUser'));
       this.idActualUserStory = Number(this.activatedRoute.snapshot.paramMap.get("idUserStory"));
       this.fillActualUserStory();
@@ -69,6 +85,7 @@ export class CommentsComponent implements OnInit, OnDestroy {
               map(userStories => {
                   this.actualUserStory = userStories;
                   this.fillComments();
+                  this.fillUsersComment();
               })
           ).subscribe()
   }
@@ -78,7 +95,21 @@ export class CommentsComponent implements OnInit, OnDestroy {
       this.subscription = this.commentsService.getByIdUserStory(this.idActualUserStory)
           .pipe(
               map(commentsTmp => {
+
+                  // COMMENT USER
+                  let tmp:CommentUser = {
+                      comment:null!,
+                      user:null!
+                  };
+                  for (let elt of commentsTmp) {
+
+                      /*this.commentUser.push(tmp)*/
+                      this.fillCommentUser(elt.idUser,elt)
+
+                  }
+
                 this.comments = commentsTmp;
+
               })
           ).subscribe()
   }
@@ -106,10 +137,35 @@ export class CommentsComponent implements OnInit, OnDestroy {
         this.fillAddComment();
         this.subscription = this.commentsService.addComment(this.addcomment).subscribe();
         this.comments.push(this.addcomment);
+        this.fillUsersComment();
     }
 
     fillUsersComment() {
-        this.idActualUserStory;
+        this.subscription = this.userService.getByCommentOnUserStory(this.idActualUserStory)
+            .pipe(
+                map(users => {
+
+                    for (let elt of users) {
+                        this.usersComment.push(elt);
+                    }
+
+
+                })
+            ).subscribe()
+    }
+
+    fillCommentUser(idUser:number, comment:SosComment) {
+
+      for (let elt of this.usersComment) {
+          if (idUser == elt.id) {
+              this.tmp = {
+                  comment:comment,
+                  user:elt
+              }
+              console.log(this.tmp)
+              this.commentUser.push(this.tmp);
+          }
+      }
     }
 
 }

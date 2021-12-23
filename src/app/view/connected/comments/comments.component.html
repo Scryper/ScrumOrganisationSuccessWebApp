@@ -3,10 +3,11 @@
         <span class="standardCard radius">US{{actualUserStory.priority}} - {{actualUserStory.name}} : {{actualUserStory.description}}</span>
         <h1 class="title robotoMedium">Comments</h1>
 
-        <div *ngFor="let comment of comments;" class="commentsContainer">
+        <div *ngFor="let elt of commentUser;" class="commentsContainer">
             <div class="standardCard radius commentStyle">
-                <span class="bold">{{formatDate(comment.postedAt)}}</span>
-                <span>{{comment.content}}</span>
+                <span>{{elt.user.firstname}}</span>
+                <span class="bold">{{formatDate(elt.comment.postedAt)}}</span>
+                <span>{{elt.comment.content}}</span>
             </div>
         </div>
 

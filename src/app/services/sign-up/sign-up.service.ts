@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SignUpService {
     private _password : string ='';
     private _email : string ='';
 
-    constructor() {
-    }
+    constructor() { }
 
     verifyPasswords(password: string, passwordConfirmation: string){
         return password == passwordConfirmation;

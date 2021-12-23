@@ -24,9 +24,9 @@ export class UserStoriesService {
     }
 
     // Post requests
-    addUserStory(userStoru: UserStory): Observable<UserStory> {
+    addUserStory(userStory: UserStory): Observable<UserStory> {
         const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
-        return this.http.post<UserStory>(`${environment.apiUrl}/userStories`, JSON.stringify(userStoru),httpOptions);
+        return this.http.post<UserStory>(`${environment.apiUrl}/userStories`, JSON.stringify(userStory),httpOptions);
     }
 
     // Put requests

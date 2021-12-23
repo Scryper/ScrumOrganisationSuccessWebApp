@@ -40,7 +40,7 @@
                     (mousedown)="toggleButtonPress(true);"
                     (mouseup)="toggleButtonPress(false);"
                     (mouseleave)="toggleButtonPress(false);"
-                    [ngClass]="{'isPressedClass': buttonIsPressed === true}"
+                    [ngClass]="{'isPressedClass': isButtonPressed === true}"
                     id="btnSignUp"
                     type="submit"
                     value="Create"
@@ -65,6 +65,18 @@
                  class="alignCenter sizeNormal">
                 <p class="robotoMedium red bgWhiteBlue radius border padding marginTop alignText">
                     You can't add a sprint finishing in the past!
+                </p>
+            </div>
+            <div *ngIf="isAddOk"
+                 class="alignCenter sizeNormal">
+                <p class="robotoMedium bgWhiteBlue radius border padding marginTop alignText">
+                    The sprint has been successfully added
+                </p>
+            </div>
+            <div *ngIf="sprintAlreadyExists"
+                 class="alignCenter sizeNormal">
+                <p class="robotoMedium red bgWhiteBlue radius border padding marginTop alignText">
+                    This sprint already exists !
                 </p>
             </div>
         </div>

@@ -6,7 +6,6 @@ import {Project} from "../../../domain/project";
 import {UserProject} from "../../../domain/user-project";
 import {SosUser} from "../../../domain/sos-user";
 import {UsersProjectsService} from "../../../services/users-projects/users-projects.service";
-import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {map} from "rxjs/operators";
 
@@ -34,11 +33,12 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
         })
     });
     isBackButtonPressed: boolean = false;
+    projectAlreadyExists: boolean = false;
+    isAddOk: boolean = false;
 
     constructor(private fb: FormBuilder,
                 private projectService : ProjectsService,
-                private developersProjectsService : UsersProjectsService,
-                private router : Router) { }
+                private developersProjectsService : UsersProjectsService) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -51,6 +51,9 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
 
     sendData() {
         this.isDateOk = true;
+        this.projectAlreadyExists = false;
+        this.isAddOk = false;
+
         //create project
         let projet: Project = {
             name: this.form.getRawValue().main.nameProject,
@@ -71,14 +74,13 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
                             idProject : project.id!,
                             isAppliance : false
                         }
-                        this.developersProjectsService.addDeveloperProject(devProject).pipe(
-                            map(() => {
-                                this.router.navigate([this.returnUrl]);
-                            })
-                        ).subscribe();
-                        //redirect to projects
+                        this.developersProjectsService.addDeveloperProject(devProject).subscribe();
+                        this.isAddOk = true;
                     })
-                ).subscribe();
+                ).subscribe(() => {}, // ignore sucess result
+                    error => {
+                        this.projectAlreadyExists = true;
+                    });
         }
         else{
             this.isDateOk = false;

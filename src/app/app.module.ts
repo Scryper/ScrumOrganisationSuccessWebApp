@@ -39,6 +39,7 @@ import { CreateUserStoryComponent } from './view/connected/create-user-story/cre
 import { ModifyUserStoryComponent } from './view/connected/modify-user-story/modify-user-story.component';
 import { CreateMeetingComponent } from './view/connected/create-meeting/create-meeting.component';
 import { UserListComponent } from './view/connected/user-list/user-list.component';
+import { SprintUserStoryComponent } from './view/connected/sprint-user-story/sprint-user-story.component';
 import { CommentsComponent } from './view/connected/comments/comments.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -80,6 +81,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
         NotFoundComponent,
         CreateMeetingComponent,
         UserListComponent,
+        SprintUserStoryComponent,
         CommentsComponent
     ],
     imports: [

@@ -1,10 +1,16 @@
 <div class="pageContainer">
     <div class="productBacklogContainer">
-        <h1 class="title robotoMedium">Product Backlog</h1>
-        <div *ngFor="let userStory of productBacklog; let i = index;"
+        <h1 class="title robotoMedium">Sprint User Stories</h1>
+
+
+
+
+
+
+        <!--<div *ngFor="let userStory of productBacklog; let i = index;"
              class="alignCenter">
             <span [routerLink]="['/comments', userStory.id]"
-                class="standardCard radius robotoLight cursorPointer">US{{userStory.priority}} : {{userStory.name}}</span>
+                  class="standardCard radius robotoLight cursorPointer">US{{userStory.priority}} : {{userStory.name}}</span>
             <input *ngIf="isProductOwner"
                    type="button" value="Delete" (click)="deleteUserStory(userStory);"
                    class="cursorPointer inputSizeSubmitSmall robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
@@ -27,6 +33,8 @@
             (mouseup)="toggleButtonPress(false);"
             (mouseleave)="toggleButtonPress(false);"
             [ngClass]="{'isPressedClass': isButtonPressed === true}"
-            class="cursorPointer inputSizeBack robotoMedium bgLightRed radius noBorder fontSizeMedium shadowBottom">
+            class="cursorPointer inputSizeBack robotoMedium bgLightRed radius noBorder fontSizeMedium shadowBottom">-->
+
+
     </div>
 </div>

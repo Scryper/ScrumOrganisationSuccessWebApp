@@ -34,6 +34,8 @@
                    (mouseleave)="toggleModifySprintButtonPress(false);"
                    [ngClass]="{'isPressedClass': isModifySprintButtonPressed === true}"
                    class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+
+
             <h1 class="robotoMedium">Active sprint</h1>
             <span *ngIf="actualSprint.name == ''"
                   class="cursorPointer radius standardCard robotoLight">
@@ -45,12 +47,13 @@
                  *ngIf="actualSprint.name != ''">
 
                 <input
+                    [routerLink]="['/sprintUserStory', projectName, idProject, actualSprint.id]"
                     type="button"
-                    value="{{actualSprint.name}}"
+                    value="Sprint {{actualSprint.id}} : {{actualSprint.name}}"
                     class="cursorPointer standardCard radius robotoLight">
 
-                <p *ngFor="let eltUS of actualSprint.US"
-                   class="robotoLight">{{eltUS}}</p>
+                <!--<p *ngFor="let eltUS of actualSprint.US"
+                   class="robotoLight">{{eltUS}}</p>-->
 
             </div>
 
@@ -66,11 +69,12 @@
                      class="alignCenter">
 
                     <input
+                        [routerLink]="['/sprintUserStory', projectName, idProject, eltSprint.id]"
                         type="button"
-                        value="{{eltSprint.name}}"
+                        value="Sprint {{eltSprint.id}} : {{eltSprint.name}}"
                         class="cursorPointer standardCard radius robotoLight">
-                    <p *ngFor="let eltUS of eltSprint.US"
-                       class="robotoLight">{{eltUS}}</p>
+                    <!--<p *ngFor="let eltUS of eltSprint.US"
+                       class="robotoLight">{{eltUS}}</p>-->
                 </div>
                 <input
                     [routerLink]="['/createSprint', projectName]"

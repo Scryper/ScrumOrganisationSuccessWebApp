@@ -17,9 +17,4 @@ export class ParticipationService {
         }
         return this.http.post<Participation>(`${environment.apiUrl}/participations`, JSON.stringify(participation), httpOptions);
     }
-
-    // Delete requests
-    deleteParticipation(id: number): Observable<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrl}/participations/${id}`);
-    }
 }

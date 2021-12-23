@@ -100,7 +100,12 @@ export class CommentsComponent implements OnInit, OnDestroy {
   }
 
     addComment() {
-      // Initialize empty comment
+      // Return if empty
+      if(this.addContent==""){
+          return;
+      }
+
+      //initialize empty comment
         let addcomment = {
             content: "",
             idUser: 0,

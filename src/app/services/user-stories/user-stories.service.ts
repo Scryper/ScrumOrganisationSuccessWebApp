@@ -30,7 +30,6 @@ export class UserStoriesService {
     }
 
     // Put requests
-    // Modifier une userStory
     updateUserStory(userStory: UserStory, idUserStory:number) {
         const httpOptions = {
             headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -39,8 +38,8 @@ export class UserStoriesService {
     }
 
     // Delete requests
-    deleteUserStory(userStoru: UserStory): Observable<boolean> {
-        return this.http.delete<boolean>(`${environment.apiUrl}/userStories/${userStoru.id}`);
+    deleteUserStory(userStory: UserStory): Observable<boolean> {
+        return this.http.delete<boolean>(`${environment.apiUrl}/userStories/${userStory.id}`);
     }
 
 }

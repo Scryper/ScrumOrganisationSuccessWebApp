@@ -63,7 +63,7 @@ export class MeetTheTeamComponent implements OnInit, OnDestroy {
 
     // Fill team page
     private initTeam(): void {
-        let mails: string[] = ["damsover@gmail.com", "martin.maes100.000@gmail.com", "la199788@student.helha.be",
+        let mails: string[] = ["damsover@gmail.com", "martin.maes100.000@gmail.com", "floran.houdart@gmail.com",
             "florian.mazzeo@gmail.com"];
 
         for(let i = 0 ; i < mails.length ; i++) {

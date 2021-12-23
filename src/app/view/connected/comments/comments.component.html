@@ -1,1 +1,43 @@
-<p>comments works!</p>
+<div class="pageContainer">
+    <div class="CommentsPageContainer">
+        <span class="standardCard radius">US{{actualUserStory.priority}} - {{actualUserStory.name}} : {{actualUserStory.description}}</span>
+        <h1 class="title robotoMedium">Comments</h1>
+
+        <div *ngFor="let comment of comments;" class="commentsContainer">
+            <div class="standardCard radius commentStyle">
+                <span class="bold">{{formatDate(comment.postedAt)}}</span>
+                <span>{{comment.content}}</span>
+            </div>
+        </div>
+
+        <!--<div *ngFor="let userStory of productBacklog; let i = index;"
+             class="alignCenter">
+            <span [routerLink]="['/comments', userStory.id]"
+                  class="standardCard radius robotoLight cursorPointer">US{{userStory.priority}} : {{userStory.name}}</span>
+            <input *ngIf="isProductOwner"
+                   type="button" value="Delete" (click)="deleteUserStory(userStory);"
+                   class="cursorPointer inputSizeSubmitSmall robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+            <input *ngIf="isProductOwner"
+                   type="button" value="Modify"
+                   class="cursorPointer inputSizeSubmitSmall robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
+                   [routerLink]="['/modifyUserStory', projectName, idProject, userStory.id]">
+        </div>
+
+        <input *ngIf="isProductOwner"
+               type="button" value="Add User story"
+               class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom"
+               [routerLink]="['/createUserStory', projectName, idProject]">
+        <br/>
+        <input
+            [routerLink]="['/myProject', projectName]"
+            type="button"
+            value="Back"
+            (mousedown)="toggleButtonPress(true);"
+            (mouseup)="toggleButtonPress(false);"
+            (mouseleave)="toggleButtonPress(false);"
+            [ngClass]="{'isPressedClass': isButtonPressed === true}"
+            class="cursorPointer inputSizeBack robotoMedium bgLightRed radius noBorder fontSizeMedium shadowBottom">-->
+
+
+    </div>
+</div>

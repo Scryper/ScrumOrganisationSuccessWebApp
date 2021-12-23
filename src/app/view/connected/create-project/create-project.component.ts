@@ -19,6 +19,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
     private subscription: Subscription | undefined;
 
     buttonIsPressed: boolean = false;
+    isDateOk: boolean = true;
     title: string = "Create project";
     currentUser: SosUser = null!;
     userId: number = 0;
@@ -49,6 +50,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
     }
 
     sendData() {
+        this.isDateOk = true;
         //create project
         let projet: Project = {
             name: this.form.getRawValue().main.nameProject,
@@ -77,6 +79,9 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
                         //redirect to projects
                     })
                 ).subscribe();
+        }
+        else{
+            this.isDateOk = false;
         }
     }
 

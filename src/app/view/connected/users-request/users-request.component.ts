@@ -36,14 +36,10 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
     idProjectActive: number | undefined;
 
     currentUser:SosUser = null!;
-    idAppliedDevelopers:number[] = []
-
-    idAppliedScrumMasters:number[] = []
     appliedDevelopers:SosUser[] = []
     appliedScrumMasters:SosUser[] = []
     idUsersWorksArray:number[] = [];
-    usersWorksArray:SosUser[] = []
-    activeProjects:Project = null!;
+
 
     isScrumMasterEmpty:boolean = true;
 

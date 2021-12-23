@@ -79,37 +79,52 @@ export class CommentsComponent implements OnInit, OnDestroy {
       this.fillActualUserStory();
   }
 
+
+    //get comments
+    //get les users grace a l'id comments
+    //bind both
+
+    //get userstory
+    private getCurrentUserStory(){
+      this.subscription = this.userStoriesService.getById(this.idActualUserStory).pipe(map(
+          userStory =>{
+              this.actualUserStory = userStory;
+
+              //get comments
+
+          }
+      )).subscribe();
+    }
+
+
+
+
+
+
   private fillActualUserStory() {
       this.subscription = this.userStoriesService.getById(this.idActualUserStory)
           .pipe(
               map(userStories => {
                   this.actualUserStory = userStories;
-                  this.fillComments();
-                  this.fillUsersComment();
+                  this.subscription = this.fillUsersComment().pipe(map(()=>{this.fillComments();})).subscribe();
               })
           ).subscribe()
   }
 
+  //récupère les commentaires d'une user story spécifique
   private fillComments() {
-
       this.subscription = this.commentsService.getByIdUserStory(this.idActualUserStory)
           .pipe(
               map(commentsTmp => {
 
-                  // COMMENT USER
-                  let tmp:CommentUser = {
-                      comment:null!,
-                      user:null!
-                  };
+                  // récupère les utilisateurs qui ont commenté l'US et les ajouter a un vecteur
+                  this.fillUsersComment();
+
+                  //parcours tous les commentaires et pour chacun
+                    //parcours les utilisateurs qui ont commenté et ajoute au tableau final COMMENT - USER la valeur du commentaire et de lutilisateur
                   for (let elt of commentsTmp) {
-
-                      /*this.commentUser.push(tmp)*/
                       this.fillCommentUser(elt.idUser,elt)
-
                   }
-
-                this.comments = commentsTmp;
-
               })
           ).subscribe()
   }
@@ -140,29 +155,27 @@ export class CommentsComponent implements OnInit, OnDestroy {
         this.fillUsersComment();
     }
 
+    // récupère les utilisateurs qui ont commenté l'US et les ajouter a un vecteur
     fillUsersComment() {
-        this.subscription = this.userService.getByCommentOnUserStory(this.idActualUserStory)
+        return this.userService.getByCommentOnUserStory(this.idActualUserStory)
             .pipe(
                 map(users => {
 
                     for (let elt of users) {
                         this.usersComment.push(elt);
                     }
-
-
                 })
-            ).subscribe()
+            )
     }
 
+    //parcours les utilisateurs qui ont commenté et ajoute au tableau final COMMENT - USER la valeur du commentaire et de lutilisateur
     fillCommentUser(idUser:number, comment:SosComment) {
-
       for (let elt of this.usersComment) {
           if (idUser == elt.id) {
               this.tmp = {
                   comment:comment,
                   user:elt
               }
-              console.log(this.tmp)
               this.commentUser.push(this.tmp);
           }
       }

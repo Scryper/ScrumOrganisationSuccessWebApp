@@ -39,6 +39,7 @@ export class SprintUserStoryComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.idProject = <number><unknown>this.activatedRoute.snapshot.paramMap.get("idProject");
         this.idSprint = Number(this.activatedRoute.snapshot.paramMap.get("idSprint"));
         this.sprintName = this.activatedRoute.snapshot.paramMap.get("sprintName");
 

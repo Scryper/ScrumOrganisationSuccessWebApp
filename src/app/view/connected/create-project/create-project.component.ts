@@ -59,23 +59,25 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
         }
 
         //add project in the database
-        this.subscription = this.projectService.addProject(projet)
-            .pipe(
-                map(project => {
-                    //assigner le product owner to the project
-                    let devProject:UserProject = {
-                        idDeveloper : this.userId,
-                        idProject : project.id!,
-                        isAppliance : false
-                    }
-                    this.developersProjectsService.addDeveloperProject(devProject).pipe(
-                        map(() => {
-                            this.router.navigate([this.returnUrl]);
-                        })
-                    ).subscribe();
-                    //redirect to projects
-                })
-            ).subscribe();
+        if(new Date() < new Date(this.form.getRawValue().main.deadline)){
+            this.subscription = this.projectService.addProject(projet)
+                .pipe(
+                    map(project => {
+                        //assigner le product owner to the project
+                        let devProject:UserProject = {
+                            idDeveloper : this.userId,
+                            idProject : project.id!,
+                            isAppliance : false
+                        }
+                        this.developersProjectsService.addDeveloperProject(devProject).pipe(
+                            map(() => {
+                                this.router.navigate([this.returnUrl]);
+                            })
+                        ).subscribe();
+                        //redirect to projects
+                    })
+                ).subscribe();
+        }
     }
 
     toggleButtonPress(isPressed:boolean) {

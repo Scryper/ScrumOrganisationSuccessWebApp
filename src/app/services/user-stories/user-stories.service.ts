@@ -19,6 +19,10 @@ export class UserStoriesService {
         return this.http.get<UserStory>(`${environment.apiUrl}/userStories/byId/${id}`);
     }
 
+    getByIdSprint(idSprint: number): Observable<UserStory[]> {
+        return this.http.get<UserStory[]>(`${environment.apiUrl}/userStories/bySprint/${idSprint}`);
+    }
+
     // Post requests
     addUserStory(userStoru: UserStory): Observable<UserStory> {
         const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
@@ -38,4 +42,5 @@ export class UserStoriesService {
     deleteUserStory(userStoru: UserStory): Observable<boolean> {
         return this.http.delete<boolean>(`${environment.apiUrl}/userStories/${userStoru.id}`);
     }
+
 }

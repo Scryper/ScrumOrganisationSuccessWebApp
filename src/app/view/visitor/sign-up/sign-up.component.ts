@@ -28,18 +28,15 @@ export class SignUpComponent implements OnInit {
     ]
 
     form:FormGroup = this.fb.group({
-        main: this.fb.group({
-            email:this.fb.control('', [
-                Validators.required, Validators.email
-            ]),
-            password:this.fb.control('', Validators.required),
-            confirmPassword:this.fb.control('', Validators.required),
-            lastname: this.fb.control('', Validators.required),
-            firstname: this.fb.control('', Validators.required),
-            birthdate: this.fb.control('', Validators.required),
-            userType: this.fb.control('Developer')
-
-        })
+        email:this.fb.control('', [
+            Validators.required, Validators.email
+        ]),
+        password:this.fb.control('', Validators.required),
+        confirmPassword:this.fb.control('', Validators.required),
+        lastname: this.fb.control('', Validators.required),
+        firstname: this.fb.control('', Validators.required),
+        birthdate: this.fb.control('', Validators.required),
+        userType: this.fb.control('Developer')
     })
 
     constructor(private fb: FormBuilder,
@@ -56,9 +53,9 @@ export class SignUpComponent implements OnInit {
         this.userExists = false;
 
         //get the value of the email
-        let email: string =this.form.getRawValue().main.email;
-        let password: string = this.form.getRawValue().main.password;
-        let passwordConfirmation: string = this.form.getRawValue().main.confirmPassword;
+        let email: string =this.form.getRawValue().email;
+        let password: string = this.form.getRawValue().password;
+        let passwordConfirmation: string = this.form.getRawValue().confirmPassword;
 
         //verify if the passwords are the same
         if(password == passwordConfirmation) {
@@ -82,7 +79,6 @@ export class SignUpComponent implements OnInit {
         let datePipe = new DatePipe('en-GB');
         let date = datePipe.transform(new Date(1998,11,26), 'yyyy-MM-dd');
         this.form.setValue({
-            main: {
                 email: "Florian@test.com",
                 password: "test",
                 confirmPassword: "test",
@@ -90,7 +86,6 @@ export class SignUpComponent implements OnInit {
                 firstname: "test",
                 birthdate: date,
                 userType: "Developer"
-            }
         })
     }
 
@@ -99,7 +94,7 @@ export class SignUpComponent implements OnInit {
     }
 
     sendData() {
-        let rawValues = this.form.getRawValue().main;
+        let rawValues = this.form.getRawValue();
         let birthdateUser: Date = new Date(rawValues.birthdate);
         let user: SosUser = {
             firstname: rawValues.firstname,
@@ -141,7 +136,6 @@ export class SignUpComponent implements OnInit {
 
     private resetFormValues() {
         this.form.setValue({
-            main: {
                 email: "",
                 password: "",
                 confirmPassword: "",
@@ -149,7 +143,23 @@ export class SignUpComponent implements OnInit {
                 firstname: "",
                 birthdate: "",
                 userType: ""
-            }
         });
+    }
+
+
+    public computeInvalidForm(){
+        const invalid = [];
+        const controls = this.form.controls;
+        for (const name in controls) {
+            if (controls[name].invalid) {
+                invalid.push(name);
+            }
+        }
+        return invalid
+    }
+
+    public findInvalidControls() {
+        let invalid = this.computeInvalidForm();
+        return invalid[0]=="email";
     }
 }

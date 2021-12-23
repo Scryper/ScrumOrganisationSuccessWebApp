@@ -16,7 +16,7 @@ export class CommentsService {
     }
 
     getByIdUserStory(idUserStory: number): Observable<SosComment[]> {
-        return this.http.get<SosComment[]>(`${environment.apiUrl}/comments/byIdUserStory/${idUserStory}`);
+        return this.http.get<SosComment[]>(`${environment.apiUrl}/comments/byUserStory/${idUserStory}`);
     }
 
     getById(id: number): Observable<SosComment> {

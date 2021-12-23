@@ -53,6 +53,18 @@
                     You can't add a meeting in the past, unless you are Dr Strange
                 </p>
             </div>
+            <div *ngIf="isAddingOfMeetingOk"
+                 class="alignCenter sizeNormal">
+                <p class="robotoMedium bgWhiteBlue radius border padding marginTop alignText">
+                    Your meeting has been added
+                </p>
+            </div>
+            <div *ngIf="meetingAlreadyExists"
+                 class="alignCenter sizeNormal">
+                <p class="robotoMedium red bgWhiteBlue radius border padding marginTop alignText">
+                    This meeting already exists !
+                </p>
+            </div>
         </div>
     </form>
 </div>

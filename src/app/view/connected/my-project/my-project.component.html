@@ -25,17 +25,6 @@
         </div>
 
         <div class="sprintContainer elementMyProject">
-            <input *ngIf="isScrumMaster && actualSprint.name != ''"
-                   [routerLink]="['/createMeeting',projectName,actualSprint.id]"
-                   type="button"
-                   value="Create Meeting"
-                   (mousedown)="toggleModifySprintButtonPress(true);"
-                   (mouseup)="toggleModifySprintButtonPress(false);"
-                   (mouseleave)="toggleModifySprintButtonPress(false);"
-                   [ngClass]="{'isPressedClass': isModifySprintButtonPressed === true}"
-                   class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
-
-
             <h1 class="robotoMedium">Active sprint</h1>
             <span *ngIf="actualSprint.name == ''"
                   class="cursorPointer radius standardCard robotoLight">
@@ -51,10 +40,6 @@
                     type="button"
                     value="Sprint {{actualSprint.id}} : {{actualSprint.name}}"
                     class="cursorPointer standardCard radius robotoLight">
-
-                <!--<p *ngFor="let eltUS of actualSprint.US"
-                   class="robotoLight">{{eltUS}}</p>-->
-
             </div>
 
             <div>
@@ -69,12 +54,10 @@
                      class="alignCenter">
 
                     <input
-                        [routerLink]="['/sprintUserStory',eltSprint.name, eltSprint.id]"
+                        [routerLink]="['/sprintUserStory', eltSprint.name, eltSprint.id]"
                         type="button"
                         value="Sprint {{eltSprint.id}} : {{eltSprint.name}}"
                         class="cursorPointer standardCard radius robotoLight">
-                    <!--<p *ngFor="let eltUS of eltSprint.US"
-                       class="robotoLight">{{eltUS}}</p>-->
                 </div>
                 <input
                     [routerLink]="['/createSprint', projectName]"

@@ -29,7 +29,6 @@ export class MyProjectComponent implements OnInit, OnDestroy {
     isBackButtonPressed: boolean = false;
     isDeleteButtonPressed: boolean = false;
     isCreateSprintButtonPressed: boolean = false;
-    isModifySprintButtonPressed: boolean = false;
 
     isScrumMaster: boolean = false;
     isProductOwner: boolean = false;
@@ -86,10 +85,6 @@ export class MyProjectComponent implements OnInit, OnDestroy {
 
     toggleCreateSprintButtonPress(isPressed: boolean) {
         this.isCreateSprintButtonPressed = isPressed;
-    }
-
-    toggleModifySprintButtonPress(isPressed: boolean) {
-        this.isModifySprintButtonPressed = isPressed;
     }
 
     toggleDeleteButtonPress(isPressed: boolean){

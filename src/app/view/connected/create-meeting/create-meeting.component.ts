@@ -11,8 +11,8 @@ import {ParticipationService} from "../../../services/participation/participatio
 import {Meeting} from "../../../domain/meeting";
 import {Participation} from "../../../domain/participation";
 import {DatePipe} from "@angular/common";
-import {catchError, map} from "rxjs/operators";
-import {of, Subscription} from "rxjs";
+import {map} from "rxjs/operators";
+import {Subscription} from "rxjs";
 import {ProjectsService} from "../../../services/projects/projects.service";
 
 @Component({
@@ -81,6 +81,7 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
                             }
                         }
                     });
+                    this.sprintService.getById(this.idSprint).subscribe(sprint => this.sprintName = sprint.description);
                 })
             ).subscribe();
     }

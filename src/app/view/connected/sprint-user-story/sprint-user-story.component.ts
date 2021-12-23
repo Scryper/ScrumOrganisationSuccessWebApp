@@ -5,6 +5,10 @@ import {SprintsUserStoriesService} from "../../../services/sprints-user-stories/
 import {map} from "rxjs/operators";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
+import {SosUser} from "../../../domain/sos-user";
+import {Role} from "../../../domain/role";
+import {SprintsService} from "../../../services/sprints/sprints.service";
+import {ProjectsService} from "../../../services/projects/projects.service";
 
 @Component({
   selector: 'app-sprint-user-story',
@@ -12,19 +16,23 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['../../../app.component.css', './sprint-user-story.component.css']
 })
 export class SprintUserStoryComponent implements OnInit, OnDestroy {
-
     private subscription: Subscription | undefined;
-    UserStories:UserStory[] = [];
+    UserStories: UserStory[] = [];
 
     projectName: string | null = "";
     idProject: number = 0;
     idSprint: number = 0;
     sprintName: string | null = "";
 
+    isCreateMeetingButtonPressed: boolean = false;
+    isBackButtonPressed: boolean = false;
+    isScrumMaster: boolean = false;
 
-  constructor(private userStoriesService:UserStoriesService,
+    constructor(private userStoriesService:UserStoriesService,
               private sprintsUserStoriesService:SprintsUserStoriesService,
-              private activatedRoute: ActivatedRoute,) { }
+              private sprintService: SprintsService,
+              private projectService: ProjectsService,
+              private activatedRoute: ActivatedRoute) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -34,19 +42,36 @@ export class SprintUserStoryComponent implements OnInit, OnDestroy {
         this.idSprint = Number(this.activatedRoute.snapshot.paramMap.get("idSprint"));
         this.sprintName = this.activatedRoute.snapshot.paramMap.get("sprintName");
 
+        this.subscription = this.sprintService.getById(this.idSprint).pipe(
+            map(result => {
+                this.sprintName = result.description;
+                this.projectService.getById(result.idProject).subscribe(project => {
+                    this.projectName = project.name;
+                });
+            })
+        ).subscribe();
+
+        let user: SosUser = JSON.parse(<string>localStorage.getItem('currentUser'));
+        this.isScrumMaster = user.role == Role.ScrumMaster;
+
         this.fillUserStories();
     }
 
     // Récupérer les userStories qui match avec la liste d'id précédement récupéré
     private fillUserStories() {
-
         this.subscription = this.userStoriesService.getByIdSprint(this.idSprint)
             .pipe(
                 map(UserStoriesTmp => {
                     this.UserStories = UserStoriesTmp;
                 })
             ).subscribe()
-
     }
 
+    toggleCreateMeetingButtonPress(isPressed: boolean) {
+        this.isCreateMeetingButtonPressed = isPressed;
+    }
+
+    toggleBackButtonPress(isPressed: boolean) {
+        this.isBackButtonPressed = isPressed;
+    }
 }

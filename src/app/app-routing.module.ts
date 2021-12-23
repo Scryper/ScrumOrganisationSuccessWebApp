@@ -50,7 +50,7 @@ const routes: Routes = [
     {path: 'modifyUserStory/:projectName/:idProject/:idUserStory', component : ModifyUserStoryComponent,canActivate:[AuthGuard]},
     {path: 'createMeeting/:projectName/:sprintId', component : CreateMeetingComponent,canActivate:[AuthGuard]},
     {path: 'userList/:projectName/:idProject', component : UserListComponent, canActivate:[AuthGuard]},
-    {path: 'comments/:idUserStory', component : CommentsComponent, canActivate:[AuthGuard]},
+    {path: 'comments/:idUserStory/:projectName/:idProject', component : CommentsComponent, canActivate:[AuthGuard]},
     {path: 'sprintUserStory/:sprintName/:idSprint', component : SprintUserStoryComponent, canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];

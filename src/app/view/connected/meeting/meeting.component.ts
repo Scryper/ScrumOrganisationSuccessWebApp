@@ -13,6 +13,7 @@ export class MeetingComponent implements OnInit {
     username: string = "";
 
     calendarOptions: CalendarOptions = {
+        height:700,
         initialView: 'dayGridMonth',
         eventClick : function (event) {
             localStorage.setItem('roomName', event.event.extendedProps.roomName);

@@ -24,6 +24,8 @@ import {CreateUserStoryComponent} from "./view/connected/create-user-story/creat
 import {ModifyUserStoryComponent} from "./view/connected/modify-user-story/modify-user-story.component";
 import {CreateMeetingComponent} from "./view/connected/create-meeting/create-meeting.component";
 import {UserListComponent} from "./view/connected/user-list/user-list.component";
+import {SprintUserStoryComponent} from "./view/connected/sprint-user-story/sprint-user-story.component";
+import {CommentsComponent} from "./view/connected/comments/comments.component";
 
 const routes: Routes = [
     {path: '', component : HomeComponent},
@@ -48,6 +50,8 @@ const routes: Routes = [
     {path: 'modifyUserStory/:projectName/:idProject/:idUserStory', component : ModifyUserStoryComponent,canActivate:[AuthGuard]},
     {path: 'createMeeting/:projectName/:sprintId', component : CreateMeetingComponent,canActivate:[AuthGuard]},
     {path: 'userList/:projectName/:idProject', component : UserListComponent, canActivate:[AuthGuard]},
+    {path: 'comments/:idUserStory', component : CommentsComponent, canActivate:[AuthGuard]},
+    {path: 'sprintUserStory/:sprintName/:idSprint', component : SprintUserStoryComponent, canActivate:[AuthGuard]},
     {path: '**', component: NotFoundComponent}
 ];
 

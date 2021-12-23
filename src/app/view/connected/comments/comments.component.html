@@ -1,1 +1,14 @@
-<p>comments works!</p>
+<div class="pageContainer">
+    <div class="CommentsPageContainer">
+        <span class="standardCard radius">US{{actualUserStory.priority}} - {{actualUserStory.name}} : {{actualUserStory.description}}</span>
+        <h1 class="title robotoMedium">Comments</h1>
+
+        <div *ngFor="let comment of comments;" class="commentsContainer">
+            <div class="standardCard radius commentStyle">
+                <span class="bold">{{formatDate(comment.postedAt)}}</span>
+                <span>{{comment.content}}</span>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -11,8 +11,8 @@ import {ParticipationService} from "../../../services/participation/participatio
 import {Meeting} from "../../../domain/meeting";
 import {Participation} from "../../../domain/participation";
 import {DatePipe} from "@angular/common";
-import { map } from "rxjs/operators";
-import { Subscription } from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import {of, Subscription} from "rxjs";
 import {ProjectsService} from "../../../services/projects/projects.service";
 
 @Component({
@@ -46,6 +46,7 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
     isDateOk: boolean = true;
     isBackButtonPressed: boolean = false;
     isAddingOfMeetingOk: boolean = false;
+    meetingAlreadyExists: boolean = false;
 
     constructor(private fb: FormBuilder,
                 private sprintService: SprintsService,
@@ -81,7 +82,7 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
                         }
                     });
                 })
-            ).subscribe()
+            ).subscribe();
     }
 
     toggleButtonSaveNewMeetingPressed(isPressed: boolean) {
@@ -89,6 +90,10 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
     }
 
     onSubmitNewMeeting() {
+        this.isDateOk = true;
+        this.isAddingOfMeetingOk = false;
+        this.meetingAlreadyExists = false;
+
         let rawValues = this.form.getRawValue().newMeeting;
         let meeting: Meeting = {
             idSprint: this.idSprint,
@@ -101,20 +106,24 @@ export class CreateMeetingComponent implements OnInit, OnDestroy {
             this.subscription = this.meetingService.addMeeting(meeting)
                 .pipe(
                     map(meeting => {
-                            if (meeting.id != null) {
-                                this.idMeeting = meeting.id;
-                            }
-                            for(let idUser of this.idsUsersOnProject) {
-                                let participation: Participation = {
-                                    idMeeting: this.idMeeting,
-                                    idUser: idUser
-                                }
-                                this.participationService.addParticipation(participation).subscribe();
-                            }
-                            this.isAddingOfMeetingOk = true;
+                        if (meeting.id != null) {
+                            this.idMeeting = meeting.id;
                         }
-                    )
-                ).subscribe();
+                        for(let idUser of this.idsUsersOnProject) {
+                            let participation: Participation = {
+                                idMeeting: this.idMeeting,
+                                idUser: idUser
+                            }
+                            this.participationService.addParticipation(participation).subscribe();
+                        }
+                        catchError(error => of([]));
+                        this.isAddingOfMeetingOk = true;
+                    })
+                ).subscribe(() => {},
+                    error => {
+                        this.meetingAlreadyExists = true;
+                    }
+                );
         } else {
             this.isDateOk = false;
         }

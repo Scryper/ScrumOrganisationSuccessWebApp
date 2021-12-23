@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserStory } from "../../../domain/user-story";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import { ProjectsService } from "../../../services/projects/projects.service";
 import { UserStoriesService } from "../../../services/user-stories/user-stories.service";
 import { Subscription } from "rxjs";
@@ -24,7 +24,7 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
     title: string = "Create sprint";
     selectedUserStory: UserStory | undefined;
     chosenUserStories: UserStory[] = [];
-    buttonIsPressed: boolean = false;
+    isButtonPressed: boolean = false;
     projectName: string | null = "";
     dateIsInPast : boolean = false;
 
@@ -37,14 +37,15 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
 
     productBacklog: UserStory[] = [];
     isBackButtonPressed: boolean = false;
+    sprintAlreadyExists: boolean = false;
+    isAddOk: boolean = false;
 
     constructor(private fb: FormBuilder,
                 private route: ActivatedRoute,
                 private projectService: ProjectsService,
                 private userStoryService: UserStoriesService,
                 private sprintService: SprintsService,
-                private sprintUserStoryService: SprintsUserStoriesService,
-                private router: Router) { }
+                private sprintUserStoryService: SprintsUserStoriesService) { }
 
     ngOnDestroy(): void {
         this.subscription?.unsubscribe();
@@ -71,13 +72,13 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
 
     sendData() {
         this.dateIsInPast = false;
+
         let rawValues = this.form.getRawValue().main;
-        //vérification of the date
+        // date verification
         if(new Date(rawValues.deadline)>new Date()){
             this.subscription = this.sprintService.getMaxNumberOfSprints(this.idProject)
                 .pipe(
                     map(result => {
-
                         let sprint: Sprint = {
                             idProject: this.idProject,
                             sprintNumber: result + 1, // result is the max number of sprints already present in the database
@@ -88,15 +89,14 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
                         this.addSprint(sprint);
                     })).subscribe();
         }
-        else{
-            this.dateIsInPast = true;
-            //date est dans le passé
+        else {
+            this.dateIsInPast = true; // date is in the past
         }
 
     }
 
     toggleButtonPress(isPressed:boolean) {
-        this.buttonIsPressed = isPressed;
+        this.isButtonPressed = isPressed;
     }
 
     private loadProductBacklog() {
@@ -124,6 +124,9 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
     }
 
     private addSprint(sprint: Sprint) {
+        this.isAddOk = false;
+        this.sprintAlreadyExists = false;
+
         this.subscription = this.sprintService.addSprint(sprint).pipe(
             map(sprintResult => {
                 for (let userStory of this.chosenUserStories) {
@@ -133,9 +136,13 @@ export class CreateSprintComponent implements OnInit, OnDestroy {
                     };
                     this.sprintUserStoryService.addSprintUserStory(sprintUserStory).subscribe();
                 }
-                this.router.navigate(["/myProject", this.projectName]);
+                this.isAddOk = true;
             })
-        ).subscribe();
+        ).subscribe(() => {},
+            error => {
+                this.sprintAlreadyExists = true;
+            }
+        );
     }
 
     autoComplete() {

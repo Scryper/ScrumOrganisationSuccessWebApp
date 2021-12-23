@@ -83,7 +83,6 @@ export class JoinProjectComponent implements OnInit, OnDestroy {
             }else{
                 this.IsNonAppliedEmpty = false;
             }
-            console.log(this.IsNonAppliedEmpty)
         }));
     }
 

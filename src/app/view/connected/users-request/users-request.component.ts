@@ -36,14 +36,10 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
     idProjectActive: number | undefined;
 
     currentUser:SosUser = null!;
-    idAppliedDevelopers:number[] = []
-
-    idAppliedScrumMasters:number[] = []
     appliedDevelopers:SosUser[] = []
     appliedScrumMasters:SosUser[] = []
     idUsersWorksArray:number[] = [];
-    usersWorksArray:SosUser[] = []
-    activeProjects:Project = null!;
+
 
     isScrumMasterEmpty:boolean = true;
 
@@ -166,7 +162,7 @@ export class UsersRequestComponent implements OnInit, OnDestroy {
                 return element.id != user.id;
             });
         } else {
-            this.appliedScrumMasters = this.appliedDevelopers.filter(element => {
+            this.appliedDevelopers = this.appliedDevelopers.filter(element => {
                 return element.id != user.id;
             });
         }

@@ -24,5 +24,15 @@
         <input (click)="addComment();"  type="button" value="Add Comments"
                 class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
 
+        <input
+            [routerLink]="['/productBacklog', projectName, idProject]"
+            type="button"
+            value="Back"
+            (mousedown)="toggleBackButtonPress(true);"
+            (mouseup)="toggleBackButtonPress(false);"
+            (mouseleave)="toggleBackButtonPress(false);"
+            [ngClass]="{'isPressedClass': isBackButtonPressed === true}"
+            class="cursorPointer inputSizeBack robotoMedium bgLightRed radius noBorder fontSizeMedium shadowBottom marginTop">
+
     </div>
 </div>

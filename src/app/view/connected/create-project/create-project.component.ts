@@ -6,7 +6,6 @@ import {Project} from "../../../domain/project";
 import {UserProject} from "../../../domain/user-project";
 import {SosUser} from "../../../domain/sos-user";
 import {UsersProjectsService} from "../../../services/users-projects/users-projects.service";
-import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {map} from "rxjs/operators";
 

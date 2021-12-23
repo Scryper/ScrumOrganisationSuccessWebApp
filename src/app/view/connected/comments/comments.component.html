@@ -10,5 +10,15 @@
             </div>
         </div>
 
+        <h2 class="robotoMedium">Content</h2>
+        <textarea
+            [(ngModel)]="addContent"
+            rows="4" cols="50"
+            class="robotoLight"></textarea>
+        <br/>
+
+        <input (click)="addComment();"  type="button" value="Add Comments"
+                class="cursorPointer inputSizeSubmit robotoMedium bgWhiteBlue radius noBorder fontSizeMedium shadowBottom">
+
     </div>
 </div>

@@ -1,5 +1,5 @@
 export interface SosComment {
-    id: number,
+    id?: number,
     idUserStory: number,
     idUser: number,
     postedAt: Date,
